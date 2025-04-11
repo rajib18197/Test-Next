@@ -24,6 +24,7 @@ import {
   CreditCard,
 } from "@mui/icons-material";
 import SelectionBox from "./SelectionBox";
+import SelectBox from "../../ui/Select";
 
 // Custom styled components
 const StyledTabs = styled(Tabs)({
@@ -139,10 +140,12 @@ export default function FlightBooking() {
   };
 
   return (
-    <Box
+    <Container
+      maxWidth="lg"
       sx={{
         width: "100%",
-        height: "100vh",
+        padding: "30px",
+        borderRadius: "10px",
         backgroundImage:
           "url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')",
         backgroundSize: "cover",
@@ -152,7 +155,10 @@ export default function FlightBooking() {
         justifyContent: "center",
       }}
     >
-      <Container maxWidth="lg">
+      <Container
+        maxWidth="lg"
+        style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+      >
         {/* Tabs */}
         <Box
           sx={{
@@ -250,14 +256,14 @@ export default function FlightBooking() {
 
         <Box
           sx={{
-            bgcolor: "white",
-            borderRadius: "16px",
             overflow: "hidden",
             boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+            display: "grid",
+            gridTemplateColumns: "3fr 1fr",
           }}
         >
-          {/* Content */}
-          <Box sx={{ p: 3 }}>
+          {/* Left Content */}
+          <Box sx={{ p: 3, borderRadius: "10px", bgcolor: "white" }}>
             {/* Trip Type Selection */}
             <Box sx={{ display: "flex", mb: 3 }}>
               <Box
@@ -437,65 +443,72 @@ export default function FlightBooking() {
               />
 
               {/* Right Side - Passenger Info */}
-              <Box sx={{ width: "300px", pl: 4 }}>
-                <Box sx={{ display: "flex", mb: 2 }}>
-                  <FormControl fullWidth sx={{ mr: 1 }}>
-                    <StyledSelect
-                      value={adult}
-                      onChange={handleAdultChange}
-                      displayEmpty
-                    >
-                      <MenuItem value="1">1 ADULT</MenuItem>
-                      <MenuItem value="2">2 ADULT</MenuItem>
-                      <MenuItem value="3">3 ADULT</MenuItem>
-                    </StyledSelect>
-                  </FormControl>
-
-                  <FormControl fullWidth>
-                    <StyledSelect
-                      value={child}
-                      onChange={handleChildChange}
-                      displayEmpty
-                    >
-                      <MenuItem value="0">0 CHILD</MenuItem>
-                      <MenuItem value="1">1 CHILD</MenuItem>
-                      <MenuItem value="2">2 CHILD</MenuItem>
-                    </StyledSelect>
-                  </FormControl>
-                </Box>
-
-                <Box sx={{ display: "flex", mb: 2 }}>
-                  <FormControl fullWidth sx={{ mr: 1 }}>
-                    <StyledSelect
-                      value={infant}
-                      onChange={handleInfantChange}
-                      displayEmpty
-                    >
-                      <MenuItem value="0">0 INFANT</MenuItem>
-                      <MenuItem value="1">1 INFANT</MenuItem>
-                      <MenuItem value="2">2 INFANT</MenuItem>
-                    </StyledSelect>
-                  </FormControl>
-
-                  <FormControl fullWidth>
-                    <StyledSelect
-                      value={travelClass}
-                      onChange={handleClassChange}
-                      displayEmpty
-                    >
-                      <MenuItem value="Economy">Economy</MenuItem>
-                      <MenuItem value="Business">Business</MenuItem>
-                      <MenuItem value="First">First</MenuItem>
-                    </StyledSelect>
-                  </FormControl>
-                </Box>
-
-                <SearchButton fullWidth>SEARCH FOR FLIGHT</SearchButton>
-              </Box>
             </Box>
+          </Box>
+
+          {/* Right Content */}
+          <Box
+            sx={{
+              padding: "12px",
+              borderRadius: "10px",
+              display: "flex",
+              flexDirection: "column",
+              bgcolor: "white",
+            }}
+          >
+            <Box sx={{ display: "flex", mb: 2, gap: "3px" }}>
+              <SelectBox
+                value={adult}
+                onChange={handleAdultChange}
+                options={[
+                  { value: "1", text: "1 ADULT" },
+                  { value: "2", text: "2 ADULT" },
+                  { value: "3", text: "3 ADULT" },
+                ]}
+              />
+
+              <SelectBox
+                value={child}
+                onChange={handleAdultChange}
+                options={[
+                  { value: "0", text: "0 CHILD" },
+                  { value: "1", text: "1 CHILD" },
+                  { value: "2", text: "2 CHILD" },
+                ]}
+              />
+
+              <SelectBox
+                value={infant}
+                onChange={handleAdultChange}
+                options={[
+                  { value: "0", text: "0 INFANT" },
+                  { value: "1", text: "0 INFANT" },
+                  { value: "2", text: "0 INFANT" },
+                ]}
+              />
+            </Box>
+
+            <Box sx={{ width: "100%", mb: "auto" }}>
+              <SelectBox
+                value={travelClass}
+                onChange={handleClassChange}
+                options={[
+                  { value: "Economy", text: "Economy" },
+                  { value: "Business", text: "Business" },
+                  { value: "First", text: "First" },
+                ]}
+              />
+            </Box>
+
+            <SearchButton
+              fullWidth
+              style={{ minWidth: 0, minHeight: 0, padding: "4px 8px" }}
+            >
+              SEARCH FOR FLIGHT
+            </SearchButton>
           </Box>
         </Box>
       </Container>
-    </Box>
+    </Container>
   );
 }
