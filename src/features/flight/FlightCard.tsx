@@ -467,6 +467,13 @@ const FlightCard: React.FC<FlightCardProps> = ({
               arrivalTime: "13:00",
               duration: "1H 5Min",
             }}
+            fareSummary={{
+              baseFare: 10048,
+              taxFees: 2350,
+              totalCost: 12398,
+              discount: 1118,
+              grandTotal: 11280,
+            }}
           />
         </FlightDetailsDrawer>
       </PriceSection>

@@ -1,7 +1,18 @@
 import type React from "react";
-import { Box, Typography, Paper, styled, Button, Tooltip } from "@mui/material";
-// import AirlineLogo from "./airline-logo";
-
+import {
+  Box,
+  Typography,
+  Paper,
+  styled,
+  Button,
+  Tooltip,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Grid,
+} from "@mui/material";
 // Custom styled components
 const FlightDetailsContainer = styled(Paper)({
   borderRadius: 8,
@@ -12,7 +23,7 @@ const FlightDetailsContainer = styled(Paper)({
   margin: "0 auto",
 });
 
-const FlightDetailsHeader = styled(Box)({
+const SectionHeader = styled(Box)({
   backgroundColor: "#e6f7f2",
   padding: "12px 20px",
 });
@@ -81,6 +92,55 @@ const HorizontalLine = styled(Box)({
   zIndex: 0,
 });
 
+// New styled components for fare summary and policy
+const StyledTableCell = styled(TableCell)({
+  padding: "10px 16px",
+  fontSize: "0.8rem",
+});
+
+const StyledTableHeaderCell = styled(TableCell)({
+  padding: "10px 16px",
+  fontSize: "0.8rem",
+  backgroundColor: "#3f4b63",
+  color: "white",
+});
+
+const PolicyBox = styled(Box)({
+  backgroundColor: "#e6f7f2",
+  padding: "10px",
+  borderRadius: "4px",
+  fontSize: "0.8rem",
+  fontWeight: "bold",
+  color: "#333",
+  textAlign: "center",
+  marginBottom: "8px",
+});
+
+const PolicyText = styled(Typography)({
+  fontSize: "0.75rem",
+  color: "#666",
+});
+
+const FooterContainer = styled(Box)({
+  backgroundColor: "#2cd889",
+  padding: "16px 20px",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+});
+
+const BookHoldButton = styled(Button)({
+  backgroundColor: "#3f4b63",
+  color: "white",
+  borderRadius: 25,
+  padding: "8px 24px",
+  fontWeight: "bold",
+  textTransform: "uppercase",
+  "&:hover": {
+    backgroundColor: "#2d3748",
+  },
+});
+
 interface FlightDetailsProps {
   outboundFlight: {
     airline: string;
@@ -122,16 +182,24 @@ interface FlightDetailsProps {
     arrivalTime: string;
     duration: string;
   };
+  fareSummary?: {
+    baseFare: number;
+    taxFees: number;
+    totalCost: number;
+    discount: number;
+    grandTotal: number;
+  };
 }
 
 const FlightDetails: React.FC<FlightDetailsProps> = ({
   outboundFlight,
   returnFlight,
+  fareSummary,
 }) => {
   return (
     <FlightDetailsContainer>
       {/* Header */}
-      <FlightDetailsHeader>
+      <SectionHeader>
         <Typography
           variant="subtitle1"
           sx={{
@@ -142,15 +210,12 @@ const FlightDetails: React.FC<FlightDetailsProps> = ({
         >
           FLIGHT DETAILS
         </Typography>
-      </FlightDetailsHeader>
+      </SectionHeader>
 
       {/* Outbound Flight */}
       <FlightSegment>
         {/* Airline Logo and Info */}
         <Box>
-          {/* <AirlineLogoContainer>
-            <AirlineLogo />
-          </AirlineLogoContainer> */}
           <Typography
             variant="body2"
             sx={{ color: "#2cd889", fontSize: "0.75rem", mt: 1 }}
@@ -296,9 +361,6 @@ const FlightDetails: React.FC<FlightDetailsProps> = ({
       <FlightSegment>
         {/* Airline Logo and Info */}
         <Box>
-          {/* <AirlineLogoContainer>
-            <AirlineLogo />
-          </AirlineLogoContainer> */}
           <Typography
             variant="body2"
             sx={{ color: "#2cd889", fontSize: "0.75rem", mt: 1 }}
@@ -423,6 +485,130 @@ const FlightDetails: React.FC<FlightDetailsProps> = ({
           </Box>
         </Box>
       </FlightSegment>
+
+      {/* FARE SUMMARY SECTION */}
+      <SectionHeader>
+        <Typography
+          variant="subtitle1"
+          sx={{
+            color: "#2cd889",
+            fontWeight: "bold",
+            fontSize: "0.9rem",
+          }}
+        >
+          FARE SUMMARY
+        </Typography>
+      </SectionHeader>
+
+      <Box p={2}>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <StyledTableHeaderCell>Pax Type</StyledTableHeaderCell>
+              <StyledTableHeaderCell>Base Fare (BDT)</StyledTableHeaderCell>
+              <StyledTableHeaderCell>Tax Fees (BDT)</StyledTableHeaderCell>
+              <StyledTableHeaderCell>Per Passenger</StyledTableHeaderCell>
+              <StyledTableHeaderCell>Total Cost (BDT)</StyledTableHeaderCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <StyledTableCell>Adult</StyledTableCell>
+              <StyledTableCell>10,048 ৳</StyledTableCell>
+              <StyledTableCell>2,350 ৳</StyledTableCell>
+              <StyledTableCell>(10,048+2350 x 1) ৳</StyledTableCell>
+              <StyledTableCell>12,398 ৳</StyledTableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+
+        <Box mt={2} px={2} py={1} sx={{ borderTop: "1px solid #e0e0e0" }}>
+          <Box display="flex" justifyContent="space-between" mb={0.5}>
+            <Typography sx={{ color: "#2cd889", fontSize: "0.9rem" }}>
+              Total
+            </Typography>
+            <Typography sx={{ color: "#2cd889", fontSize: "0.9rem" }}>
+              12398 ৳
+            </Typography>
+          </Box>
+          <Box display="flex" justifyContent="space-between" mb={0.5}>
+            <Typography sx={{ color: "#2cd889", fontSize: "0.9rem" }}>
+              Discount
+            </Typography>
+            <Typography sx={{ color: "#2cd889", fontSize: "0.9rem" }}>
+              1118 ৳
+            </Typography>
+          </Box>
+          <Box display="flex" justifyContent="space-between">
+            <Typography
+              sx={{ color: "#2cd889", fontSize: "0.9rem", fontWeight: "bold" }}
+            >
+              Grand Total
+            </Typography>
+            <Typography
+              sx={{ color: "#2cd889", fontSize: "0.9rem", fontWeight: "bold" }}
+            >
+              11280 ৳
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+
+      {/* FARE POLICY SECTION */}
+      <SectionHeader>
+        <Typography
+          variant="subtitle1"
+          sx={{
+            color: "#2cd889",
+            fontWeight: "bold",
+            fontSize: "0.9rem",
+          }}
+        >
+          FARE POLICY
+        </Typography>
+      </SectionHeader>
+
+      <Box p={2}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <PolicyBox>Cancellation</PolicyBox>
+            <PolicyText>
+              Refund Amount = Paid Amount - Airline Cancellation Fee
+            </PolicyText>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <PolicyBox>Re-Issue</PolicyBox>
+            <PolicyText>
+              Re-issue Fee = Airline's Fee + Fare Difference
+            </PolicyText>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <PolicyBox>Refund</PolicyBox>
+            <PolicyText>
+              Refund Fee = Airline's Fee + Fare Difference
+            </PolicyText>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <PolicyBox>Void</PolicyBox>
+            <PolicyText>Void Fee = Airline's Fee + Fare Difference</PolicyText>
+          </Grid>
+        </Grid>
+      </Box>
+
+      {/* Footer with Book & Hold */}
+      <FooterContainer>
+        <Box>
+          <Typography sx={{ color: "white", fontSize: "0.8rem" }}>
+            Total (include VAT)
+          </Typography>
+          <Typography
+            sx={{ color: "white", fontSize: "1.2rem", fontWeight: "bold" }}
+          >
+            Fare: 11280 ৳
+          </Typography>
+        </Box>
+        <BookHoldButton>BOOK & HOLD</BookHoldButton>
+      </FooterContainer>
     </FlightDetailsContainer>
   );
 };
