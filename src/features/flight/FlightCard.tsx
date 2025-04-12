@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import FlightDetailsDrawer from "../../ui/Drawer";
+import FlightDetails from "./FlightDetails";
 
 // Custom styled components
 const StyledCard = styled(Card)({
@@ -422,21 +424,51 @@ const FlightCard: React.FC<FlightCardProps> = ({
             BOOK NOW
           </BookNowButton>
         </Box>
-        <FlightDetailsButton
-        //   endIcon={<KeyboardArrowDownIcon fontSize="small" />}
-        >
-          FLIGHT DETAILS
-          <i
-            style={{
-              borderColor: "#0000 #0000 #0000 #34495e",
-              borderWidth: "4px 4px 4px 6px",
-              transform: "translate(6px, -1px)",
-              textAlign: "center",
-              margin: "auto",
-              borderStyle: "solid",
+
+        <FlightDetailsDrawer>
+          <FlightDetails
+            outboundFlight={{
+              airline: "Biman Bangladesh",
+              flightNumber: "BG-437 & G",
+              operator: "Operated By BG",
+              departureCode: "DAC",
+              departureCity: "Dhaka",
+              departureCountry: "BD",
+              departureAirport: "Hazrat Shahj...",
+              departureAirportFull: "Hazrat Shahjalal International Airport",
+              departureDate: "13 Apr 2025",
+              departureTime: "15:30",
+              arrivalCode: "CXB",
+              arrivalCity: "Coxs Bazar",
+              arrivalCountry: "BD",
+              arrivalAirport: "COXs B...",
+              arrivalAirportFull: "COXs Bazar International Airport",
+              arrivalDate: "13 Apr 2025",
+              arrivalTime: "16:45",
+              duration: "1H 15Min",
             }}
-          ></i>
-        </FlightDetailsButton>
+            returnFlight={{
+              airline: "Biman Bangladesh",
+              flightNumber: "BG-434 & G",
+              operator: "Operated By BG",
+              departureCode: "CXB",
+              departureCity: "Coxs Bazar",
+              departureCountry: "BD",
+              departureAirport: "COXs B...",
+              departureAirportFull: "COXs Bazar International Airport",
+              departureDate: "15 Apr 2025",
+              departureTime: "11:55",
+              arrivalCode: "DAC",
+              arrivalCity: "Dhaka",
+              arrivalCountry: "BD",
+              arrivalAirport: "Hazrat Shahj...",
+              arrivalAirportFull: "Hazrat Shahjalal International Airport",
+              arrivalDate: "15 Apr 2025",
+              arrivalTime: "13:00",
+              duration: "1H 5Min",
+            }}
+          />
+        </FlightDetailsDrawer>
       </PriceSection>
     </StyledCard>
   );
