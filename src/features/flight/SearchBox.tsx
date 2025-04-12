@@ -110,7 +110,7 @@ const SearchButton = styled(Button)({
   },
 });
 
-export default function SearchFlights() {
+export default function SearchBox() {
   const [tabValue, setTabValue] = useState(0);
   const [tripType, setTripType] = useState("round-way");
   const [adult, setAdult] = useState("1");
