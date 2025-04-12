@@ -25,6 +25,9 @@ import {
 } from "@mui/icons-material";
 import SelectionBox from "./SelectionBox";
 import SelectBox from "../../ui/Select";
+import { useSearch } from "../../context/SearchContext";
+import AirportSelection from "./AutoComplete";
+import DatePicker from "./DatePicker";
 
 // Custom styled components
 const StyledTabs = styled(Tabs)({
@@ -107,13 +110,20 @@ const SearchButton = styled(Button)({
   },
 });
 
-export default function FlightBooking() {
+export default function SearchFlights() {
   const [tabValue, setTabValue] = useState(0);
   const [tripType, setTripType] = useState("round-way");
   const [adult, setAdult] = useState("1");
   const [child, setChild] = useState("0");
   const [infant, setInfant] = useState("0");
   const [travelClass, setTravelClass] = useState("Economy");
+
+  const [fromAirport, setFromAirport] = useState("");
+  const [toAirport, setToAirport] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+
+  const { searchState, handleSearch } = useSearch();
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -139,6 +149,22 @@ export default function FlightBooking() {
     setTravelClass(event.target.value);
   };
 
+  const handleSubmit = () => {
+    handleSearch({
+      from: fromAirport,
+      to: toAirport,
+      fromDate,
+      toDate,
+      tripType,
+      travelClass,
+      pax: {
+        adult: Number(adult),
+        child: Number(child),
+        infant: Number(child),
+      },
+    });
+  };
+
   return (
     <Container
       maxWidth="lg"
@@ -159,7 +185,6 @@ export default function FlightBooking() {
         maxWidth="lg"
         style={{ display: "flex", flexDirection: "column", gap: "20px" }}
       >
-        {/* Tabs */}
         <Box
           sx={{
             padding: "4px",
@@ -256,15 +281,12 @@ export default function FlightBooking() {
 
         <Box
           sx={{
-            overflow: "hidden",
             boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
             display: "grid",
             gridTemplateColumns: "3fr 1fr",
           }}
         >
-          {/* Left Content */}
           <Box sx={{ p: 3, borderRadius: "10px", bgcolor: "white" }}>
-            {/* Trip Type Selection */}
             <Box sx={{ display: "flex", mb: 3 }}>
               <Box
                 onClick={() => handleTripTypeChange("round-way")}
@@ -370,17 +392,15 @@ export default function FlightBooking() {
               </Box>
             </Box>
 
-            {/* Main Form */}
             <Box sx={{ display: "flex" }}>
-              {/* Left Column */}
               <SelectionBox
                 labelText="FROM"
-                acronym="DAC"
-                fullName="Hazrat Shahjalal Intl Airport (DAC)"
-                date="12 Apr 25"
-              />
+                acronym={fromAirport.acronym || "DAC"}
+              >
+                <AirportSelection setAirport={setFromAirport} />
+                <DatePicker onChange={setFromDate} />
+              </SelectionBox>
 
-              {/* Middle Column - Airplane Icon */}
               <Box
                 sx={{
                   display: "flex",
@@ -434,19 +454,13 @@ export default function FlightBooking() {
                 </Box>
               </Box>
 
-              {/* Right Column */}
-              <SelectionBox
-                labelText="TO"
-                acronym="CXB"
-                fullName="Cox's Bazar Airport(CXB)"
-                date="14 Apr 25"
-              />
-
-              {/* Right Side - Passenger Info */}
+              <SelectionBox labelText="TO" acronym={toAirport.acronym || "CXB"}>
+                <AirportSelection setAirport={setToAirport} />
+                <DatePicker onChange={setToDate} />
+              </SelectionBox>
             </Box>
           </Box>
 
-          {/* Right Content */}
           <Box
             sx={{
               padding: "12px",
@@ -464,26 +478,37 @@ export default function FlightBooking() {
                   { value: "1", text: "1 ADULT" },
                   { value: "2", text: "2 ADULT" },
                   { value: "3", text: "3 ADULT" },
+                  { value: "4", text: "4 ADULT" },
+                  { value: "5", text: "5 ADULT" },
+                  { value: "6", text: "6 ADULT" },
+                  { value: "7", text: "7 ADULT" },
+                  { value: "8", text: "8 ADULT" },
+                  { value: "9", text: "9 ADULT" },
                 ]}
               />
 
               <SelectBox
                 value={child}
-                onChange={handleAdultChange}
+                onChange={handleChildChange}
                 options={[
                   { value: "0", text: "0 CHILD" },
                   { value: "1", text: "1 CHILD" },
                   { value: "2", text: "2 CHILD" },
+                  { value: "3", text: "3 CHILD" },
+                  { value: "4", text: "4 CHILD" },
+                  { value: "5", text: "5 CHILD" },
                 ]}
               />
 
               <SelectBox
                 value={infant}
-                onChange={handleAdultChange}
+                onChange={handleInfantChange}
                 options={[
                   { value: "0", text: "0 INFANT" },
-                  { value: "1", text: "0 INFANT" },
-                  { value: "2", text: "0 INFANT" },
+                  { value: "1", text: "1 INFANT" },
+                  { value: "2", text: "2 INFANT" },
+                  { value: "3", text: "3 INFANT" },
+                  { value: "4", text: "4 INFANT" },
                 ]}
               />
             </Box>
@@ -493,16 +518,26 @@ export default function FlightBooking() {
                 value={travelClass}
                 onChange={handleClassChange}
                 options={[
-                  { value: "Economy", text: "Economy" },
-                  { value: "Business", text: "Business" },
-                  { value: "First", text: "First" },
+                  { value: "economy", text: "Economy" },
+                  { value: "premium-economy", text: "Premium Economy" },
+                  { value: "business", text: "Business" },
+                  { value: "premium-business", text: "Premium Business" },
+                  { value: "first-class", text: "First Class" },
+                  { value: "premium-first-class", text: "Premium First Class" },
                 ]}
               />
             </Box>
 
             <SearchButton
+              onClick={handleSubmit}
               fullWidth
-              style={{ minWidth: 0, minHeight: 0, padding: "4px 8px" }}
+              style={{
+                minWidth: 0,
+                minHeight: 0,
+                padding: "4px 8px",
+                background: "#32d095",
+                fontWeight: "normal",
+              }}
             >
               SEARCH FOR FLIGHT
             </SearchButton>

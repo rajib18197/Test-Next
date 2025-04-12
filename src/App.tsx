@@ -1,10 +1,17 @@
-import FlightBooking from "./features/flight/SearchBox";
+import SearchFlights from "./features/flight/SearchBox";
+import { SearchProvider } from "./context/SearchContext";
+import { BrowserRouter, Route, Routes } from "react-router";
 
 function App() {
   return (
-    <div>
-      <FlightBooking />
-    </div>
+    <SearchProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<SearchFlights />} />
+          <Route element={""} />
+        </Routes>
+      </BrowserRouter>
+    </SearchProvider>
   );
 }
 

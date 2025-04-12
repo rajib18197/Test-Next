@@ -1,5 +1,5 @@
 interface SelectProps {
-  value: "string";
+  value: string;
   onChange: (event) => void;
   options: any[];
 }
