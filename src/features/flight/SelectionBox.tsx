@@ -12,7 +12,7 @@ export default function SelectionBox({
   children,
 }: SelectionBoxProps) {
   return (
-    <Box sx={{ flex: 1, pr: 2 }}>
+    <Box sx={{ flex: 1, pr: 2, display: "flex", flexDirection: "column" }}>
       <Typography
         sx={{
           mb: 1,

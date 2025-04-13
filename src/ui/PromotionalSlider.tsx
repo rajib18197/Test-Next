@@ -17,6 +17,7 @@ const SliderContainer = styled(Box)({
   position: "relative",
   overflow: "hidden",
   borderRadius: "8px",
+  padding: 0,
 });
 
 const SliderTrack = styled(Box)({
@@ -80,6 +81,10 @@ const PromotionalSlider: React.FC<PromotionalSliderProps> = ({
   slides,
   autoPlay = true,
   interval = 5000,
+}: {
+  slides: { id: string; backgroundImage: string }[];
+  autoPlay?: boolean;
+  interval: number;
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -138,46 +143,16 @@ const PromotionalSlider: React.FC<PromotionalSliderProps> = ({
           <Slide
             key={slide.id}
             sx={{
-              background:
-                slide.backgroundColor ||
-                "linear-gradient(90deg, #F9A826 0%, #F8B049 100%)",
+              // background:
+              //   slide.backgroundColor ||
+              //   "linear-gradient(90deg, #F9A826 0%, #F8B049 100%)",
               backgroundImage: slide.backgroundImage
                 ? `url(${slide.backgroundImage})`
                 : "none",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-          >
-            <SlideContent>
-              <Typography
-                variant="h2"
-                sx={{
-                  color: slide.titleColor || "#1976d2",
-                  fontWeight: "bold",
-                  fontSize: isMobile ? "2rem" : "3rem",
-                  mb: 1,
-                  textAlign: "right",
-                  width: "100%",
-                  maxWidth: "700px",
-                }}
-              >
-                {slide.title}
-              </Typography>
-              <Typography
-                variant="h5"
-                sx={{
-                  color: slide.subtitleColor || "white",
-                  fontWeight: "bold",
-                  fontSize: isMobile ? "1rem" : "1.5rem",
-                  textAlign: "right",
-                  width: "100%",
-                  maxWidth: "700px",
-                }}
-              >
-                {slide.subtitle}
-              </Typography>
-            </SlideContent>
-          </Slide>
+          ></Slide>
         ))}
       </SliderTrack>
 

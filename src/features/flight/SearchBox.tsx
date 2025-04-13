@@ -6,8 +6,6 @@ import {
   Box,
   Button,
   Container,
-  FormControl,
-  MenuItem,
   Select,
   type SelectChangeEvent,
   Tab,
@@ -15,19 +13,11 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import {
-  FlightTakeoff,
-  LocationOn,
-  CalendarMonth,
-  Hotel,
-  Tour,
-  CreditCard,
-} from "@mui/icons-material";
-import SelectionBox from "./SelectionBox";
+import { FlightTakeoff, Hotel, Tour, CreditCard } from "@mui/icons-material";
 import SelectBox from "../../ui/Select";
 import { useSearch } from "../../context/SearchContext";
-import AirportSelection from "./AutoComplete";
-import DatePicker from "./DatePicker";
+import TripType from "./TripType";
+import MultiCity from "./MultiCity";
 
 // Custom styled components
 const StyledTabs = styled(Tabs)({
@@ -110,6 +100,11 @@ const SearchButton = styled(Button)({
   },
 });
 
+interface Airport {
+  acronym?: string;
+  [key: string]: any;
+}
+
 export default function SearchBox() {
   const [tabValue, setTabValue] = useState(0);
   const [tripType, setTripType] = useState("round-way");
@@ -118,8 +113,8 @@ export default function SearchBox() {
   const [infant, setInfant] = useState("0");
   const [travelClass, setTravelClass] = useState("Economy");
 
-  const [fromAirport, setFromAirport] = useState("");
-  const [toAirport, setToAirport] = useState("");
+  const [fromAirport, setFromAirport] = useState<Airport>({});
+  const [toAirport, setToAirport] = useState<Airport>({});
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
 
@@ -160,7 +155,7 @@ export default function SearchBox() {
       pax: {
         adult: Number(adult),
         child: Number(child),
-        infant: Number(child),
+        infant: Number(infant),
       },
     });
   };
@@ -392,73 +387,32 @@ export default function SearchBox() {
               </Box>
             </Box>
 
-            <Box sx={{ display: "flex" }}>
-              <SelectionBox
-                labelText="FROM"
-                acronym={fromAirport.acronym || "DAC"}
-              >
-                <AirportSelection setAirport={setFromAirport} />
-                <DatePicker onChange={setFromDate} />
-              </SelectionBox>
+            {tripType === "round-way" && (
+              <TripType
+                tripType="round-way"
+                fromAcronym={fromAirport.acronym}
+                toAcronym={toAirport.acronym}
+                setFromAirport={setFromAirport}
+                setToAirport={setToAirport}
+                fromDate={fromDate}
+                setFromDate={setFromDate}
+                toDate={toDate}
+                setToDate={setToDate}
+              />
+            )}
 
-              <Box
-                sx={{
-                  display: "flex",
-                  // flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "120px",
-                }}
-              >
-                <Box
-                  component="div"
-                  sx={{
-                    width: 120,
-                    height: 120,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <div style={{ height: "100%", width: "100%" }}>
-                    <svg
-                      className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-jr0dk7"
-                      focusable="false"
-                      aria-hidden="true"
-                      viewBox="0 0 24 24"
-                      data-testid="FlightOutlinedIcon"
-                      style={{
-                        transform: "rotate(90deg)",
-                        width: "80px",
-                        height: "80px",
-                      }}
-                    >
-                      <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"></path>
-                    </svg>
-
-                    <svg
-                      className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-10w0s29"
-                      focusable="false"
-                      aria-hidden="true"
-                      viewBox="0 0 24 24"
-                      data-testid="FlightOutlinedIcon"
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        transform: "rotate(-90deg) translateX(30px)",
-                      }}
-                    >
-                      <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"></path>
-                    </svg>
-                  </div>
-                </Box>
-              </Box>
-
-              <SelectionBox labelText="TO" acronym={toAirport.acronym || "CXB"}>
-                <AirportSelection setAirport={setToAirport} />
-                <DatePicker onChange={setToDate} />
-              </SelectionBox>
-            </Box>
+            {tripType === "one-way" && (
+              <TripType
+                tripType="one-way"
+                fromAcronym={fromAirport.acronym}
+                toAcronym={toAirport.acronym}
+                setFromAirport={setFromAirport}
+                setToAirport={setToAirport}
+                fromDate={fromDate}
+                setFromDate={setFromDate}
+              />
+            )}
+            {tripType === "multi-city" && <MultiCity data={[]} />}
           </Box>
 
           <Box
@@ -541,9 +495,63 @@ export default function SearchBox() {
             >
               SEARCH FOR FLIGHT
             </SearchButton>
+
+            {tripType === "multi-city" && (
+              <SearchButton
+                fullWidth
+                style={{
+                  minWidth: 0,
+                  minHeight: 0,
+                  padding: "4px 8px",
+                  background: "#32d095",
+                  fontWeight: "normal",
+                  marginTop: "10px",
+                }}
+              >
+                Add City
+              </SearchButton>
+            )}
           </Box>
         </Box>
       </Container>
     </Container>
   );
 }
+
+// Constants
+// const TABS = [
+//   { icon: FlightTakeoff, label: "Flight", value: 0 },
+//   { icon: Hotel, label: "Hotel", value: 1 },
+//   { icon: Tour, label: "Tour", value: 2 },
+//   { icon: CreditCard, label: "Visa", value: 3 },
+// ];
+
+// const TRIP_TYPES = [
+//   { value: "round-way", label: "ROUND-WAY" },
+//   { value: "one-way", label: "ONE-WAY" },
+//   { value: "multi-city", label: "MULTI-CITY" },
+// ];
+
+// const ADULT_OPTIONS = Array.from({ length: 9 }, (_, i) => ({
+//   value: String(i + 1),
+//   text: `${i + 1} ADULT`,
+// }));
+
+// const CHILD_OPTIONS = Array.from({ length: 6 }, (_, i) => ({
+//   value: String(i),
+//   text: `${i} CHILD`,
+// }));
+
+// const INFANT_OPTIONS = Array.from({ length: 5 }, (_, i) => ({
+//   value: String(i),
+//   text: `${i} INFANT`,
+// }));
+
+// const TRAVEL_CLASS_OPTIONS = [
+//   { value: "economy", text: "Economy" },
+//   { value: "premium-economy", text: "Premium Economy" },
+//   { value: "business", text: "Business" },
+//   { value: "premium-business", text: "Premium Business" },
+//   { value: "first-class", text: "First Class" },
+//   { value: "premium-first-class", text: "Premium First Class" },
+// ];

@@ -19,7 +19,7 @@ const HotDealsContainer = styled(Box)({
 
 const ContentContainer = styled(Box)({
   maxWidth: "1200px",
-  margin: "0 auto",
+  // margin: "0 auto",
   padding: "0 20px",
 });
 
@@ -32,8 +32,12 @@ const HeaderContainer = styled(Box)({
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)({
   backgroundColor: "#2cd889",
-  borderRadius: "30px",
-  height: "40px",
+  borderRadius: "100px",
+  height: "50px",
+  padding: "2px 20px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   "& .MuiToggleButtonGroup-grouped": {
     border: "none",
     borderRadius: "30px",
@@ -41,7 +45,10 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)({
     textTransform: "uppercase",
     fontWeight: "bold",
     fontSize: "0.8rem",
-    padding: "0 20px",
+    padding: "0 30px",
+    minWidth: 0,
+    height: "30px",
+    // minHeight: 0,
     "&.Mui-selected": {
       backgroundColor: "#3f4b63",
       color: "white",
@@ -55,17 +62,13 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)({
 const TabContent = styled(Box)({
   display: "flex",
   justifyContent: "center",
-  gap: "16px",
-  flexWrap: "wrap",
+  gap: "8px",
 });
 
 const DealCard = styled(Box)({
-  borderRadius: "8px",
   overflow: "hidden",
-  boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
+  height: "210px",
   width: "100%",
-  maxWidth: "350px",
-  height: "200px",
 });
 
 interface TabData {
