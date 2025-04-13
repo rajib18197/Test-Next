@@ -8,10 +8,9 @@ import {
   Paper,
   useTheme,
   useMediaQuery,
-  Divider,
 } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import DatePicker from "../flight/DatePicker";
 
 const HotelBookingWidget: React.FC = () => {
   const theme = useTheme();
@@ -21,14 +20,11 @@ const HotelBookingWidget: React.FC = () => {
     <Paper
       elevation={3}
       sx={{
-        borderRadius: "10px",
-        overflow: "hidden",
-        width: "100%",
-        maxWidth: "1100px",
-        margin: "0 auto",
-        border: "1px solid #e0e0e0",
-        display: "flex",
-        flexDirection: { xs: "column", md: "row" },
+        boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+        display: "grid",
+        gridTemplateColumns: "3fr 1fr",
+        padding: "30px 0 10px 0",
+        alignContent: "end",
       }}
     >
       {/* Left Section: Destination, Check In, Check Out */}
@@ -37,14 +33,19 @@ const HotelBookingWidget: React.FC = () => {
           flex: "3",
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
+          alignItems: "center",
+          borderRadius: "10px",
         }}
       >
         {/* Destination Section */}
         <Box
           sx={{
-            p: 2,
+            padding: "0 16px",
             flex: 1,
-            borderRight: { xs: "none", md: "1px solid #e0e0e0" },
+            // borderRight: { xs: "none", md: "1px solid #e0e0e0" },
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
           }}
         >
           <Typography
@@ -58,11 +59,12 @@ const HotelBookingWidget: React.FC = () => {
             DESTINATION
           </Typography>
           <Typography
-            variant="h5"
+            variant="h4"
             sx={{
               color: "#00c4a7",
               fontWeight: 500,
-              mb: 1,
+              fontSize: "30px",
+              mb: "8px",
             }}
           >
             DHAKA
@@ -87,9 +89,12 @@ const HotelBookingWidget: React.FC = () => {
         {/* Check In Section */}
         <Box
           sx={{
-            p: 2,
+            padding: "0 16px",
             flex: 1,
-            borderRight: { xs: "none", md: "1px solid #e0e0e0" },
+            // borderRight: { xs: "none", md: "1px solid #e0e0e0" },
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
           }}
         >
           <Typography
@@ -103,36 +108,30 @@ const HotelBookingWidget: React.FC = () => {
             CHECK IN
           </Typography>
           <Typography
-            variant="h5"
+            variant="h4"
             sx={{
               color: "#00c4a7",
               fontWeight: 500,
-              mb: 1,
+              fontSize: "30px",
+              mb: "8px",
             }}
           >
             13 APR, 2025
           </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              bgcolor: "#f0f7ff",
-              p: 1,
-              borderRadius: "4px",
-              width: "fit-content",
-            }}
-          >
-            <CalendarTodayIcon
-              sx={{ color: "#00c4a7", fontSize: 20, mr: 0.5 }}
-            />
-            <Typography variant="body2" sx={{ color: "#555" }}>
-              13 APR 25,SUNDAY
-            </Typography>
-          </Box>
+          <DatePicker />
         </Box>
 
         {/* Check Out Section */}
-        <Box sx={{ p: 2, flex: 1 }}>
+        <Box
+          sx={{
+            padding: "0 16px",
+            flex: 1,
+            // borderRight: { xs: "none", md: "1px solid #e0e0e0" },
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
+          }}
+        >
           <Typography
             variant="body2"
             sx={{
@@ -144,55 +143,29 @@ const HotelBookingWidget: React.FC = () => {
             CHECK OUT
           </Typography>
           <Typography
-            variant="h5"
+            variant="h4"
             sx={{
               color: "#00c4a7",
               fontWeight: 500,
-              mb: 1,
+              fontSize: "30px",
+              mb: "8px",
             }}
           >
             13 APR, 2025
           </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              bgcolor: "#f0f7ff",
-              p: 1,
-              borderRadius: "4px",
-              width: "fit-content",
-            }}
-          >
-            <CalendarTodayIcon
-              sx={{ color: "#00c4a7", fontSize: 20, mr: 0.5 }}
-            />
-            <Typography variant="body2" sx={{ color: "#555" }}>
-              13 APR 25,SUNDAY
-            </Typography>
-          </Box>
+          <DatePicker />
         </Box>
       </Box>
-
-      {/* Vertical Divider */}
-      <Divider
-        orientation="vertical"
-        flexItem
-        sx={{ display: { xs: "none", md: "block" } }}
-      />
-      <Divider
-        orientation="horizontal"
-        flexItem
-        sx={{ display: { xs: "block", md: "none" } }}
-      />
 
       {/* Right Section: Guests & Rooms */}
       <Box
         sx={{
-          flex: "1",
-          p: 2,
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
+          padding: "12px",
+          borderRadius: "10px",
+          bgcolor: "white",
         }}
       >
         <Box>
@@ -209,7 +182,7 @@ const HotelBookingWidget: React.FC = () => {
           <Box
             sx={{
               bgcolor: "#f0f7ff",
-              p: 1.5,
+              // p: 1.5,
               borderRadius: "4px",
               mb: 2,
               width: "100%",

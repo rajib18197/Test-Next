@@ -18,6 +18,7 @@ import SelectBox from "../../ui/Select";
 import { useSearch } from "../../context/SearchContext";
 import TripType from "./TripType";
 import MultiCity from "./MultiCity";
+import HotelBookingWidget from "../hotel/HotelBooking";
 
 // Custom styled components
 const StyledTabs = styled(Tabs)({
@@ -274,230 +275,220 @@ export default function SearchBox() {
           </Box>
         </Box>
 
-        <Box
-          sx={{
-            boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-            display: "grid",
-            gridTemplateColumns: "3fr 1fr",
-          }}
-        >
-          <Box sx={{ p: 3, borderRadius: "10px", bgcolor: "white" }}>
-            <Box sx={{ display: "flex", mb: 3 }}>
-              <Box
-                onClick={() => handleTripTypeChange("round-way")}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  mr: 3,
-                  cursor: "pointer",
-                }}
-              >
-                <RadioButton style={{ width: "12px", height: "12px" }}>
-                  {tripType === "round-way" && (
-                    <RadioButtonInner
-                      sx={{ fontSize: "14px" }}
-                      style={{
-                        width: "12px",
-                        height: "12px",
-                        outline: "2px solid black",
-                      }}
-                    />
-                  )}
-                </RadioButton>
-                <Typography
-                  sx={{
-                    color: tripType === "round-way" ? "#2dd4bf" : "#666",
-                    fontWeight: "medium",
-                    fontSize: "14px",
-                  }}
-                >
-                  ROUND-WAY
-                </Typography>
-              </Box>
-
-              <Box
-                onClick={() => handleTripTypeChange("one-way")}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  mr: 3,
-                  cursor: "pointer",
-                }}
-              >
-                <RadioButton
-                  style={{
-                    width: "12px",
-                    height: "12px",
-                  }}
-                >
-                  {tripType === "one-way" && (
-                    <RadioButtonInner
-                      style={{
-                        width: "12px",
-                        height: "12px",
-                        outline: "2px solid black",
-                      }}
-                    />
-                  )}
-                </RadioButton>
-                <Typography
-                  sx={{
-                    color: tripType === "one-way" ? "#2dd4bf" : "#666",
-                    fontWeight: "medium",
-                    fontSize: "14px",
-                  }}
-                >
-                  ONE-WAY
-                </Typography>
-              </Box>
-
-              <Box
-                onClick={() => handleTripTypeChange("multi-city")}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  cursor: "pointer",
-                }}
-              >
-                <RadioButton
-                  style={{
-                    width: "12px",
-                    height: "12px",
-                  }}
-                >
-                  {tripType === "multi-city" && (
-                    <RadioButtonInner
-                      style={{
-                        width: "12px",
-                        height: "12px",
-                        outline: "2px solid black",
-                      }}
-                    />
-                  )}
-                </RadioButton>
-                <Typography
-                  sx={{
-                    color: tripType === "multi-city" ? "#2dd4bf" : "#666",
-                    fontWeight: "medium",
-                    fontSize: "14px",
-                  }}
-                >
-                  MULTI-CITY
-                </Typography>
-              </Box>
-            </Box>
-
-            {tripType === "round-way" && (
-              <TripType
-                tripType="round-way"
-                fromAcronym={fromAirport.acronym}
-                toAcronym={toAirport.acronym}
-                setFromAirport={setFromAirport}
-                setToAirport={setToAirport}
-                fromDate={fromDate}
-                setFromDate={setFromDate}
-                toDate={toDate}
-                setToDate={setToDate}
-              />
-            )}
-
-            {tripType === "one-way" && (
-              <TripType
-                tripType="one-way"
-                fromAcronym={fromAirport.acronym}
-                toAcronym={toAirport.acronym}
-                setFromAirport={setFromAirport}
-                setToAirport={setToAirport}
-                fromDate={fromDate}
-                setFromDate={setFromDate}
-              />
-            )}
-            {tripType === "multi-city" && <MultiCity data={[]} />}
-          </Box>
-
+        {tabValue === 0 && (
           <Box
             sx={{
-              padding: "12px",
-              borderRadius: "10px",
-              display: "flex",
-              flexDirection: "column",
-              bgcolor: "white",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+              display: "grid",
+              gridTemplateColumns: "3fr 1fr",
             }}
           >
-            <Box sx={{ display: "flex", mb: 2, gap: "3px" }}>
-              <SelectBox
-                value={adult}
-                onChange={handleAdultChange}
-                options={[
-                  { value: "1", text: "1 ADULT" },
-                  { value: "2", text: "2 ADULT" },
-                  { value: "3", text: "3 ADULT" },
-                  { value: "4", text: "4 ADULT" },
-                  { value: "5", text: "5 ADULT" },
-                  { value: "6", text: "6 ADULT" },
-                  { value: "7", text: "7 ADULT" },
-                  { value: "8", text: "8 ADULT" },
-                  { value: "9", text: "9 ADULT" },
-                ]}
-              />
+            <Box sx={{ p: 3, borderRadius: "10px", bgcolor: "white" }}>
+              <Box sx={{ display: "flex", mb: 3 }}>
+                <Box
+                  onClick={() => handleTripTypeChange("round-way")}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    mr: 3,
+                    cursor: "pointer",
+                  }}
+                >
+                  <RadioButton style={{ width: "12px", height: "12px" }}>
+                    {tripType === "round-way" && (
+                      <RadioButtonInner
+                        sx={{ fontSize: "14px" }}
+                        style={{
+                          width: "12px",
+                          height: "12px",
+                          outline: "2px solid black",
+                        }}
+                      />
+                    )}
+                  </RadioButton>
+                  <Typography
+                    sx={{
+                      color: tripType === "round-way" ? "#2dd4bf" : "#666",
+                      fontWeight: "medium",
+                      fontSize: "14px",
+                    }}
+                  >
+                    ROUND-WAY
+                  </Typography>
+                </Box>
 
-              <SelectBox
-                value={child}
-                onChange={handleChildChange}
-                options={[
-                  { value: "0", text: "0 CHILD" },
-                  { value: "1", text: "1 CHILD" },
-                  { value: "2", text: "2 CHILD" },
-                  { value: "3", text: "3 CHILD" },
-                  { value: "4", text: "4 CHILD" },
-                  { value: "5", text: "5 CHILD" },
-                ]}
-              />
+                <Box
+                  onClick={() => handleTripTypeChange("one-way")}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    mr: 3,
+                    cursor: "pointer",
+                  }}
+                >
+                  <RadioButton
+                    style={{
+                      width: "12px",
+                      height: "12px",
+                    }}
+                  >
+                    {tripType === "one-way" && (
+                      <RadioButtonInner
+                        style={{
+                          width: "12px",
+                          height: "12px",
+                          outline: "2px solid black",
+                        }}
+                      />
+                    )}
+                  </RadioButton>
+                  <Typography
+                    sx={{
+                      color: tripType === "one-way" ? "#2dd4bf" : "#666",
+                      fontWeight: "medium",
+                      fontSize: "14px",
+                    }}
+                  >
+                    ONE-WAY
+                  </Typography>
+                </Box>
 
-              <SelectBox
-                value={infant}
-                onChange={handleInfantChange}
-                options={[
-                  { value: "0", text: "0 INFANT" },
-                  { value: "1", text: "1 INFANT" },
-                  { value: "2", text: "2 INFANT" },
-                  { value: "3", text: "3 INFANT" },
-                  { value: "4", text: "4 INFANT" },
-                ]}
-              />
+                <Box
+                  onClick={() => handleTripTypeChange("multi-city")}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <RadioButton
+                    style={{
+                      width: "12px",
+                      height: "12px",
+                    }}
+                  >
+                    {tripType === "multi-city" && (
+                      <RadioButtonInner
+                        style={{
+                          width: "12px",
+                          height: "12px",
+                          outline: "2px solid black",
+                        }}
+                      />
+                    )}
+                  </RadioButton>
+                  <Typography
+                    sx={{
+                      color: tripType === "multi-city" ? "#2dd4bf" : "#666",
+                      fontWeight: "medium",
+                      fontSize: "14px",
+                    }}
+                  >
+                    MULTI-CITY
+                  </Typography>
+                </Box>
+              </Box>
+
+              {tripType === "round-way" && (
+                <TripType
+                  tripType="round-way"
+                  fromAcronym={fromAirport.acronym}
+                  toAcronym={toAirport.acronym}
+                  setFromAirport={setFromAirport}
+                  setToAirport={setToAirport}
+                  fromDate={fromDate}
+                  setFromDate={setFromDate}
+                  toDate={toDate}
+                  setToDate={setToDate}
+                />
+              )}
+
+              {tripType === "one-way" && (
+                <TripType
+                  tripType="one-way"
+                  fromAcronym={fromAirport.acronym}
+                  toAcronym={toAirport.acronym}
+                  setFromAirport={setFromAirport}
+                  setToAirport={setToAirport}
+                  fromDate={fromDate}
+                  setFromDate={setFromDate}
+                />
+              )}
+              {tripType === "multi-city" && <MultiCity data={[]} />}
             </Box>
 
-            <Box sx={{ width: "100%", mb: "auto" }}>
-              <SelectBox
-                value={travelClass}
-                onChange={handleClassChange}
-                options={[
-                  { value: "economy", text: "Economy" },
-                  { value: "premium-economy", text: "Premium Economy" },
-                  { value: "business", text: "Business" },
-                  { value: "premium-business", text: "Premium Business" },
-                  { value: "first-class", text: "First Class" },
-                  { value: "premium-first-class", text: "Premium First Class" },
-                ]}
-              />
-            </Box>
-
-            <SearchButton
-              onClick={handleSubmit}
-              fullWidth
-              style={{
-                minWidth: 0,
-                minHeight: 0,
-                padding: "4px 8px",
-                background: "#32d095",
-                fontWeight: "normal",
+            <Box
+              sx={{
+                padding: "12px",
+                borderRadius: "10px",
+                display: "flex",
+                flexDirection: "column",
+                bgcolor: "white",
               }}
             >
-              SEARCH FOR FLIGHT
-            </SearchButton>
+              <Box sx={{ display: "flex", mb: 2, gap: "3px" }}>
+                <SelectBox
+                  value={adult}
+                  onChange={handleAdultChange}
+                  options={[
+                    { value: "1", text: "1 ADULT" },
+                    { value: "2", text: "2 ADULT" },
+                    { value: "3", text: "3 ADULT" },
+                    { value: "4", text: "4 ADULT" },
+                    { value: "5", text: "5 ADULT" },
+                    { value: "6", text: "6 ADULT" },
+                    { value: "7", text: "7 ADULT" },
+                    { value: "8", text: "8 ADULT" },
+                    { value: "9", text: "9 ADULT" },
+                  ]}
+                />
 
-            {tripType === "multi-city" && (
+                <SelectBox
+                  value={child}
+                  onChange={handleChildChange}
+                  options={[
+                    { value: "0", text: "0 CHILD" },
+                    { value: "1", text: "1 CHILD" },
+                    { value: "2", text: "2 CHILD" },
+                    { value: "3", text: "3 CHILD" },
+                    { value: "4", text: "4 CHILD" },
+                    { value: "5", text: "5 CHILD" },
+                  ]}
+                />
+
+                <SelectBox
+                  value={infant}
+                  onChange={handleInfantChange}
+                  options={[
+                    { value: "0", text: "0 INFANT" },
+                    { value: "1", text: "1 INFANT" },
+                    { value: "2", text: "2 INFANT" },
+                    { value: "3", text: "3 INFANT" },
+                    { value: "4", text: "4 INFANT" },
+                  ]}
+                />
+              </Box>
+
+              <Box sx={{ width: "100%", mb: "auto" }}>
+                <SelectBox
+                  value={travelClass}
+                  onChange={handleClassChange}
+                  options={[
+                    { value: "economy", text: "Economy" },
+                    { value: "premium-economy", text: "Premium Economy" },
+                    { value: "business", text: "Business" },
+                    { value: "premium-business", text: "Premium Business" },
+                    { value: "first-class", text: "First Class" },
+                    {
+                      value: "premium-first-class",
+                      text: "Premium First Class",
+                    },
+                  ]}
+                />
+              </Box>
+
               <SearchButton
+                onClick={handleSubmit}
                 fullWidth
                 style={{
                   minWidth: 0,
@@ -505,14 +496,31 @@ export default function SearchBox() {
                   padding: "4px 8px",
                   background: "#32d095",
                   fontWeight: "normal",
-                  marginTop: "10px",
                 }}
               >
-                Add City
+                SEARCH FOR FLIGHT
               </SearchButton>
-            )}
+
+              {tripType === "multi-city" && (
+                <SearchButton
+                  fullWidth
+                  style={{
+                    minWidth: 0,
+                    minHeight: 0,
+                    padding: "4px 8px",
+                    background: "#32d095",
+                    fontWeight: "normal",
+                    marginTop: "10px",
+                  }}
+                >
+                  Add City
+                </SearchButton>
+              )}
+            </Box>
           </Box>
-        </Box>
+        )}
+
+        {tabValue === 1 && <HotelBookingWidget />}
       </Container>
     </Container>
   );

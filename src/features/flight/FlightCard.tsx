@@ -19,8 +19,8 @@ const StyledCard = styled(Card)({
   boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
   overflow: "visible",
   position: "relative",
-  maxWidth: "900px",
-  margin: "0 auto",
+  // maxWidth: "900px",
+  // margin: "0 auto",
   display: "flex",
 });
 

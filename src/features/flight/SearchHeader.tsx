@@ -18,14 +18,18 @@ import FlightIcon from "@mui/icons-material/Flight";
 // Custom styled components
 const HeaderContainer = styled(Box)({
   width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  gap: "20px",
 });
 
 const SearchInfoBar = styled(Box)({
   backgroundColor: "#2cd889",
-  padding: "12px 20px",
+  padding: "8px 20px",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+  borderRadius: "4px",
   color: "white",
 });
 
@@ -43,6 +47,7 @@ const ModifySearchButton = styled(Button)({
 
 const AirlineTabs = styled(Tabs)({
   minHeight: "60px",
+  borderRadius: "4px",
   "& .MuiTabs-indicator": {
     display: "none",
   },
@@ -58,6 +63,7 @@ const AirlineTab = styled(Tab)({
     color: "inherit",
     borderBottom: "2px solid #2cd889",
   },
+  borderRadius: "4px",
 });
 
 const AirlineLogo = styled(Box)({
@@ -138,7 +144,7 @@ const FlightSearchHeader: React.FC<FlightSearchHeaderProps> = ({
         </ModifySearchButton>
       </SearchInfoBar>
 
-      <Paper elevation={0} square>
+      <Paper elevation={0} square style={{ borderRadius: "4px" }}>
         <AirlineTabs
           value={selectedAirline}
           onChange={handleAirlineChange}

@@ -2,8 +2,11 @@ import { useParams } from "react-router";
 import FlightList from "../features/flight/FlightList";
 // import FilterBox from "../features/flight/FilterBox";
 import FlightSearchHeader from "../features/flight/SearchHeader";
-import { Box } from "@mui/material";
+import { Box, Container, styled } from "@mui/material";
 import FlightIcon from "@mui/icons-material/Flight";
+import FilterBox from "../features/flight/FilterBox";
+import LayoverFilter from "../features/flight/Layover";
+import DepartureTimesFilter from "../features/flight/Departure";
 
 // Custom airline logos
 const BSLogo = () => (
@@ -31,6 +34,16 @@ const BGLogo = () => (
   </Box>
 );
 
+const FilterContainerBox = styled("div")({
+  position: "sticky",
+  top: 0,
+  height: "90vh",
+  overflowY: "scroll",
+
+  "&::-webkit-scrollbar": {
+    display: "none",
+  },
+});
 export default function Flights() {
   const { tripType } = useParams();
   console.log(tripType);
@@ -49,21 +62,37 @@ export default function Flights() {
     },
   ];
   return (
-    <div>
-      <FlightSearchHeader
-        origin="DAC"
-        destination="CXB"
-        totalFlights={48}
-        departureDate="13 Apr 2025"
-        returnDate="15 Apr 2025"
-        travelers={1}
-        airlines={airlines}
-        onAirlineChange={(airlineCode) =>
-          console.log("Selected airline:", airlineCode)
-        }
-        onModifySearch={() => console.log("Modify search clicked")}
-      />
-      <FlightList />
-    </div>
+    <Container>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "220px 1fr",
+          gap: "10px",
+        }}
+      >
+        <FilterContainerBox>
+          <FilterBox />
+          <DepartureTimesFilter />
+          <LayoverFilter />
+        </FilterContainerBox>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+          <FlightSearchHeader
+            origin="DAC"
+            destination="CXB"
+            totalFlights={48}
+            departureDate="13 Apr 2025"
+            returnDate="15 Apr 2025"
+            travelers={1}
+            airlines={airlines}
+            onAirlineChange={(airlineCode) =>
+              console.log("Selected airline:", airlineCode)
+            }
+            onModifySearch={() => console.log("Modify search clicked")}
+          />
+          <FlightList />
+        </div>
+      </div>
+    </Container>
   );
 }
