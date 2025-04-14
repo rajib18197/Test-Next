@@ -13,6 +13,7 @@ import InputBase from "@mui/material/InputBase";
 import Box from "@mui/material/Box";
 import { LocationOn } from "@mui/icons-material";
 import { Typography } from "@mui/material";
+import { getAllAirportsData } from "../../services/api/apiRoundways";
 
 interface PopperComponentProps {
   anchorEl?: any;
@@ -165,18 +166,20 @@ const StyledItem = styled("li")({
 });
 
 interface AirportType {
-  fullName: string;
+  airportName: string;
   acronym: string;
-  location: string;
+  city: string;
+  country: string;
 }
 
-export default function AirportSelection({ setAirport }) {
+export default function AirportSelection({ initialValue, setAirport }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [value, setValue] = React.useState<AirportType | null>(null);
   const [inputValue, setInputValue] = React.useState("");
   const [searchTerm, setSearchTerm] = React.useState("");
-  const theme = useTheme();
   const [textValue, setTextValue] = React.useState<AirportType | null>(null);
+  const labels = getAllAirportsData().slice(0, 7);
+  const allLabels = getAllAirportsData();
 
   // Filter options based on search term
   const filteredOptions = React.useMemo(() => {
@@ -185,13 +188,16 @@ export default function AirportSelection({ setAirport }) {
     }
 
     const term = searchTerm.trim().toLowerCase();
-    return labels.filter(
-      (option) =>
-        option.fullName.toLowerCase().includes(term) ||
-        option.acronym.toLowerCase().includes(term) ||
-        option.location.toLowerCase().includes(term)
-    );
-  }, [searchTerm]);
+    return allLabels
+      .filter(
+        (option) =>
+          option?.airportName.toLowerCase().includes(term) ||
+          option?.acronym.toLowerCase().includes(term) ||
+          option?.city.toLowerCase().includes(term) ||
+          option?.country.toLowerCase().includes(term)
+      )
+      .slice(0, 7);
+  }, [searchTerm, labels.length]);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -218,11 +224,14 @@ export default function AirportSelection({ setAirport }) {
     console.log("Search term:", newInputValue);
     console.log(
       "Filtered options count:",
-      labels.filter(
+      allLabels.filter(
         (option) =>
-          option.fullName.toLowerCase().includes(newInputValue.toLowerCase()) ||
-          option.acronym.toLowerCase().includes(newInputValue.toLowerCase()) ||
-          option.location.toLowerCase().includes(newInputValue.toLowerCase())
+          option?.airportName
+            .toLowerCase()
+            .includes(newInputValue.toLowerCase()) ||
+          option?.acronym.toLowerCase().includes(newInputValue.toLowerCase()) ||
+          option?.city.toLowerCase().includes(newInputValue.toLowerCase()) ||
+          option?.country.toLowerCase().includes(newInputValue.toLowerCase())
       ).length
     );
   };
@@ -239,8 +248,11 @@ export default function AirportSelection({ setAirport }) {
 
   const open = Boolean(anchorEl);
   const id = open ? "github-label" : undefined;
-  console.log(filteredOptions[0].fullName, 1817);
-  const text = value || textValue || filteredOptions[0];
+  console.log(filteredOptions[0]?.airportName, 1817);
+  const text = value || textValue || filteredOptions[initialValue];
+
+  if (labels.length === 0) return null;
+  console.log(labels);
 
   return (
     <div
@@ -272,7 +284,7 @@ export default function AirportSelection({ setAirport }) {
             }}
           />
           <Typography sx={{ color: "#666", fontSize: "14px" }}>
-            {text ? `${text.fullName} (${text.acronym})` : "DAC"}
+            {text ? `${text.airportName} (${text.acronym})` : "DAC"}
           </Typography>
         </LocationField>
       </Box>
@@ -340,7 +352,7 @@ export default function AirportSelection({ setAirport }) {
                             color: "white",
                           }}
                         >
-                          {option.location}
+                          {option.city}, {option.country}
                         </p>
                         <p
                           style={{
@@ -349,7 +361,7 @@ export default function AirportSelection({ setAirport }) {
                             color: "white",
                           }}
                         >
-                          {option.fullName}
+                          {option.airportName}
                         </p>
                       </div>
                       <p
@@ -366,7 +378,7 @@ export default function AirportSelection({ setAirport }) {
                 );
               }}
               options={filteredOptions}
-              getOptionLabel={(option) => option.fullName}
+              getOptionLabel={(option) => option.airportName}
               renderInput={(params) => (
                 <StyledInput
                   ref={params.InputProps.ref}

@@ -100,7 +100,7 @@ export default function TripType(props: TripTypeProps) {
         acronym={fromAcronym}
         sx={selectionBoxSx}
       >
-        <AirportSelection setAirport={setFromAirport} />
+        <AirportSelection setAirport={setFromAirport} initialValue={0} />
         <DatePicker onChange={setFromDate} value={fromDate} />
       </SelectionBox>
 
@@ -154,7 +154,7 @@ export default function TripType(props: TripTypeProps) {
       )}
 
       <SelectionBox labelText={toLabel} acronym={toAcronym} sx={selectionBoxSx}>
-        <AirportSelection setAirport={setToAirport} />
+        <AirportSelection setAirport={setToAirport} initialValue={1} />
         {tripType === "round-way" ? (
           <DatePicker onChange={setToDate} value={toDate} />
         ) : null}

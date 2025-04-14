@@ -1,5 +1,6 @@
 import { isSameDate } from "../../utils/helpers";
 import roundwaysJSON from "../data/roundways.json";
+import airportsJSON from "../data/airports.json";
 
 const delay = function (ms: number) {
   return new Promise((resolve) => {
@@ -80,4 +81,9 @@ export async function getRoundwaysFlightsData(searchFields: SearchContext) {
   });
 
   return filteredData;
+}
+
+export function getAllAirportsData() {
+  const data = JSON.parse(JSON.stringify(airportsJSON));
+  return data;
 }
