@@ -12,6 +12,8 @@ import {
   type SelectChangeEvent,
   Typography,
   styled,
+  Popper,
+  ClickAwayListener,
 } from "@mui/material";
 import { CalendarMonth, ChevronRight } from "@mui/icons-material";
 
@@ -152,6 +154,23 @@ interface DatePickerProps {
   onChange?: (date: Date) => void;
 }
 
+const StyledPopper = styled(Popper)(({ theme }) => ({
+  // border: "1px solid #e1e4e8",
+  // boxShadow: `0 8px 24px ${"rgba(149, 157, 165, 0.2)"}`,
+  // color: "#24292e",
+  // backgroundColor: "#fff",
+  borderRadius: 6,
+  width: 300,
+  zIndex: theme.zIndex.modal,
+  fontSize: 13,
+  // ...theme.applyStyles("dark", {
+  //   border: "1px solid #30363d",
+  //   boxShadow: "0 8px 24px rgb(1, 4, 9)",
+  //   color: "#c9d1d9",
+  //   backgroundColor: "#1c2128",
+  // }),
+}));
+
 export default function DatePicker({
   value = new Date(),
   onChange,
@@ -170,11 +189,28 @@ export default function DatePicker({
   );
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
+  // New state to disable click away when selects are open
+  const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
+    // Don't close if select is open
+    if (isSelectOpen) {
+      return;
+    }
+
+    // Prevent closing when clicking on month or year selectors
+    const target = event.target as HTMLElement;
+    if (
+      target.closest(".MuiSelect-select") ||
+      target.closest(".MuiMenu-paper")
+    ) {
+      return;
+    }
+
     setAnchorEl(null);
   };
 
@@ -188,7 +224,16 @@ export default function DatePicker({
     if (onChange) {
       onChange(date);
     }
-    handleClose();
+    setAnchorEl(null);
+  };
+
+  // Handle select opening and closing
+  const handleSelectOpen = () => {
+    setIsSelectOpen(true);
+  };
+
+  const handleSelectClose = () => {
+    setIsSelectOpen(false);
   };
 
   const handleMonthChange = (event: SelectChangeEvent) => {
@@ -386,7 +431,13 @@ export default function DatePicker({
   };
 
   return (
-    <div style={{ position: "relative" }}>
+    <div
+      style={{
+        width: "100%",
+        position: "relative",
+        borderRadius: "0 !important",
+      }}
+    >
       <DateField
         sx={{ minHeight: 0, minWidth: 0, p: 0, borderRadius: "4px" }}
         onClick={handleClick}
@@ -407,148 +458,158 @@ export default function DatePicker({
         </Typography>
       </DateField>
 
-      <Popover
+      <StyledPopper
         id={id}
         open={open}
         anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+        placement="bottom-start"
+        style={{
+          width: "100%,",
+          padding: "4px 6px",
+          // background: "#32d095",
+          borderRadius: "0 !important",
         }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-        style={{ marginTop: "80px" }} // Add fixed margin to ensure it appears below
-        disablePortal={false} // Allow the popover to break out of its container
-        container={document.body} // Render directly in the body to avoid positioning issues
       >
-        <CalendarContainer>
-          <CalendarHeader>
-            <IconButton
-              onClick={handlePrevMonth}
-              size="small"
-              style={{
-                background: "#eff2f7",
-                height: "24px",
-                width: "24px",
-                opacity: isPrevMonthDisabled() ? 0.5 : 1,
-                cursor: isPrevMonthDisabled() ? "not-allowed" : "pointer",
-              }}
-              disabled={isPrevMonthDisabled()}
-            >
-              <i
+        <ClickAwayListener onClickAway={handleClose}>
+          <CalendarContainer>
+            <CalendarHeader>
+              <IconButton
+                onClick={handlePrevMonth}
+                size="small"
                 style={{
-                  borderColor: "#0000 #34495e #0000 #0000",
-                  borderWidth: "4px 6px 4px 4px",
-                  transform: "translate(-3px)",
-                  textAlign: "center",
-                  margin: "auto",
-                  borderStyle: "solid",
+                  background: "#eff2f7",
+                  height: "24px",
+                  width: "24px",
+                  opacity: isPrevMonthDisabled() ? 0.5 : 1,
+                  cursor: isPrevMonthDisabled() ? "not-allowed" : "pointer",
                 }}
-              ></i>
-            </IconButton>
-
-            <MonthYearSelector>
-              <StyledSelect
-                value={currentMonth.getMonth().toString()}
-                onChange={handleMonthChange}
-                variant="standard"
-                IconComponent={() => (
-                  <ChevronRight
-                    sx={{ transform: "rotate(90deg)", fontSize: 16 }}
-                  />
-                )}
-                style={{ fontSize: "14px", borderBottom: "none" }}
+                disabled={isPrevMonthDisabled()}
               >
-                {months.map((month, index) => {
-                  const isDisabled = isPastMonth(
-                    currentMonth.getFullYear(),
-                    index
-                  );
-                  return (
-                    <MenuItem
-                      key={month}
-                      value={index}
-                      style={{
-                        fontSize: "14px",
-                        borderBottom: "none",
-                        opacity: isDisabled ? 0.5 : 1,
-                        cursor: isDisabled ? "not-allowed" : "pointer",
-                      }}
-                      disabled={isDisabled}
-                    >
-                      {month}
+                <i
+                  style={{
+                    borderColor: "#0000 #34495e #0000 #0000",
+                    borderWidth: "4px 6px 4px 4px",
+                    transform: "translate(-3px)",
+                    textAlign: "center",
+                    margin: "auto",
+                    borderStyle: "solid",
+                  }}
+                ></i>
+              </IconButton>
+
+              <MonthYearSelector>
+                <StyledSelect
+                  data-month="month"
+                  value={currentMonth.getMonth().toString()}
+                  onChange={handleMonthChange}
+                  variant="standard"
+                  onOpen={handleSelectOpen}
+                  onClose={handleSelectClose}
+                  IconComponent={() => (
+                    <ChevronRight
+                      sx={{ transform: "rotate(90deg)", fontSize: 16 }}
+                    />
+                  )}
+                  style={{ fontSize: "14px", borderBottom: "none" }}
+                  MenuProps={{
+                    // Prevent menu clicks from closing the datepicker
+                    onClick: (e) => e.stopPropagation(),
+                  }}
+                >
+                  {months.map((month, index) => {
+                    const isDisabled = isPastMonth(
+                      currentMonth.getFullYear(),
+                      index
+                    );
+                    return (
+                      <MenuItem
+                        key={month}
+                        value={index}
+                        style={{
+                          fontSize: "14px",
+                          borderBottom: "none",
+                          opacity: isDisabled ? 0.5 : 1,
+                          cursor: isDisabled ? "not-allowed" : "pointer",
+                        }}
+                        disabled={isDisabled}
+                      >
+                        {month}
+                      </MenuItem>
+                    );
+                  })}
+                </StyledSelect>
+
+                <StyledSelect
+                  value={currentMonth.getFullYear().toString()}
+                  onChange={handleYearChange}
+                  variant="standard"
+                  onOpen={handleSelectOpen}
+                  onClose={handleSelectClose}
+                  IconComponent={() => (
+                    <ChevronRight
+                      sx={{ transform: "rotate(90deg)", fontSize: 16 }}
+                    />
+                  )}
+                  style={{ fontSize: "14px", borderBottom: "none" }}
+                  MenuProps={{
+                    // Prevent menu clicks from closing the datepicker
+                    onClick: (e) => e.stopPropagation(),
+                  }}
+                >
+                  {availableYears.map((year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
                     </MenuItem>
-                  );
-                })}
-              </StyledSelect>
+                  ))}
+                </StyledSelect>
+              </MonthYearSelector>
 
-              <StyledSelect
-                value={currentMonth.getFullYear().toString()}
-                onChange={handleYearChange}
-                variant="standard"
-                IconComponent={() => (
-                  <ChevronRight
-                    sx={{ transform: "rotate(90deg)", fontSize: 16 }}
-                  />
-                )}
-                style={{ fontSize: "14px", borderBottom: "none" }}
+              <IconButton
+                onClick={handleNextMonth}
+                size="small"
+                style={{ background: "#eff2f7", height: "24px", width: "24px" }}
               >
-                {availableYears.map((year) => (
-                  <MenuItem key={year} value={year}>
-                    {year}
-                  </MenuItem>
-                ))}
-              </StyledSelect>
-            </MonthYearSelector>
+                <i
+                  style={{
+                    borderColor: "#0000 #0000 #0000 #34495e",
+                    borderWidth: "4px 4px 4px 6px",
+                    transform: "translate(3px)",
+                    textAlign: "center",
+                    margin: "auto",
+                    borderStyle: "solid",
+                  }}
+                ></i>
+              </IconButton>
+            </CalendarHeader>
 
-            <IconButton
-              onClick={handleNextMonth}
-              size="small"
-              style={{ background: "#eff2f7", height: "24px", width: "24px" }}
+            <MonthTitle style={{ fontSize: "14px", padding: "0 10px" }}>{`${
+              months[currentMonth.getMonth()]
+            } ${currentMonth.getFullYear()}`}</MonthTitle>
+
+            <DaysHeader style={{ fontSize: "11px", padding: 0 }}>
+              {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+                <Typography
+                  key={day}
+                  variant="caption"
+                  color="textSecondary"
+                  style={{ fontSize: "12px", padding: 0 }}
+                >
+                  {day}
+                </Typography>
+              ))}
+            </DaysHeader>
+
+            <DaysGrid
+              style={{
+                fontSize: "12px",
+                fontFamily: "sans-serif",
+              }}
             >
-              <i
-                style={{
-                  borderColor: "#0000 #0000 #0000 #34495e",
-                  borderWidth: "4px 4px 4px 6px",
-                  transform: "translate(3px)",
-                  textAlign: "center",
-                  margin: "auto",
-                  borderStyle: "solid",
-                }}
-              ></i>
-            </IconButton>
-          </CalendarHeader>
-
-          <MonthTitle style={{ fontSize: "14px", padding: "0 10px" }}>{`${
-            months[currentMonth.getMonth()]
-          } ${currentMonth.getFullYear()}`}</MonthTitle>
-
-          <DaysHeader style={{ fontSize: "11px", padding: 0 }}>
-            {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-              <Typography
-                key={day}
-                variant="caption"
-                color="textSecondary"
-                style={{ fontSize: "12px", padding: 0 }}
-              >
-                {day}
-              </Typography>
-            ))}
-          </DaysHeader>
-
-          <DaysGrid
-            style={{
-              fontSize: "12px",
-              fontFamily: "sans-serif",
-            }}
-          >
-            {renderCalendarDays()}
-          </DaysGrid>
-        </CalendarContainer>
-      </Popover>
+              {renderCalendarDays()}
+            </DaysGrid>
+          </CalendarContainer>
+        </ClickAwayListener>
+      </StyledPopper>
     </div>
   );
 }
