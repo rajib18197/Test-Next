@@ -19,6 +19,7 @@ import { useSearch } from "../../context/SearchContext";
 import TripType from "./TripType";
 import MultiCity from "./MultiCity";
 import HotelBookingWidget from "../hotel/HotelBooking";
+import { useNavigate } from "react-router";
 
 // Custom styled components
 const StyledTabs = styled(Tabs)({
@@ -107,6 +108,8 @@ interface Airport {
 }
 
 export default function SearchBox() {
+  const navigate = useNavigate();
+
   const [tabValue, setTabValue] = useState(0);
   const [tripType, setTripType] = useState("round-way");
   const [adult, setAdult] = useState("1");
@@ -119,7 +122,7 @@ export default function SearchBox() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
 
-  const { searchState, handleSearch } = useSearch();
+  const { handleSearch } = useSearch();
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -159,6 +162,8 @@ export default function SearchBox() {
         infant: Number(infant),
       },
     });
+
+    navigate(`/${tripType}search`);
   };
 
   return (

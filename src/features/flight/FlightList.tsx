@@ -1,9 +1,25 @@
-import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useSearch } from "../../context/SearchContext";
 import FlightCard from "./FlightCard";
+import { getRoundwaysFlightsData } from "../../services/api/apiRoundways";
 
 export default function FlightList() {
+  const { searchState } = useSearch();
+  const [flightData, setFlightData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadFlights() {
+      setIsLoading(true);
+      const data = await getRoundwaysFlightsData(searchState);
+      console.log(data);
+      setIsLoading(false);
+    }
+
+    loadFlights();
+  }, []);
+
   return (
-    // <Box sx={{ p: 3, bgcolor: "#f5f5f5", minHeight: "100vh" }}>
     <FlightCard
       airlineName="USBangla Airlines"
       airlineLogo="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/gg-dkfnfc3aHqUC7K2znUmyWj2yYtXW6V.png"
@@ -24,6 +40,5 @@ export default function FlightList() {
       currentPrice={11078}
       originalPrice={12398}
     />
-    // </Box>
   );
 }

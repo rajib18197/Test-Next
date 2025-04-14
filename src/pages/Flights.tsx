@@ -44,23 +44,23 @@ const FilterContainerBox = styled("div")({
     display: "none",
   },
 });
+
+const airlines = [
+  {
+    code: "BS",
+    name: "US-Bangla Airlines",
+    logo: <BSLogo />,
+    price: 11077,
+  },
+  {
+    code: "BG",
+    name: "Biman Bangladesh",
+    logo: <BGLogo />,
+    price: 11279,
+  },
+];
+
 export default function Flights() {
-  const { tripType } = useParams();
-  console.log(tripType);
-  const airlines = [
-    {
-      code: "BS",
-      name: "US-Bangla Airlines",
-      logo: <BSLogo />,
-      price: 11077,
-    },
-    {
-      code: "BG",
-      name: "Biman Bangladesh",
-      logo: <BGLogo />,
-      price: 11279,
-    },
-  ];
   return (
     <Container>
       <div

@@ -1,0 +1,702 @@
+[
+  {
+    "system": "alpha",
+    "segment": "1",
+    "uId": "b9b54c921916071f2bf554e0434b8fac1a549994",
+    "triptype": "Inbound",
+    "career": "BS",
+    "careerName": "USBangla Airlines",
+    "lastTicketTime": "2025-04-08 23:59",
+    "BasePrice": 10048,
+    "Taxes": 2350,
+    "netfare": "11128",
+    "agentprice": "11128",
+    "subagentprice": "11128",
+    "customerPrice": 12398,
+    "comission": "1270",
+    "comissiontype": "domestic",
+    "comissionvalue": "13.5",
+    "farecurrency": "BDT",
+    "airlinescomref": "100699",
+    "pricebreakdown": [
+      {
+        "BaseFare": "10048",
+        "Tax": "2350",
+        "PaxCount": "1",
+        "PaxType": "ADT",
+        "Discount": "0",
+        "OtherCharges": "0",
+        "ServiceFee": "0"
+      }
+    ],
+    "godeparture": "DAC",
+    "godepartureTime": "16:35",
+    "godepartureDate": "Wed 23 Apr 2025",
+    "goarrival": "CXB",
+    "goarrivalTime": "17:40",
+    "goarrivalDate": "Wed 23 Apr 2025",
+    "backdeparture": "CXB",
+    "backdepartureTime": "21:35",
+    "backdepartureDate": "Wed 30 Apr 2025",
+    "backarrival": "DAC",
+    "backarrivalTime": "22:40",
+    "backarrivalDate": "Wed 30 Apr 2025",
+    "goflightduration": "1H 5Min",
+    "backflightduration": "1H 5Min",
+    "transit": {
+      "go": {
+        "transit1": "0"
+      },
+      "back": {
+        "transit1": "0"
+      }
+    },
+    "bags": "20",
+    "seat": "9",
+    "class": "economy",
+    "refundable": "Refundable",
+    "segments": {
+      "go": [
+        {
+          "marketingcareer": "BS",
+          "marketingcareerName": "USBangla Airlines",
+          "marketingflight": "157",
+          "operatingcareer": "BS",
+          "operatingflight": "157",
+          "departure": "DAC",
+          "departureAirport": "Hazrat Shahjalal Intl Airport",
+          "departureLocation": "Dhaka , BD",
+          "departureTime": "2025-04-23T16:35:00",
+          "arrival": "CXB",
+          "arrivalTime": "2025-04-23T17:40:00",
+          "arrivalAirport": "Cox's Bazar Airport",
+          "arrivalLocation": "Cox's Bazar , BD",
+          "flightduration": "1H 5Min",
+          "bookingcode": "I",
+          "seat": "9"
+        }
+      ],
+      "back": [
+        {
+          "marketingcareer": "BS",
+          "marketingcareerName": "USBangla Airlines",
+          "marketingflight": "160",
+          "operatingcareer": "BS",
+          "operatingflight": "160",
+          "departure": "CXB",
+          "departureAirport": "Cox's Bazar Airport",
+          "departureLocation": "Cox's Bazar , BD",
+          "departureTime": "2025-04-30T21:35:00",
+          "arrival": "DAC",
+          "arrivalTime": "2025-04-30T22:40:00",
+          "arrivalAirport": "Hazrat Shahjalal Intl Airport",
+          "arrivalLocation": "Dhaka , BD",
+          "flightduration": "1H 5Min",
+          "bookingcode": "I",
+          "seat": "9"
+        }
+      ]
+    },
+    "ischeap": true
+  },
+  {
+    "system": "alpha",
+    "segment": "2",
+    "uId": "8c47a92b35f67d091faed3520b8c5e92a4781023",
+    "triptype": "Outbound",
+    "career": "BG",
+    "careerName": "Biman Bangladesh",
+    "lastTicketTime": "2025-04-10 23:59",
+    "BasePrice": 9850,
+    "Taxes": 2100,
+    "netfare": "10890",
+    "agentprice": "10890",
+    "subagentprice": "10890",
+    "customerPrice": 11950,
+    "comission": "1060",
+    "comissiontype": "domestic",
+    "comissionvalue": "12.0",
+    "farecurrency": "BDT",
+    "airlinescomref": "100722",
+    "pricebreakdown": [
+      {
+        "BaseFare": "9850",
+        "Tax": "2100",
+        "PaxCount": "1",
+        "PaxType": "ADT",
+        "Discount": "0",
+        "OtherCharges": "0",
+        "ServiceFee": "0"
+      }
+    ],
+    "godeparture": "DAC",
+    "godepartureTime": "09:15",
+    "godepartureDate": "Fri 25 Apr 2025",
+    "goarrival": "CXB",
+    "goarrivalTime": "10:30",
+    "goarrivalDate": "Fri 25 Apr 2025",
+    "backdeparture": "CXB",
+    "backdepartureTime": "15:20",
+    "backdepartureDate": "Sun 04 May 2025",
+    "backarrival": "DAC",
+    "backarrivalTime": "16:35",
+    "backarrivalDate": "Sun 04 May 2025",
+    "goflightduration": "1H 15Min",
+    "backflightduration": "1H 15Min",
+    "transit": {
+      "go": {
+        "transit1": "0"
+      },
+      "back": {
+        "transit1": "0"
+      }
+    },
+    "bags": "20",
+    "seat": "12",
+    "class": "premium economy",
+    "refundable": "Refundable",
+    "segments": {
+      "go": [
+        {
+          "marketingcareer": "BG",
+          "marketingcareerName": "Biman Bangladesh",
+          "marketingflight": "437",
+          "operatingcareer": "BG",
+          "operatingflight": "437",
+          "departure": "DAC",
+          "departureAirport": "Hazrat Shahjalal Intl Airport",
+          "departureLocation": "Dhaka , BD",
+          "departureTime": "2025-04-25T09:15:00",
+          "arrival": "CXB",
+          "arrivalTime": "2025-04-25T10:30:00",
+          "arrivalAirport": "Cox's Bazar Airport",
+          "arrivalLocation": "Cox's Bazar , BD",
+          "flightduration": "1H 15Min",
+          "bookingcode": "K",
+          "seat": "12"
+        }
+      ],
+      "back": [
+        {
+          "marketingcareer": "BG",
+          "marketingcareerName": "Biman Bangladesh",
+          "marketingflight": "438",
+          "operatingcareer": "BG",
+          "operatingflight": "438",
+          "departure": "CXB",
+          "departureAirport": "Cox's Bazar Airport",
+          "departureLocation": "Cox's Bazar , BD",
+          "departureTime": "2025-05-04T15:20:00",
+          "arrival": "DAC",
+          "arrivalTime": "2025-05-04T16:35:00",
+          "arrivalAirport": "Hazrat Shahjalal Intl Airport",
+          "arrivalLocation": "Dhaka , BD",
+          "flightduration": "1H 15Min",
+          "bookingcode": "K",
+          "seat": "12"
+        }
+      ]
+    },
+    "ischeap": true
+  },
+  {
+    "system": "beta",
+    "segment": "3",
+    "uId": "c7e35d8af092416e8c5792a3fd1b45e0b3a67842",
+    "triptype": "Outbound",
+    "career": "RX",
+    "careerName": "Regent Airways",
+    "lastTicketTime": "2025-04-09 23:59",
+    "BasePrice": 11250,
+    "Taxes": 2400,
+    "netfare": "12375",
+    "agentprice": "12375",
+    "subagentprice": "12375",
+    "customerPrice": 13650,
+    "comission": "1275",
+    "comissiontype": "domestic",
+    "comissionvalue": "12.5",
+    "farecurrency": "BDT",
+    "airlinescomref": "100817",
+    "pricebreakdown": [
+      {
+        "BaseFare": "11250",
+        "Tax": "2400",
+        "PaxCount": "1",
+        "PaxType": "ADT",
+        "Discount": "0",
+        "OtherCharges": "0",
+        "ServiceFee": "0"
+      }
+    ],
+    "godeparture": "DAC",
+    "godepartureTime": "07:30",
+    "godepartureDate": "Sat 26 Apr 2025",
+    "goarrival": "CGP",
+    "goarrivalTime": "08:30",
+    "goarrivalDate": "Sat 26 Apr 2025",
+    "backdeparture": "CGP",
+    "backdepartureTime": "19:15",
+    "backdepartureDate": "Sat 03 May 2025",
+    "backarrival": "DAC",
+    "backarrivalTime": "20:15",
+    "backarrivalDate": "Sat 03 May 2025",
+    "goflightduration": "1H 0Min",
+    "backflightduration": "1H 0Min",
+    "transit": {
+      "go": {
+        "transit1": "0"
+      },
+      "back": {
+        "transit1": "0"
+      }
+    },
+    "bags": "20",
+    "seat": "8",
+    "class": "Business",
+    "refundable": "Refundable",
+    "segments": {
+      "go": [
+        {
+          "marketingcareer": "RX",
+          "marketingcareerName": "Regent Airways",
+          "marketingflight": "721",
+          "operatingcareer": "RX",
+          "operatingflight": "721",
+          "departure": "DAC",
+          "departureAirport": "Hazrat Shahjalal Intl Airport",
+          "departureLocation": "Dhaka , BD",
+          "departureTime": "2025-04-26T07:30:00",
+          "arrival": "CGP",
+          "arrivalTime": "2025-04-26T08:30:00",
+          "arrivalAirport": "Shah Amanat Intl Airport",
+          "arrivalLocation": "Chittagong , BD",
+          "flightduration": "1H 0Min",
+          "bookingcode": "E",
+          "seat": "8"
+        }
+      ],
+      "back": [
+        {
+          "marketingcareer": "RX",
+          "marketingcareerName": "Regent Airways",
+          "marketingflight": "728",
+          "operatingcareer": "RX",
+          "operatingflight": "728",
+          "departure": "CGP",
+          "departureAirport": "Shah Amanat Intl Airport",
+          "departureLocation": "Chittagong , BD",
+          "departureTime": "2025-05-03T19:15:00",
+          "arrival": "DAC",
+          "arrivalTime": "2025-05-03T20:15:00",
+          "arrivalAirport": "Hazrat Shahjalal Intl Airport",
+          "arrivalLocation": "Dhaka , BD",
+          "flightduration": "1H 0Min",
+          "bookingcode": "E",
+          "seat": "8"
+        }
+      ]
+    },
+    "ischeap": false
+  },
+  {
+    "system": "gamma",
+    "segment": "4",
+    "uId": "e5f83b17c249a0d58e762f39c810a6d7b9241576",
+    "triptype": "Inbound",
+    "career": "BS",
+    "careerName": "USBangla Airlines",
+    "lastTicketTime": "2025-04-12 23:59",
+    "BasePrice": 9750,
+    "Taxes": 2250,
+    "netfare": "10725",
+    "agentprice": "10725",
+    "subagentprice": "10725",
+    "customerPrice": 12000,
+    "comission": "1275",
+    "comissiontype": "domestic",
+    "comissionvalue": "14.0",
+    "farecurrency": "BDT",
+    "airlinescomref": "100588",
+    "pricebreakdown": [
+      {
+        "BaseFare": "9750",
+        "Tax": "2250",
+        "PaxCount": "1",
+        "PaxType": "ADT",
+        "Discount": "0",
+        "OtherCharges": "0",
+        "ServiceFee": "0"
+      }
+    ],
+    "godeparture": "DAC",
+    "godepartureTime": "08:45",
+    "godepartureDate": "Mon 28 Apr 2025",
+    "goarrival": "JSR",
+    "goarrivalTime": "09:30",
+    "goarrivalDate": "Mon 28 Apr 2025",
+    "backdeparture": "JSR",
+    "backdepartureTime": "17:45",
+    "backdepartureDate": "Fri 02 May 2025",
+    "backarrival": "DAC",
+    "backarrivalTime": "18:30",
+    "backarrivalDate": "Fri 02 May 2025",
+    "goflightduration": "0H 45Min",
+    "backflightduration": "0H 45Min",
+    "transit": {
+      "go": {
+        "transit1": "0"
+      },
+      "back": {
+        "transit1": "0"
+      }
+    },
+    "bags": "20",
+    "seat": "10",
+    "class": "Premium Business",
+    "refundable": "Refundable",
+    "segments": {
+      "go": [
+        {
+          "marketingcareer": "BS",
+          "marketingcareerName": "USBangla Airlines",
+          "marketingflight": "321",
+          "operatingcareer": "BS",
+          "operatingflight": "321",
+          "departure": "DAC",
+          "departureAirport": "Hazrat Shahjalal Intl Airport",
+          "departureLocation": "Dhaka , BD",
+          "departureTime": "2025-04-28T08:45:00",
+          "arrival": "JSR",
+          "arrivalTime": "2025-04-28T09:30:00",
+          "arrivalAirport": "Jashore Airport",
+          "arrivalLocation": "Jashore , BD",
+          "flightduration": "0H 45Min",
+          "bookingcode": "I",
+          "seat": "10"
+        }
+      ],
+      "back": [
+        {
+          "marketingcareer": "BS",
+          "marketingcareerName": "USBangla Airlines",
+          "marketingflight": "326",
+          "operatingcareer": "BS",
+          "operatingflight": "326",
+          "departure": "JSR",
+          "departureAirport": "Jashore Airport",
+          "departureLocation": "Jashore , BD",
+          "departureTime": "2025-05-02T17:45:00",
+          "arrival": "DAC",
+          "arrivalTime": "2025-05-02T18:30:00",
+          "arrivalAirport": "Hazrat Shahjalal Intl Airport",
+          "arrivalLocation": "Dhaka , BD",
+          "flightduration": "0H 45Min",
+          "bookingcode": "I",
+          "seat": "10"
+        }
+      ]
+    },
+    "ischeap": true
+  },
+  {
+    "system": "delta",
+    "segment": "5",
+    "uId": "d4a69c31875b2e083f4c1d92e7a358f6c782a435",
+    "triptype": "Outbound",
+    "career": "BG",
+    "careerName": "Biman Bangladesh",
+    "lastTicketTime": "2025-04-11 23:59",
+    "BasePrice": 12500,
+    "Taxes": 2800,
+    "netfare": "13750",
+    "agentprice": "13750",
+    "subagentprice": "13750",
+    "customerPrice": 15300,
+    "comission": "1550",
+    "comissiontype": "domestic",
+    "comissionvalue": "14.0",
+    "farecurrency": "BDT",
+    "airlinescomref": "100912",
+    "pricebreakdown": [
+      {
+        "BaseFare": "12500",
+        "Tax": "2800",
+        "PaxCount": "1",
+        "PaxType": "ADT",
+        "Discount": "0",
+        "OtherCharges": "0",
+        "ServiceFee": "0"
+      }
+    ],
+    "godeparture": "DAC",
+    "godepartureTime": "11:30",
+    "godepartureDate": "Tue 22 Apr 2025",
+    "goarrival": "SPD",
+    "goarrivalTime": "12:20",
+    "goarrivalDate": "Tue 22 Apr 2025",
+    "backdeparture": "SPD",
+    "backdepartureTime": "13:00",
+    "backdepartureDate": "Tue 29 Apr 2025",
+    "backarrival": "DAC",
+    "backarrivalTime": "13:50",
+    "backarrivalDate": "Tue 29 Apr 2025",
+    "goflightduration": "0H 50Min",
+    "backflightduration": "0H 50Min",
+    "transit": {
+      "go": {
+        "transit1": "0"
+      },
+      "back": {
+        "transit1": "0"
+      }
+    },
+    "bags": "20",
+    "seat": "15",
+    "class": "First Class",
+    "refundable": "Refundable",
+    "segments": {
+      "go": [
+        {
+          "marketingcareer": "BG",
+          "marketingcareerName": "Biman Bangladesh",
+          "marketingflight": "511",
+          "operatingcareer": "BG",
+          "operatingflight": "511",
+          "departure": "DAC",
+          "departureAirport": "Hazrat Shahjalal Intl Airport",
+          "departureLocation": "Dhaka , BD",
+          "departureTime": "2025-04-22T11:30:00",
+          "arrival": "SPD",
+          "arrivalTime": "2025-04-22T12:20:00",
+          "arrivalAirport": "Saidpur Airport",
+          "arrivalLocation": "Saidpur , BD",
+          "flightduration": "0H 50Min",
+          "bookingcode": "K",
+          "seat": "15"
+        }
+      ],
+      "back": [
+        {
+          "marketingcareer": "BG",
+          "marketingcareerName": "Biman Bangladesh",
+          "marketingflight": "512",
+          "operatingcareer": "BG",
+          "operatingflight": "512",
+          "departure": "SPD",
+          "departureAirport": "Saidpur Airport",
+          "departureLocation": "Saidpur , BD",
+          "departureTime": "2025-04-29T13:00:00",
+          "arrival": "DAC",
+          "arrivalTime": "2025-04-29T13:50:00",
+          "arrivalAirport": "Hazrat Shahjalal Intl Airport",
+          "arrivalLocation": "Dhaka , BD",
+          "flightduration": "0H 50Min",
+          "bookingcode": "K",
+          "seat": "15"
+        }
+      ]
+    },
+    "ischeap": false
+  },
+  {
+    "system": "alpha",
+    "segment": "6",
+    "uId": "f7b28e405a3d19c67b8e32514f9a76d8e5c91283",
+    "triptype": "Inbound",
+    "career": "RX",
+    "careerName": "Regent Airways",
+    "lastTicketTime": "2025-04-13 23:59",
+    "BasePrice": 10850,
+    "Taxes": 2400,
+    "netfare": "11935",
+    "agentprice": "11935",
+    "subagentprice": "11935",
+    "customerPrice": 13250,
+    "comission": "1315",
+    "comissiontype": "domestic",
+    "comissionvalue": "13.0",
+    "farecurrency": "BDT",
+    "airlinescomref": "100637",
+    "pricebreakdown": [
+      {
+        "BaseFare": "10850",
+        "Tax": "2400",
+        "PaxCount": "1",
+        "PaxType": "ADT",
+        "Discount": "0",
+        "OtherCharges": "0",
+        "ServiceFee": "0"
+      }
+    ],
+    "godeparture": "DAC",
+    "godepartureTime": "14:15",
+    "godepartureDate": "Thu 24 Apr 2025",
+    "goarrival": "ZYL",
+    "goarrivalTime": "15:15",
+    "goarrivalDate": "Thu 24 Apr 2025",
+    "backdeparture": "ZYL",
+    "backdepartureTime": "10:00",
+    "backdepartureDate": "Wed 30 Apr 2025",
+    "backarrival": "DAC",
+    "backarrivalTime": "11:00",
+    "backarrivalDate": "Wed 30 Apr 2025",
+    "goflightduration": "1H 0Min",
+    "backflightduration": "1H 0Min",
+    "transit": {
+      "go": {
+        "transit1": "0"
+      },
+      "back": {
+        "transit1": "0"
+      }
+    },
+    "bags": "20",
+    "seat": "12",
+    "class": "Premium First Class",
+    "refundable": "Refundable",
+    "segments": {
+      "go": [
+        {
+          "marketingcareer": "RX",
+          "marketingcareerName": "Regent Airways",
+          "marketingflight": "781",
+          "operatingcareer": "RX",
+          "operatingflight": "781",
+          "departure": "DAC",
+          "departureAirport": "Hazrat Shahjalal Intl Airport",
+          "departureLocation": "Dhaka , BD",
+          "departureTime": "2025-04-24T14:15:00",
+          "arrival": "ZYL",
+          "arrivalTime": "2025-04-24T15:15:00",
+          "arrivalAirport": "Osmani Intl Airport",
+          "arrivalLocation": "Sylhet , BD",
+          "flightduration": "1H 0Min",
+          "bookingcode": "E",
+          "seat": "12"
+        }
+      ],
+      "back": [
+        {
+          "marketingcareer": "RX",
+          "marketingcareerName": "Regent Airways",
+          "marketingflight": "782",
+          "operatingcareer": "RX",
+          "operatingflight": "782",
+          "departure": "ZYL",
+          "departureAirport": "Osmani Intl Airport",
+          "departureLocation": "Sylhet , BD",
+          "departureTime": "2025-04-30T10:00:00",
+          "arrival": "DAC",
+          "arrivalTime": "2025-04-30T11:00:00",
+          "arrivalAirport": "Hazrat Shahjalal Intl Airport",
+          "arrivalLocation": "Dhaka , BD",
+          "flightduration": "1H 0Min",
+          "bookingcode": "E",
+          "seat": "12"
+        }
+      ]
+    },
+    "ischeap": true
+  },
+  {
+    "system": "beta",
+    "segment": "7",
+    "uId": "a1c39f47d2e58b306c97f1a425d8e93f7415b026",
+    "triptype": "Outbound",
+    "career": "BS",
+    "careerName": "USBangla Airlines",
+    "lastTicketTime": "2025-04-10 23:59",
+    "BasePrice": 11250,
+    "Taxes": 2500,
+    "netfare": "12375",
+    "agentprice": "12375",
+    "subagentprice": "12375",
+    "customerPrice": 13750,
+    "comission": "1375",
+    "comissiontype": "domestic",
+    "comissionvalue": "13.5",
+    "farecurrency": "BDT",
+    "airlinescomref": "100753",
+    "pricebreakdown": [
+      {
+        "BaseFare": "11250",
+        "Tax": "2500",
+        "PaxCount": "1",
+        "PaxType": "ADT",
+        "Discount": "0",
+        "OtherCharges": "0",
+        "ServiceFee": "0"
+      }
+    ],
+    "godeparture": "DAC",
+    "godepartureTime": "10:45",
+    "godepartureDate": "Fri 25 Apr 2025",
+    "goarrival": "BZL",
+    "goarrivalTime": "11:45",
+    "goarrivalDate": "Fri 25 Apr 2025",
+    "backdeparture": "BZL",
+    "backdepartureTime": "12:15",
+    "backdepartureDate": "Mon 05 May 2025",
+    "backarrival": "DAC",
+    "backarrivalTime": "13:15",
+    "backarrivalDate": "Mon 05 May 2025",
+    "goflightduration": "1H 0Min",
+    "backflightduration": "1H 0Min",
+    "transit": {
+      "go": {
+        "transit1": "0"
+      },
+      "back": {
+        "transit1": "0"
+      }
+    },
+    "bags": "20",
+    "seat": "11",
+    "class": "Business",
+    "refundable": "Refundable",
+    "segments": {
+      "go": [
+        {
+          "marketingcareer": "BS",
+          "marketingcareerName": "USBangla Airlines",
+          "marketingflight": "211",
+          "operatingcareer": "BS",
+          "operatingflight": "211",
+          "departure": "DAC",
+          "departureAirport": "Hazrat Shahjalal Intl Airport",
+          "departureLocation": "Dhaka , BD",
+          "departureTime": "2025-04-25T10:45:00",
+          "arrival": "BZL",
+          "arrivalTime": "2025-04-25T11:45:00",
+          "arrivalAirport": "Barisal Airport",
+          "arrivalLocation": "Barisal , BD",
+          "flightduration": "1H 0Min",
+          "bookingcode": "I",
+          "seat": "11"
+        }
+      ],
+      "back": [
+        {
+          "marketingcareer": "BS",
+          "marketingcareerName": "USBangla Airlines",
+          "marketingflight": "212",
+          "operatingcareer": "BS",
+          "operatingflight": "212",
+          "departure": "BZL",
+          "departureAirport": "Barisal Airport",
+          "departureLocation": "Barisal , BD",
+          "departureTime": "2025-05-05T12:15:00",
+          "arrival": "DAC",
+          "arrivalTime": "2025-05-05T13:15:00",
+          "arrivalAirport": "Hazrat Shahjalal Intl Airport",
+          "arrivalLocation": "Dhaka , BD",
+          "flightduration": "1H 0Min",
+          "bookingcode": "I",
+          "seat": "11"
+        }
+      ]
+    },
+    "ischeap": false
+  }
+]
