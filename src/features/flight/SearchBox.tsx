@@ -21,6 +21,10 @@ import MultiCity from "./MultiCity";
 import HotelBookingWidget from "../hotel/HotelBooking";
 import { useNavigate } from "react-router";
 
+import { getAllAirportsData } from "../../services/api/apiRoundways";
+const allAirports = getAllAirportsData();
+// {
+
 // Custom styled components
 const StyledTabs = styled(Tabs)({
   backgroundColor: "white",
@@ -123,6 +127,27 @@ export default function SearchBox() {
   const [toDate, setToDate] = useState("");
 
   const { handleSearch } = useSearch();
+
+  const [cities, setCities] = useState([
+    { from: allAirports[0], to: allAirports[1], fromNum: 0, toNum: 1 },
+    { from: allAirports[1], to: allAirports[2], fromNum: 1, toNum: 2 },
+  ]);
+  console.log(cities);
+  function addNewCity() {
+    setCities((prevCities: any[]) => {
+      const last = prevCities[prevCities.length - 1];
+      const newCity = allAirports[prevCities[prevCities.length - 1].toNum + 1];
+      return [
+        ...prevCities,
+        {
+          from: { ...last.to },
+          to: newCity,
+          fromNum: last.toNum,
+          toNum: last.toNum + 1,
+        },
+      ];
+    });
+  }
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -419,7 +444,7 @@ export default function SearchBox() {
                   setFromDate={setFromDate}
                 />
               )}
-              {tripType === "multi-city" && <MultiCity data={[]} />}
+              {tripType === "multi-city" && <MultiCity cities={cities} />}
             </Box>
 
             <Box
@@ -517,6 +542,7 @@ export default function SearchBox() {
                     fontWeight: "normal",
                     marginTop: "10px",
                   }}
+                  onClick={addNewCity}
                 >
                   Add City
                 </SearchButton>

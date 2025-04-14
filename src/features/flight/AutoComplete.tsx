@@ -178,8 +178,12 @@ export default function AirportSelection({ initialValue, setAirport }) {
   const [inputValue, setInputValue] = React.useState("");
   const [searchTerm, setSearchTerm] = React.useState("");
   const [textValue, setTextValue] = React.useState<AirportType | null>(null);
-  const labels = getAllAirportsData().slice(0, 7);
+  const labels = getAllAirportsData().slice(
+    initialValue > 6 ? initialValue : 0,
+    initialValue > 6 ? initialValue + 7 : 7
+  );
   const allLabels = getAllAirportsData();
+  // console.log(labels);
 
   // Filter options based on search term
   const filteredOptions = React.useMemo(() => {
@@ -197,7 +201,7 @@ export default function AirportSelection({ initialValue, setAirport }) {
           option?.country.toLowerCase().includes(term)
       )
       .slice(0, 7);
-  }, [searchTerm, labels.length]);
+  }, [searchTerm]);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -248,11 +252,12 @@ export default function AirportSelection({ initialValue, setAirport }) {
 
   const open = Boolean(anchorEl);
   const id = open ? "github-label" : undefined;
-  console.log(filteredOptions[0]?.airportName, 1817);
-  const text = value || textValue || filteredOptions[initialValue];
+  console.log(filteredOptions[0], 1817);
+  const text = value || textValue || filteredOptions[initialValue % 7];
 
   if (labels.length === 0) return null;
-  console.log(labels);
+  // console.log(labels);
+  console.log(text, initialValue);
 
   return (
     <div

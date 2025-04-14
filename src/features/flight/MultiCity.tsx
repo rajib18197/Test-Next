@@ -3,22 +3,31 @@ import SelectionBox from "./SelectionBox";
 import AirportSelection from "./AutoComplete";
 import DatePicker from "./DatePicker";
 import FlightIcon from "../../ui/FlightIcon";
+import { useState } from "react";
 
-export default function MultiCity() {
+//   "city": "Dhaka",
+//   "country": "Bangladesh",
+//   "airportName": "Hazrat Shahjalal Intl Airport",
+//   "acronym": "DAC"
+// },
+export default function MultiCity({ cities = [] }) {
   return (
     <>
-      {[1, 2].map((_, i) => {
+      {cities.map((city, i) => {
         return (
           <Box
-            key={i}
+            key={`${i} - ${city.from.acronym}`}
             sx={{
               display: "flex",
               flexDirection: { xs: "column", md: "row" },
               width: "100%",
             }}
           >
-            <SelectionBox labelText={"FROM"} acronym={"DAC"}>
-              <AirportSelection setAirport={() => {}} />
+            <SelectionBox labelText={"FROM"} acronym={city.from.acronym}>
+              <AirportSelection
+                initialValue={city.fromNum}
+                setAirport={() => {}}
+              />
             </SelectionBox>
 
             <Box
@@ -54,8 +63,11 @@ export default function MultiCity() {
               </Box>
             </Box>
 
-            <SelectionBox labelText={"TO"} acronym={"CXB"}>
-              <AirportSelection setAirport={() => {}} />
+            <SelectionBox labelText={"TO"} acronym={city.to.acronym}>
+              <AirportSelection
+                initialValue={city.toNum}
+                setAirport={() => {}}
+              />
               <DatePicker onChange={() => {}} value={new Date()} />
             </SelectionBox>
           </Box>
