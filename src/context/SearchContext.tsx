@@ -2,9 +2,10 @@ import { createContext, useContext, useState } from "react";
 
 const SearchContext = createContext({});
 type Airport = {
-  fullName: string;
+  airportName: string;
   acronym: string;
-  location: string;
+  city: string;
+  country: string;
 };
 
 type Pax = {
@@ -17,7 +18,7 @@ type SearchContext = {
   from: Airport;
   to: Airport;
   fromDate: Date;
-  toDate: Date;
+  toDate?: Date;
   pax: Pax;
   travelClass:
     | "economy"
@@ -30,8 +31,18 @@ type SearchContext = {
 };
 
 const INITIAL_STATE: SearchContext = {
-  from: { fullName: "", acronym: "", location: "" },
-  to: { fullName: "", acronym: "", location: "" },
+  from: {
+    airportName: "Hazrat Shahjalal Intl Airport",
+    acronym: "DAC",
+    city: "Dhaka",
+    country: "Bangladesh",
+  },
+  to: {
+    airportName: "Cox's Bazar Airport",
+    acronym: "CXB",
+    city: "Cox's Bazar",
+    country: "Bangladesh",
+  },
   fromDate: new Date(),
   toDate: new Date(),
   pax: { adult: 1, child: 0, infant: 0 },

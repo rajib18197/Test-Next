@@ -225,19 +225,19 @@ export default function AirportSelection({ initialValue, setAirport }) {
     setSearchTerm(newInputValue);
 
     // Debug
-    console.log("Search term:", newInputValue);
-    console.log(
-      "Filtered options count:",
-      allLabels.filter(
-        (option) =>
-          option?.airportName
-            .toLowerCase()
-            .includes(newInputValue.toLowerCase()) ||
-          option?.acronym.toLowerCase().includes(newInputValue.toLowerCase()) ||
-          option?.city.toLowerCase().includes(newInputValue.toLowerCase()) ||
-          option?.country.toLowerCase().includes(newInputValue.toLowerCase())
-      ).length
-    );
+    // console.log("Search term:", newInputValue);
+    // console.log(
+    //   "Filtered options count:",
+    //   allLabels.filter(
+    //     (option) =>
+    //       option?.airportName
+    //         .toLowerCase()
+    //         .includes(newInputValue.toLowerCase()) ||
+    //       option?.acronym.toLowerCase().includes(newInputValue.toLowerCase()) ||
+    //       option?.city.toLowerCase().includes(newInputValue.toLowerCase()) ||
+    //       option?.country.toLowerCase().includes(newInputValue.toLowerCase())
+    //   ).length
+    // );
   };
 
   const handleOptionSelect = (
@@ -252,12 +252,12 @@ export default function AirportSelection({ initialValue, setAirport }) {
 
   const open = Boolean(anchorEl);
   const id = open ? "github-label" : undefined;
-  console.log(filteredOptions[0], 1817);
+  // console.log(filteredOptions[0], 1817);
   const text = value || textValue || filteredOptions[initialValue % 7];
 
   if (labels.length === 0) return null;
   // console.log(labels);
-  console.log(text, initialValue);
+  // console.log(text, initialValue);
 
   return (
     <div

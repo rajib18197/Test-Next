@@ -23,9 +23,7 @@ import { useNavigate } from "react-router";
 
 import { getAllAirportsData } from "../../services/api/apiRoundways";
 const allAirports = getAllAirportsData();
-// {
 
-// Custom styled components
 const StyledTabs = styled(Tabs)({
   backgroundColor: "white",
   borderRadius: "30px",
@@ -107,8 +105,10 @@ const SearchButton = styled(Button)({
 });
 
 interface Airport {
-  acronym?: string;
-  [key: string]: any;
+  airportName: string;
+  acronym: string;
+  city: string;
+  country: string;
 }
 
 export default function SearchBox() {
@@ -121,10 +121,20 @@ export default function SearchBox() {
   const [infant, setInfant] = useState("0");
   const [travelClass, setTravelClass] = useState("Economy");
 
-  const [fromAirport, setFromAirport] = useState<Airport>({});
-  const [toAirport, setToAirport] = useState<Airport>({});
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [fromAirport, setFromAirport] = useState<Airport>({
+    airportName: "Hazrat Shahjalal Intl Airport",
+    acronym: "DAC",
+    city: "Dhaka",
+    country: "Bangladesh",
+  });
+  const [toAirport, setToAirport] = useState<Airport>({
+    airportName: "Cox's Bazar Airport",
+    acronym: "CXB",
+    city: "Cox's Bazar",
+    country: "Bangladesh",
+  });
+  const [fromDate, setFromDate] = useState(new Date());
+  const [toDate, setToDate] = useState(new Date());
 
   const { handleSearch } = useSearch();
 
@@ -132,7 +142,7 @@ export default function SearchBox() {
     { from: allAirports[0], to: allAirports[1], fromNum: 0, toNum: 1 },
     { from: allAirports[1], to: allAirports[2], fromNum: 1, toNum: 2 },
   ]);
-  console.log(cities);
+  // console.log(cities);
   function addNewCity() {
     setCities((prevCities: any[]) => {
       const last = prevCities[prevCities.length - 1];
@@ -174,19 +184,34 @@ export default function SearchBox() {
   };
 
   const handleSubmit = () => {
-    handleSearch({
-      from: fromAirport,
-      to: toAirport,
-      fromDate,
-      toDate,
-      tripType,
-      travelClass,
-      pax: {
-        adult: Number(adult),
-        child: Number(child),
-        infant: Number(infant),
-      },
-    });
+    if (tripType === "round-way") {
+      handleSearch({
+        from: fromAirport,
+        to: toAirport,
+        fromDate,
+        toDate,
+        tripType,
+        travelClass,
+        pax: {
+          adult: Number(adult),
+          child: Number(child),
+          infant: Number(infant),
+        },
+      });
+    } else if (tripType === "one-way") {
+      handleSearch({
+        from: fromAirport,
+        to: toAirport,
+        fromDate,
+        tripType,
+        travelClass,
+        pax: {
+          adult: Number(adult),
+          child: Number(child),
+          infant: Number(infant),
+        },
+      });
+    }
 
     navigate(`/${tripType}search`);
   };

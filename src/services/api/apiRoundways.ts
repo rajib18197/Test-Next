@@ -9,7 +9,7 @@ const delay = function (ms: number) {
 };
 
 type Airport = {
-  fullName: string;
+  airportName: string;
   acronym: string;
   location: string;
 };
@@ -49,38 +49,44 @@ export async function getRoundwaysFlightsData(searchFields: SearchContext) {
 
   const data = JSON.parse(JSON.stringify(roundwaysJSON));
   console.log(searchFields);
-  const filteredData = data.filter((flight: FlightApiData) => {
-    console.log(flight.segments.go[0].departureAirport);
-    console.log(
-      isSameDate(
-        new Date(flight.segments.go[0].departureTime),
-        new Date(searchFields.fromDate)
-      )
-    );
-    console.log(flight.segments.back[0].departureAirport);
-    console.log(
-      isSameDate(
-        new Date(flight.segments.back[0].departureTime),
-        new Date(searchFields.toDate)
-      )
-    );
 
-    return (
-      flight.segments.go[0].departureAirport === searchFields.from.fullName &&
-      isSameDate(
-        new Date(flight.segments.go[0].departureTime),
-        new Date(searchFields.fromDate)
-      ) &&
-      flight.segments.back[0].departureAirport === searchFields.to.fullName &&
-      isSameDate(
-        new Date(flight.segments.back[0].departureTime),
-        new Date(searchFields.toDate)
-      ) &&
-      flight.class.toLowerCase() === searchFields.travelClass.toLowerCase()
-    );
-  });
+  if (searchFields.tripType === "round-way") {
+    const filteredData = data.filter((flight: FlightApiData) => {
+      return (
+        flight.segments.go[0].departureAirport ===
+          searchFields.from.airportName &&
+        isSameDate(
+          new Date(flight.segments.go[0].departureTime),
+          new Date(searchFields.fromDate)
+        ) &&
+        flight.segments.back[0].departureAirport ===
+          searchFields.to.airportName &&
+        isSameDate(
+          new Date(flight.segments.back[0].departureTime),
+          new Date(searchFields.toDate)
+        ) &&
+        flight.class.toLowerCase() === searchFields.travelClass.toLowerCase()
+      );
+    });
 
-  return filteredData;
+    return filteredData;
+  } else {
+    const filteredData = data.filter((flight: FlightApiData) => {
+      return (
+        flight.segments.go[0].departureAirport ===
+          searchFields.from.airportName &&
+        isSameDate(
+          new Date(flight.segments.go[0].departureTime),
+          new Date(searchFields.fromDate)
+        ) &&
+        flight.segments.back[0].departureAirport ===
+          searchFields.to.airportName &&
+        flight.class.toLowerCase() === searchFields.travelClass.toLowerCase()
+      );
+    });
+
+    return filteredData;
+  }
 }
 
 export function getAllAirportsData() {

@@ -127,6 +127,24 @@ interface FlightCardProps {
   baggage: string;
   currentPrice: number;
   originalPrice?: number;
+  flight: any;
+}
+
+function formatDate(dateStr: string) {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }); // e.g., 23 Apr 2025
+}
+
+function formatTime(dateStr: string) {
+  const date = new Date(dateStr);
+  return date.toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+  }); // e.g., 16:35
 }
 
 const FlightCard: React.FC<FlightCardProps> = ({
@@ -148,6 +166,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
   baggage,
   currentPrice,
   originalPrice,
+  flight,
 }) => {
   return (
     <StyledCard>
@@ -428,6 +447,79 @@ const FlightCard: React.FC<FlightCardProps> = ({
         <FlightDetailsDrawer>
           <FlightDetails
             outboundFlight={{
+              airline: flight.segments.go[0].marketingcareerName,
+              flightNumber: `${flight.segments.go[0].marketingcareer}${flight.segments.go[0].marketingflight}`,
+              operator: `Operated By ${flight.segments.go[0].operatingcareer}`,
+              departureCode: flight.segments.go[0].departure,
+              departureCity: flight.segments.go[0].departureLocation
+                .split(",")[0]
+                .trim(),
+              departureCountry: flight.segments.go[0].departureLocation
+                .split(",")[1]
+                .trim(),
+              departureAirport:
+                flight.segments.go[0].departureAirport.slice(0, 10) + "...",
+              departureAirportFull: flight.segments.go[0].departureAirport,
+              departureDate: formatDate(flight.segments.go[0].departureTime),
+              departureTime: formatTime(flight.segments.go[0].departureTime),
+              arrivalCode: flight.segments.go[0].arrival,
+              arrivalCity: flight.segments.go[0].arrivalLocation
+                .split(",")[0]
+                .trim(),
+              arrivalCountry: flight.segments.go[0].arrivalLocation
+                .split(",")[1]
+                .trim(),
+              arrivalAirport:
+                flight.segments.go[0].arrivalAirport.slice(0, 10) + "...",
+              arrivalAirportFull: flight.segments.go[0].arrivalAirport,
+              arrivalDate: formatDate(flight.segments.go[0].arrivalTime),
+              arrivalTime: formatTime(flight.segments.go[0].arrivalTime),
+              duration: flight.segments.go[0].flightduration,
+            }}
+            returnFlight={{
+              airline: flight.segments.back[0].marketingcareerName,
+              flightNumber: `${flight.segments.back[0].marketingcareer}${flight.segments.back[0].marketingflight}`,
+              operator: `Operated By ${flight.segments.back[0].operatingcareer}`,
+              departureCode: flight.segments.back[0].departure,
+              departureCity: flight.segments.back[0].departureLocation
+                .split(",")[0]
+                .trim(),
+              departureCountry: flight.segments.back[0].departureLocation
+                .split(",")[1]
+                .trim(),
+              departureAirport:
+                flight.segments.back[0].departureAirport.slice(0, 10) + "...",
+              departureAirportFull: flight.segments.back[0].departureAirport,
+              departureDate: formatDate(flight.segments.back[0].departureTime),
+              departureTime: formatTime(flight.segments.back[0].departureTime),
+              arrivalCode: flight.segments.back[0].arrival,
+              arrivalCity: flight.segments.back[0].arrivalLocation
+                .split(",")[0]
+                .trim(),
+              arrivalCountry: flight.segments.back[0].arrivalLocation
+                .split(",")[1]
+                .trim(),
+              arrivalAirport:
+                flight.segments.back[0].arrivalAirport.slice(0, 10) + "...",
+              arrivalAirportFull: flight.segments.back[0].arrivalAirport,
+              arrivalDate: formatDate(flight.segments.back[0].arrivalTime),
+              arrivalTime: formatTime(flight.segments.back[0].arrivalTime),
+              duration: flight.segments.back[0].flightduration,
+            }}
+            fareSummary={{
+              baseFare: Number(flight.BasePrice),
+              taxFees: Number(flight.Taxes),
+              totalCost: Number(flight.customerPrice),
+              discount:
+                Number(flight.BasePrice) +
+                Number(flight.Taxes) -
+                Number(flight.customerPrice),
+              grandTotal: Number(flight.netfare),
+            }}
+          />
+
+          {/* <FlightDetails
+            outboundFlight={{
               airline: "Biman Bangladesh",
               flightNumber: "BG-437 & G",
               operator: "Operated By BG",
@@ -474,7 +566,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
               discount: 1118,
               grandTotal: 11280,
             }}
-          />
+          /> */}
         </FlightDetailsDrawer>
       </PriceSection>
     </StyledCard>

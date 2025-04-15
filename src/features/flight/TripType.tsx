@@ -90,7 +90,6 @@ export default function TripType(props: TripTypeProps) {
       sx={{
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
-        // alignItems: "center",
         width: "100%",
         ...containerSx,
       }}

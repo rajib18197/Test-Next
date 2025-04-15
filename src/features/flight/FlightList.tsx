@@ -3,42 +3,42 @@ import { useSearch } from "../../context/SearchContext";
 import FlightCard from "./FlightCard";
 import { getRoundwaysFlightsData } from "../../services/api/apiRoundways";
 
-export default function FlightList() {
-  const { searchState } = useSearch();
-  const [flightData, setFlightData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+const formatTime = (isoString) =>
+  new Date(isoString).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
-  useEffect(() => {
-    async function loadFlights() {
-      setIsLoading(true);
-      const data = await getRoundwaysFlightsData(searchState);
-      console.log(data);
-      setIsLoading(false);
-    }
-
-    loadFlights();
-  }, []);
-
+export default function FlightList({ flightData }) {
   return (
-    <FlightCard
-      airlineName="USBangla Airlines"
-      airlineLogo="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/gg-dkfnfc3aHqUC7K2znUmyWj2yYtXW6V.png"
-      flightNumber="BS-141"
-      departureCode="DAC"
-      departureAirport="Hazrat Shahjalal Intl Airport"
-      departureTime="07:20"
-      departureDate="Sun 13 Apr 2025"
-      arrivalCode="CXB"
-      arrivalAirport="COXs Bazar Airport"
-      arrivalTime="08:25"
-      arrivalDate="Sun 13 Apr 2025"
-      duration="1H 5Min"
-      flightType="NON STOP"
-      refundable={true}
-      flightClass="Economy"
-      baggage="20 Kg"
-      currentPrice={11078}
-      originalPrice={12398}
-    />
+    <>
+      {flightData.map((flight) => {
+        return (
+          <FlightCard
+            airlineLogo=""
+            airlineName={flight.segments.go[0].marketingcareerName} // "USBangla Airlines"
+            flightNumber={`${flight.segments.go[0].marketingcareer}-${flight.segments.go[0].marketingflight}`} // "BS-157"
+            departureCode={flight.segments.go[0].departure} // "DAC"
+            departureAirport={flight.segments.go[0].departureAirport} // "Hazrat Shahjalal Intl Airport"
+            departureTime={formatTime(flight.segments.go[0].departureTime)} // "16:35"
+            departureDate={flight.godepartureDate} // "Wed 23 Apr 2025"
+            arrivalCode={flight.segments.go[0].arrival} // "CXB"
+            arrivalAirport={flight.segments.go[0].arrivalAirport} // "Cox's Bazar Airport"
+            arrivalTime={formatTime(flight.segments.go[0].arrivalTime)} // "17:40"
+            arrivalDate={flight.goarrivalDate} // "Wed 23 Apr 2025"
+            duration={flight.goflightduration} // "1H 5Min"
+            flightType={
+              flight.transit.go.transit1 === "0" ? "NON STOP" : "Transit"
+            } // "NON STOP"
+            refundable={flight.refundable} // "Refundable"
+            flightClass={flight.class} // "economy"
+            baggage={`${flight.bags} Kg`} // "20 Kg"
+            currentPrice={flight.netfare} // 11128
+            originalPrice={flight.customerPrice} // 12398
+            flight={flight}
+          />
+        );
+      })}
+    </>
   );
 }

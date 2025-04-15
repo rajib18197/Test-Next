@@ -7,6 +7,9 @@ import FlightIcon from "@mui/icons-material/Flight";
 import FilterBox from "../features/flight/FilterBox";
 import LayoverFilter from "../features/flight/Layover";
 import DepartureTimesFilter from "../features/flight/Departure";
+import { useEffect, useState } from "react";
+import { useSearch } from "../context/SearchContext";
+import { getRoundwaysFlightsData } from "../services/api/apiRoundways";
 
 // Custom airline logos
 const BSLogo = () => (
@@ -60,7 +63,32 @@ const airlines = [
   },
 ];
 
+function formatDate(dateStr: string) {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }); // e.g., 23 Apr 2025
+}
+
 export default function Flights() {
+  const { searchState } = useSearch();
+  const [flightData, setFlightData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadFlights() {
+      setIsLoading(true);
+      const data = await getRoundwaysFlightsData(searchState);
+      console.log(data);
+      setFlightData(data);
+      setIsLoading(false);
+    }
+
+    loadFlights();
+  }, []);
+
   return (
     <Container>
       <div
@@ -78,19 +106,23 @@ export default function Flights() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           <FlightSearchHeader
-            origin="DAC"
-            destination="CXB"
-            totalFlights={48}
-            departureDate="13 Apr 2025"
-            returnDate="15 Apr 2025"
-            travelers={1}
+            origin={searchState.from.acronym}
+            destination={searchState.to.acronym}
+            totalFlights={flightData.length}
+            departureDate={formatDate(searchState.fromDate)}
+            returnDate={formatDate(searchState.toDate)}
+            travelers={
+              searchState.pax.adult +
+              searchState.pax.child +
+              searchState.pax.infant
+            }
             airlines={airlines}
             onAirlineChange={(airlineCode) =>
               console.log("Selected airline:", airlineCode)
             }
             onModifySearch={() => console.log("Modify search clicked")}
           />
-          <FlightList />
+          <FlightList flightData={flightData} />
         </div>
       </div>
     </Container>
