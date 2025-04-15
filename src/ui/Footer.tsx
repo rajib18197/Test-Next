@@ -1,433 +1,373 @@
-"use client";
-
-import type React from "react";
-import { useState } from "react";
+import React from "react";
 import {
   Box,
   Container,
-  Typography,
   Grid,
+  Typography,
+  Link,
   TextField,
   IconButton,
-  InputAdornment,
-  useTheme,
-  useMediaQuery,
   Divider,
-  Link,
-  styled,
+  Stack,
+  InputAdornment,
+  styled, // Import styled utility
 } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import SendIcon from "@mui/icons-material/Send";
 
-// Styled components
-const FooterContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: "#2ecc9a", // Exact color from the design
-  color: "white",
-  padding: theme.spacing(5, 0, 2, 0),
-  [theme.breakpoints.down("md")]: {
-    padding: theme.spacing(4, 0, 2, 0),
-  },
+// --- Styled Components (for cleaner component structure) ---
+
+const FooterWrapper = styled(Box)(({ theme }) => ({
+  backgroundColor: "#1abc9c", // Approximate green color from image
+  color: "#ffffff",
+  paddingTop: theme.spacing(6),
+  paddingBottom: theme.spacing(2),
+  fontSize: "0.875rem",
 }));
 
-const FooterLink = styled(Link)({
-  color: "white",
+const FooterLink = styled(Link)(({ theme }) => ({
+  color: "#ffffff",
   textDecoration: "none",
   display: "block",
-  marginBottom: "10px",
+  marginBottom: theme.spacing(1),
   "&:hover": {
     textDecoration: "underline",
   },
-});
+}));
 
-const SocialIconButton = styled(Box)({
-  width: "30px",
-  height: "30px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  marginRight: "10px",
-  cursor: "pointer",
-});
-
-const CertificationBox = styled(Box)(({ theme }) => ({
-  backgroundColor: "white",
-  borderRadius: "4px",
-  padding: theme.spacing(1),
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  height: "70px",
-  marginBottom: theme.spacing(1),
+const FooterIcon = styled(IconButton)(({ theme }) => ({
+  color: "#ffffff",
+  padding: theme.spacing(0.5),
   marginRight: theme.spacing(1),
+  border: "1px solid rgba(255, 255, 255, 0.5)", // Optional border like in design
+  borderRadius: "50%", // Make it circular
+  "&:hover": {
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+  },
+  // Ensure consistent size
+  width: "32px",
+  height: "32px",
 }));
 
-const PaymentMethodsContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexWrap: "wrap",
-  justifyContent: "center",
-  alignItems: "center",
-  marginTop: theme.spacing(4),
-  marginBottom: theme.spacing(2),
+const FooterTextField = styled(TextField)(({ theme }) => ({
+  "& .MuiOutlinedInput-root": {
+    backgroundColor: "#ffffff", // White background for the input
+    borderRadius: "20px", // Rounded corners
+    paddingRight: 0, // Remove default padding to place icon button nicely
+    "& fieldset": {
+      borderColor: "transparent", // Hide default border
+    },
+    "&:hover fieldset": {
+      borderColor: "transparent",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "transparent", // Hide focus border
+    },
+  },
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1.5), // Adjust padding
+    color: "#333", // Darker text color inside input
+    fontSize: "0.875rem", // Match other footer text size
+  },
 }));
 
-const PaymentMethodBox = styled(Box)({
-  backgroundColor: "white",
-  borderRadius: "4px",
-  padding: "5px",
-  margin: "3px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "50px",
-  height: "30px",
-});
+const FooterSubmitButton = styled(IconButton)(({ theme }) => ({
+  backgroundColor: "#16a085", // Slightly darker green for button
+  color: "#ffffff",
+  padding: theme.spacing(0.8), // Adjust padding for visual balance
+  "&:hover": {
+    backgroundColor: "#117e6b", // Darker on hover
+  },
+}));
+
+// --- Placeholder Data (Replace with actual image paths/URLs) ---
+
+const certifications = [
+  { alt: "Tata", src: "/images/placeholder-logo.png" }, // Replace
+  { alt: "ATAB", src: "/images/placeholder-logo.png" }, // Replace
+  { alt: "TOAB", src: "/images/placeholder-logo.png" }, // Replace
+  { alt: "IATA", src: "/images/placeholder-logo.png" }, // Replace
+  { alt: "Bangladesh Parjatan", src: "/images/placeholder-logo.png" }, // Replace
+];
+
+const paymentMethods = [
+  { alt: "Visa", src: "/images/payment/visa.png" }, // Replace
+  { alt: "Mastercard", src: "/images/payment/mastercard.png" }, // Replace
+  { alt: "Amex", src: "/images/payment/amex.png" }, // Replace
+  { alt: "UnionPay", src: "/images/payment/unionpay.png" }, // Replace
+  { alt: "DBBL", src: "/images/payment/dbbl.png" }, // Replace
+  { alt: "City Bank", src: "/images/payment/citybank.png" }, // Replace
+  { alt: "MTB", src: "/images/payment/mtb.png" }, // Replace
+  { alt: "Bkash", src: "/images/payment/bkash.png" }, // Replace
+  { alt: "Nagad", src: "/images/payment/nagad.png" }, // Replace
+  { alt: "Upay", src: "/images/payment/upay.png" }, // Replace
+  // Add other logos from the design as needed
+];
+
+// --- Footer Component ---
 
 const Footer: React.FC = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-  const [email, setEmail] = useState("");
-
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log("Email submitted:", email);
-    setEmail("");
-  };
+  const currentYear = new Date().getFullYear(); // Get current year dynamically
 
   return (
-    <FooterContainer>
+    <FooterWrapper component="footer">
       <Container maxWidth="lg">
-        <Grid container spacing={isSmall ? 4 : 3}>
-          {/* Need Help Section */}
+        {" "}
+        {/* Limits max width and centers content */}
+        {/* ============================================ */}
+        {/* Top Section: 4 Columns Grid Layout          */}
+        {/* ============================================ */}
+        <Grid container spacing={4} sx={{ mb: 4 }}>
+          {" "}
+          {/* spacing adds gaps between columns */}
+          {/* --- Column 1: Need Help --- */}
           <Grid item xs={12} sm={6} md={3}>
+            {" "}
+            {/* xs: full width, sm: half width, md: quarter width */}
             <Typography
               variant="h6"
-              sx={{ mb: 3, fontWeight: "normal", fontSize: "1.25rem" }}
+              gutterBottom
+              sx={{ fontWeight: "bold", mb: 2 }}
             >
               Need Help
             </Typography>
-            <Box sx={{ display: "flex", mb: 2 }}>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ mb: 1, alignItems: "flex-start" }}
+            >
               <LocationOnIcon
-                sx={{ mr: 1, fontSize: "20px", mt: "2px", color: "white" }}
+                fontSize="small"
+                sx={{ mt: 0.5, flexShrink: 0 }}
               />
-              <Typography variant="body2" sx={{ fontSize: "0.9rem" }}>
-                Ka 11/2A, Bashundhora R/A Road, Jagannathpur, Dhaka 1229
+              <Typography variant="body2">
+                Ka 112/A, Bashundhora R/A Road, Jagannathpur, Dhaka 1229
               </Typography>
-            </Box>
-            <Box sx={{ display: "flex", mb: 2, alignItems: "center" }}>
-              <EmailIcon sx={{ mr: 1, fontSize: "20px", color: "white" }} />
-              <Typography variant="body2" sx={{ fontSize: "0.9rem" }}>
-                support@flyfannt.com
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", mb: 3, alignItems: "center" }}>
-              <PhoneIcon sx={{ mr: 1, fontSize: "20px", color: "white" }} />
-              <Typography variant="body2" sx={{ fontSize: "0.9rem" }}>
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ mb: 1, alignItems: "center" }}
+            >
+              <EmailIcon fontSize="small" sx={{ flexShrink: 0 }} />
+              <Link
+                href="mailto:support@flyfarint.com"
+                color="inherit"
+                underline="hover"
+                variant="body2"
+              >
+                support@flyfarint.com
+              </Link>
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ mb: 2, alignItems: "center" }}
+            >
+              <PhoneIcon fontSize="small" sx={{ flexShrink: 0 }} />
+              <Link
+                href="tel:+8801755572099"
+                color="inherit"
+                underline="hover"
+                variant="body2"
+              >
                 +880 1755 572 099
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex" }}>
-              {/* Facebook icon */}
-              <SocialIconButton>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="white"
-                >
-                  <path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C18.34 21.21 22 17.06 22 12.06C22 6.53 17.5 2.04 12 2.04Z" />
-                </svg>
-              </SocialIconButton>
-              {/* Instagram icon */}
-              <SocialIconButton>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="white"
-                >
-                  <path d="M12 2C14.717 2 15.056 2.01 16.122 2.06C17.187 2.11 17.912 2.277 18.55 2.525C19.21 2.779 19.766 3.123 20.322 3.678C20.8305 4.1779 21.224 4.78259 21.475 5.45C21.722 6.087 21.89 6.813 21.94 7.878C21.987 8.944 22 9.283 22 12C22 14.717 21.99 15.056 21.94 16.122C21.89 17.187 21.722 17.912 21.475 18.55C21.2247 19.2178 20.8311 19.8226 20.322 20.322C19.822 20.8303 19.2173 21.2238 18.55 21.475C17.913 21.722 17.187 21.89 16.122 21.94C15.056 21.987 14.717 22 12 22C9.283 22 8.944 21.99 7.878 21.94C6.813 21.89 6.088 21.722 5.45 21.475C4.78233 21.2245 4.17753 20.8309 3.678 20.322C3.16941 19.8222 2.77593 19.2175 2.525 18.55C2.277 17.913 2.11 17.187 2.06 16.122C2.013 15.056 2 14.717 2 12C2 9.283 2.01 8.944 2.06 7.878C2.11 6.812 2.277 6.088 2.525 5.45C2.77524 4.78218 3.1688 4.17732 3.678 3.678C4.17767 3.16923 4.78243 2.77573 5.45 2.525C6.088 2.277 6.812 2.11 7.878 2.06C8.944 2.013 9.283 2 12 2ZM12 7C10.6739 7 9.40215 7.52678 8.46447 8.46447C7.52678 9.40215 7 10.6739 7 12C7 13.3261 7.52678 14.5979 8.46447 15.5355C9.40215 16.4732 10.6739 17 12 17C13.3261 17 14.5979 16.4732 15.5355 15.5355C16.4732 14.5979 17 13.3261 17 12C17 10.6739 16.4732 9.40215 15.5355 8.46447C14.5979 7.52678 13.3261 7 12 7ZM18.5 6.75C18.5 6.41848 18.3683 6.10054 18.1339 5.86612C17.8995 5.6317 17.5815 5.5 17.25 5.5C16.9185 5.5 16.6005 5.6317 16.3661 5.86612C16.1317 6.10054 16 6.41848 16 6.75C16 7.08152 16.1317 7.39946 16.3661 7.63388C16.6005 7.8683 16.9185 8 17.25 8C17.5815 8 17.8995 7.8683 18.1339 7.63388C18.3683 7.39946 18.5 7.08152 18.5 6.75ZM12 9C12.7956 9 13.5587 9.31607 14.1213 9.87868C14.6839 10.4413 15 11.2044 15 12C15 12.7956 14.6839 13.5587 14.1213 14.1213C13.5587 14.6839 12.7956 15 12 15C11.2044 15 10.4413 14.6839 9.87868 14.1213C9.31607 13.5587 9 12.7956 9 12C9 11.2044 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2044 9 12 9Z" />
-                </svg>
-              </SocialIconButton>
-              {/* WhatsApp icon */}
-              <SocialIconButton>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="white"
-                >
-                  <path d="M17.6 6.32C16.27 5.03 14.5 4.32 12.64 4.32C8.78 4.32 5.64 7.45 5.64 11.32C5.64 12.66 6.01 13.95 6.69 15.07L5.59 18.5L9.14 17.43C10.21 18.05 11.4 18.37 12.64 18.37C16.5 18.37 19.64 15.24 19.64 11.37C19.64 9.5 18.93 7.73 17.64 6.32H17.6ZM12.64 17.13C11.54 17.13 10.48 16.82 9.56 16.24L9.31 16.09L7.09 16.72L7.73 14.56L7.56 14.29C6.91 13.33 6.56 12.33 6.56 11.29C6.56 8.11 9.28 5.5 12.61 5.5C14.15 5.5 15.6 6.09 16.67 7.15C17.74 8.22 18.33 9.67 18.33 11.21C18.38 14.38 15.66 17.09 12.64 17.09V17.13ZM15.35 12.65C15.16 12.56 14.22 12.09 14.03 12.04C13.85 11.98 13.73 11.95 13.6 12.14C13.48 12.33 13.1 12.74 13 12.87C12.9 13 12.78 13.03 12.59 12.94C12.4 12.85 11.77 12.64 11.03 11.98C10.45 11.47 10.05 10.83 9.93 10.64C9.82 10.45 9.91 10.35 10 10.25C10.08 10.16 10.19 10.02 10.29 9.92C10.39 9.82 10.42 9.74 10.48 9.62C10.53 9.5 10.5 9.4 10.45 9.31C10.4 9.22 10.01 8.27 9.85 7.9C9.69 7.53 9.53 7.58 9.42 7.58C9.31 7.58 9.19 7.55 9.06 7.55C8.94 7.55 8.72 7.6 8.54 7.79C8.35 7.98 7.86 8.45 7.86 9.4C7.86 10.35 8.54 11.26 8.64 11.39C8.74 11.51 10.05 13.47 11.99 14.3C12.35 14.47 12.63 14.56 12.86 14.63C13.22 14.75 13.56 14.73 13.82 14.68C14.12 14.63 14.88 14.22 15.04 13.79C15.2 13.37 15.2 13 15.15 12.92C15.1 12.84 14.98 12.79 14.79 12.7L15.35 12.65Z" />
-                </svg>
-              </SocialIconButton>
-            </Box>
+              </Link>
+            </Stack>
+            <Stack direction="row" spacing={0.5}>
+              <FooterIcon aria-label="Facebook">
+                <FacebookIcon fontSize="small" />
+              </FooterIcon>
+              <FooterIcon aria-label="Instagram">
+                <InstagramIcon fontSize="small" />
+              </FooterIcon>
+              <FooterIcon aria-label="WhatsApp">
+                <WhatsAppIcon fontSize="small" />
+              </FooterIcon>
+            </Stack>
           </Grid>
-
-          {/* Discover Section */}
+          {/* --- Column 2: Discover --- */}
           <Grid item xs={12} sm={6} md={3}>
             <Typography
               variant="h6"
-              sx={{ mb: 3, fontWeight: "normal", fontSize: "1.25rem" }}
+              gutterBottom
+              sx={{ fontWeight: "bold", mb: 2 }}
             >
               Discover
             </Typography>
-            <FooterLink href="#">About Us</FooterLink>
-            <FooterLink href="#">Contact Us</FooterLink>
-            <FooterLink href="#">Payment Method</FooterLink>
-            <FooterLink href="#">Terms and Condition</FooterLink>
-            <FooterLink href="#">Privacy Policy</FooterLink>
-            <FooterLink href="#">Refund & Cancellation Policy</FooterLink>
+            <FooterLink href="/about-us">About Us</FooterLink>
+            <FooterLink href="/contact-us">Contact Us</FooterLink>
+            <FooterLink href="/payment-method">Payment Method</FooterLink>
+            <FooterLink href="/terms-and-conditions">
+              Terms and Condition
+            </FooterLink>
+            <FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
+            <FooterLink href="/refund-cancellation-policy">
+              Refund & Cancellation Policy
+            </FooterLink>
           </Grid>
-
-          {/* Certification Section */}
+          {/* --- Column 3: Certification --- */}
           <Grid item xs={12} sm={6} md={3}>
             <Typography
               variant="h6"
-              sx={{ mb: 3, fontWeight: "normal", fontSize: "1.25rem" }}
+              gutterBottom
+              sx={{ fontWeight: "bold", mb: 2 }}
             >
               Certification
             </Typography>
-            <Grid container spacing={1}>
-              {/* IATA Logo */}
-              <Grid item xs={6}>
-                <CertificationBox>
-                  <Box sx={{ textAlign: "center" }}>
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        display: "block",
-                        color: "#666",
-                        fontSize: "0.7rem",
-                      }}
-                    >
-                      Authorized by
-                    </Typography>
-                    <img
-                      src="/placeholder.svg?height=30&width=60"
-                      alt="IATA"
-                      style={{ maxWidth: "100%", maxHeight: "30px" }}
-                    />
-                  </Box>
-                </CertificationBox>
-              </Grid>
-              {/* ATAB Logo */}
-              <Grid item xs={6}>
-                <CertificationBox>
-                  <Box sx={{ textAlign: "center" }}>
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        display: "block",
-                        color: "#666",
-                        fontSize: "0.7rem",
-                      }}
-                    >
-                      Member of
-                    </Typography>
-                    <img
-                      src="/placeholder.svg?height=30&width=60"
-                      alt="ATAB"
-                      style={{ maxWidth: "100%", maxHeight: "30px" }}
-                    />
-                  </Box>
-                </CertificationBox>
-              </Grid>
-              {/* TOAB Logo */}
-              <Grid item xs={6}>
-                <CertificationBox>
-                  <Box sx={{ textAlign: "center" }}>
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        display: "block",
-                        color: "#666",
-                        fontSize: "0.7rem",
-                      }}
-                    >
-                      Member of
-                    </Typography>
-                    <img
-                      src="/placeholder.svg?height=30&width=60"
-                      alt="TOAB"
-                      style={{ maxWidth: "100%", maxHeight: "30px" }}
-                    />
-                  </Box>
-                </CertificationBox>
-              </Grid>
-              {/* Approved Agent Logo */}
-              <Grid item xs={6}>
-                <CertificationBox>
-                  <Box sx={{ textAlign: "center" }}>
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        display: "block",
-                        color: "#666",
-                        fontSize: "0.7rem",
-                      }}
-                    >
-                      Approved Agent
-                    </Typography>
-                    <img
-                      src="/placeholder.svg?height=30&width=60"
-                      alt="Approved Agent"
-                      style={{ maxWidth: "100%", maxHeight: "30px" }}
-                    />
-                  </Box>
-                </CertificationBox>
-              </Grid>
+            {/* Nested Grid for logos */}
+            <Grid container spacing={1.5}>
+              {certifications.map((cert) => (
+                <Grid
+                  item
+                  xs={4}
+                  key={cert.alt}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={cert.src} // Remember to replace this placeholder
+                    alt={cert.alt}
+                    sx={{
+                      maxWidth: "100%", // Make image responsive within grid item
+                      height: "auto",
+                      maxHeight: "40px", // Limit height if needed
+                      backgroundColor: "white", // Background for visibility if logo is transparent
+                      padding: "4px",
+                      borderRadius: "4px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Grid>
+              ))}
             </Grid>
           </Grid>
-
-          {/* Get In Touch Section */}
+          {/* --- Column 4: Get In Touch --- */}
           <Grid item xs={12} sm={6} md={3}>
             <Typography
               variant="h6"
-              sx={{ mb: 3, fontWeight: "normal", fontSize: "1.25rem" }}
+              gutterBottom
+              sx={{ fontWeight: "bold", mb: 2 }}
             >
               Get In Touch
             </Typography>
-            <Typography variant="body2" sx={{ mb: 2, fontSize: "0.9rem" }}>
+            <Typography variant="body2" sx={{ mb: 2 }}>
               Question or feedback we would love to hear from you
             </Typography>
-            <form onSubmit={handleSubmit}>
-              <TextField
-                fullWidth
-                placeholder="Email Address"
-                variant="outlined"
-                value={email}
-                onChange={handleEmailChange}
-                sx={{
-                  backgroundColor: "white",
-                  borderRadius: "50px",
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: "50px",
-                    "& fieldset": {
-                      borderColor: "transparent",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: "transparent",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "transparent",
-                    },
-                  },
-                }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        type="submit"
-                        edge="end"
-                        sx={{
-                          backgroundColor: "#2ecc9a",
-                          color: "white",
-                          borderRadius: "50%",
-                          width: "36px",
-                          height: "36px",
-                          "&:hover": {
-                            backgroundColor: "#25a07c",
-                          },
-                        }}
-                      >
-                        <SendIcon sx={{ fontSize: "18px" }} />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </form>
+            <FooterTextField
+              variant="outlined"
+              placeholder="Email Address"
+              fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end" sx={{ height: "100%" }}>
+                    <FooterSubmitButton size="small" aria-label="Submit email">
+                      <SendIcon fontSize="small" />
+                    </FooterSubmitButton>
+                  </InputAdornment>
+                ),
+                sx: { paddingRight: 0 }, // Ensure button sits flush
+              }}
+            />
           </Grid>
         </Grid>
-
-        {/* Payment Methods Section */}
-        <Box sx={{ mt: 5, textAlign: "center" }}>
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 1,
-            }}
-          >
-            <Typography variant="body1" sx={{ fontWeight: "500", mr: 1 }}>
+        {/* End of Top 4 Columns Grid */}
+        {/* ============================================ */}
+        {/* Payment Methods Section                     */}
+        {/* ============================================ */}
+        <Grid container spacing={2} sx={{ alignItems: "center", mb: 3, mt: 2 }}>
+          {" "}
+          {/* Add some top margin */}
+          {/* --- Pay With Title --- */}
+          <Grid item xs={12} md={"auto"}>
+            {" "}
+            {/* Let title take auto width */}
+            <Typography
+              variant="body1"
+              sx={{
+                fontWeight: "bold",
+                textAlign: { xs: "center", md: "left" },
+                mr: { md: 2 } /* Margin right on medium+ */,
+              }}
+            >
               Pay With
             </Typography>
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(45px, 1fr))",
-                gap: "5px",
-                maxWidth: "600px",
-                justifyContent: "center",
-              }}
+          </Grid>
+          {/* --- Payment Logos --- */}
+          <Grid item xs={12} md>
+            {" "}
+            {/* Let logos take remaining space */}
+            <Stack
+              direction="row"
+              spacing={1.5} // Adjust spacing between logos
+              useFlexGap // Better spacing control
+              flexWrap="wrap" // Allow logos to wrap on smaller screens
+              sx={{ justifyContent: { xs: "center", md: "flex-start" } }} // Center on mobile, start on desktop
             >
-              {/* Payment method logos - 5 rows of 4 logos each */}
-              {Array.from({ length: 20 }).map((_, index) => (
-                <PaymentMethodBox key={index}>
-                  <img
-                    src="/placeholder.svg?height=20&width=40"
-                    alt={`Payment method ${index + 1}`}
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                  />
-                </PaymentMethodBox>
-              ))}
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                ml: { xs: 0, md: 2 },
-                mt: { xs: 2, md: 0 },
-              }}
-            >
-              <Typography variant="body2" sx={{ mr: 1, whiteSpace: "nowrap" }}>
-                Verified by
-              </Typography>
-              <Box
-                sx={{
-                  backgroundColor: "white",
-                  borderRadius: "4px",
-                  p: 0.5,
-                  height: "30px",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <img
-                  src="/placeholder.svg?height=20&width=100"
-                  alt="SSL Commerz"
-                  style={{ height: "100%", maxWidth: "100px" }}
+              {paymentMethods.map((method) => (
+                <Box
+                  key={method.alt}
+                  component="img"
+                  src={method.src} // Remember to replace this placeholder
+                  alt={method.alt}
+                  sx={{
+                    height: "25px", // Adjust height as needed
+                    width: "auto",
+                    backgroundColor: "white",
+                    padding: "3px",
+                    borderRadius: "3px",
+                    objectFit: "contain",
+                    verticalAlign: "middle", // Align logos nicely if they wrap
+                  }}
                 />
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-
-        <Divider
-          sx={{ backgroundColor: "rgba(255,255,255,0.2)", my: 2, mt: 4 }}
-        />
-
-        {/* Copyright Section */}
-        <Typography
-          variant="body2"
-          align="center"
-          sx={{ mt: 2, fontSize: "0.85rem" }}
-        >
-          © Copyright 2025 by Fly Far Tech | B2C OTA Portal
+              ))}
+            </Stack>
+          </Grid>
+          {/* --- SSL Commerz Verification --- */}
+          <Grid
+            item
+            xs={12}
+            md={"auto"}
+            sx={{
+              textAlign: { xs: "center", md: "right" },
+              mt: { xs: 2, md: 0 },
+            }}
+          >
+            {" "}
+            {/* Auto width, add top margin on mobile */}
+            <Typography
+              variant="caption"
+              sx={{ display: "inline-block", mr: 1 }}
+            >
+              Verified By:
+            </Typography>
+            <Box
+              component="img"
+              src="/images/payment/sslcommerz.png" // Replace with actual path
+              alt="SSLCommerz Verified"
+              sx={{ height: "30px", width: "auto", verticalAlign: "middle" }}
+            />
+          </Grid>
+        </Grid>
+        {/* End of Payment Methods Section */}
+        {/* ============================================ */}
+        {/* Divider and Copyright                       */}
+        {/* ============================================ */}
+        <Divider sx={{ borderColor: "rgba(255, 255, 255, 0.3)", mb: 2 }} />
+        <Typography variant="body2" align="center">
+          © Copyright {currentYear} by Fly Far Tech | B2C OTA Portal
         </Typography>
       </Container>
-    </FooterContainer>
+    </FooterWrapper>
   );
 };
 

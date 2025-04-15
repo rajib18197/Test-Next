@@ -54,7 +54,7 @@ export default function FlightDetailsDrawer({
 
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: "900px" }}
+      sx={{ width: "800px" }}
       role="presentation"
       //   onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -85,6 +85,7 @@ export default function FlightDetailsDrawer({
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
+            style={{ width: "800px" }}
           >
             {list(anchor)}
           </Drawer>

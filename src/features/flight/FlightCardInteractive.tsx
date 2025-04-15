@@ -12,6 +12,7 @@ import LuggageIcon from "@mui/icons-material/Luggage";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import FlightDetailsDrawer from "../../ui/Drawer";
 import FlightDetails from "./FlightDetails";
+import { useState } from "react";
 
 // Custom styled components
 const StyledCard = styled(Card)({
@@ -128,6 +129,7 @@ interface FlightCardProps {
   currentPrice: number;
   originalPrice?: number;
   flight: any;
+  onStatusChange: any;
 }
 
 function formatDate(dateStr: string) {
@@ -147,7 +149,7 @@ function formatTime(dateStr: string) {
   }); // e.g., 16:35
 }
 
-const FlightCard: React.FC<FlightCardProps> = ({
+const FlightCardInteractive: React.FC<FlightCardProps> = ({
   airlineName,
   airlineLogo,
   flightNumber,
@@ -167,6 +169,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
   currentPrice,
   originalPrice,
   flight,
+  onStatusChange,
 }) => {
   return (
     <StyledCard>
@@ -269,6 +272,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
                     width: "80px",
                     height: "80px",
                   }}
+                  onClick={() => onStatusChange("from-to")}
                 >
                   <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"></path>
                 </svg>
@@ -284,6 +288,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
                     height: "80px",
                     transform: "rotate(-90deg) translateX(30px)",
                   }}
+                  onClick={() => onStatusChange("to-from")}
                 >
                   <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"></path>
                 </svg>
@@ -385,7 +390,11 @@ const FlightCard: React.FC<FlightCardProps> = ({
               />
               <Typography
                 variant="body2"
-                sx={{ color: "#4cd3a5", fontSize: "15px" }}
+                sx={{
+                  color: "#4cd3a5",
+                  fontSize: "15px",
+                  padding: "0 20px 0 0",
+                }}
               >
                 {baggage}
               </Typography>
@@ -393,185 +402,8 @@ const FlightCard: React.FC<FlightCardProps> = ({
           </Box>
         </Box>
       </FlightInfoSection>
-
-      {/* Price and Booking Box - Completely separate section */}
-      <PriceSection
-        elevation={0}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-end",
-        }}
-      >
-        <Typography
-          variant="h6"
-          sx={{
-            color: "#4cd3a5",
-            // fontWeight: "bold",
-            fontSize: "30px",
-            display: "flex",
-            // alignItems: "center",
-            // justifyContent: "flex-end",
-            mb: 0.5,
-          }}
-        >
-          {/* <Box component="span" sx={{ fontSize: "0.9rem", mr: 0.5 }}>
-          </Box> */}
-          ৳ {currentPrice.toLocaleString()}
-        </Typography>
-        {originalPrice && (
-          <Typography
-            variant="body2"
-            sx={{
-              color: "#4cd3a5",
-              textDecoration: "line-through",
-              fontSize: "16px",
-              display: "flex",
-              alignItems: "center",
-              mb: "auto",
-            }}
-          >
-            ৳ {originalPrice.toLocaleString()}
-          </Typography>
-        )}
-        <Box mb={1}>
-          <BookNowButton
-            variant="contained"
-            size="small"
-            style={{ fontSize: "12px", padding: "10px 16px", lineHeight: 1 }}
-          >
-            BOOK NOW
-          </BookNowButton>
-        </Box>
-
-        <FlightDetailsDrawer>
-          <FlightDetails
-            flight={flight}
-            outboundFlight={{
-              airline: flight.segments.go[0].marketingcareerName,
-              flightNumber: `${flight.segments.go[0].marketingcareer}${flight.segments.go[0].marketingflight}`,
-              operator: `Operated By ${flight.segments.go[0].operatingcareer}`,
-              departureCode: flight.segments.go[0].departure,
-              departureCity: flight.segments.go[0].departureLocation
-                .split(",")[0]
-                .trim(),
-              departureCountry: flight.segments.go[0].departureLocation
-                .split(",")[1]
-                .trim(),
-              departureAirport:
-                flight.segments.go[0].departureAirport.slice(0, 10) + "...",
-              departureAirportFull: flight.segments.go[0].departureAirport,
-              departureDate: formatDate(flight.segments.go[0].departureTime),
-              departureTime: formatTime(flight.segments.go[0].departureTime),
-              arrivalCode: flight.segments.go[0].arrival,
-              arrivalCity: flight.segments.go[0].arrivalLocation
-                .split(",")[0]
-                .trim(),
-              arrivalCountry: flight.segments.go[0].arrivalLocation
-                .split(",")[1]
-                .trim(),
-              arrivalAirport:
-                flight.segments.go[0].arrivalAirport.slice(0, 10) + "...",
-              arrivalAirportFull: flight.segments.go[0].arrivalAirport,
-              arrivalDate: formatDate(flight.segments.go[0].arrivalTime),
-              arrivalTime: formatTime(flight.segments.go[0].arrivalTime),
-              duration: flight.segments.go[0].flightduration,
-            }}
-            returnFlight={{
-              airline: flight.segments.back[0].marketingcareerName,
-              flightNumber: `${flight.segments.back[0].marketingcareer}${flight.segments.back[0].marketingflight}`,
-              operator: `Operated By ${flight.segments.back[0].operatingcareer}`,
-              departureCode: flight.segments.back[0].departure,
-              departureCity: flight.segments.back[0].departureLocation
-                .split(",")[0]
-                .trim(),
-              departureCountry: flight.segments.back[0].departureLocation
-                .split(",")[1]
-                .trim(),
-              departureAirport:
-                flight.segments.back[0].departureAirport.slice(0, 10) + "...",
-              departureAirportFull: flight.segments.back[0].departureAirport,
-              departureDate: formatDate(flight.segments.back[0].departureTime),
-              departureTime: formatTime(flight.segments.back[0].departureTime),
-              arrivalCode: flight.segments.back[0].arrival,
-              arrivalCity: flight.segments.back[0].arrivalLocation
-                .split(",")[0]
-                .trim(),
-              arrivalCountry: flight.segments.back[0].arrivalLocation
-                .split(",")[1]
-                .trim(),
-              arrivalAirport:
-                flight.segments.back[0].arrivalAirport.slice(0, 10) + "...",
-              arrivalAirportFull: flight.segments.back[0].arrivalAirport,
-              arrivalDate: formatDate(flight.segments.back[0].arrivalTime),
-              arrivalTime: formatTime(flight.segments.back[0].arrivalTime),
-              duration: flight.segments.back[0].flightduration,
-            }}
-            fareSummary={{
-              baseFare: Number(flight.BasePrice),
-              taxFees: Number(flight.Taxes),
-              totalCost: Number(flight.customerPrice),
-              discount:
-                Number(flight.BasePrice) +
-                Number(flight.Taxes) -
-                Number(flight.customerPrice),
-              grandTotal: Number(flight.netfare),
-            }}
-          />
-
-          {/* <FlightDetails
-            outboundFlight={{
-              airline: "Biman Bangladesh",
-              flightNumber: "BG-437 & G",
-              operator: "Operated By BG",
-              departureCode: "DAC",
-              departureCity: "Dhaka",
-              departureCountry: "BD",
-              departureAirport: "Hazrat Shahj...",
-              departureAirportFull: "Hazrat Shahjalal International Airport",
-              departureDate: "13 Apr 2025",
-              departureTime: "15:30",
-              arrivalCode: "CXB",
-              arrivalCity: "Coxs Bazar",
-              arrivalCountry: "BD",
-              arrivalAirport: "COXs B...",
-              arrivalAirportFull: "COXs Bazar International Airport",
-              arrivalDate: "13 Apr 2025",
-              arrivalTime: "16:45",
-              duration: "1H 15Min",
-            }}
-            returnFlight={{
-              airline: "Biman Bangladesh",
-              flightNumber: "BG-434 & G",
-              operator: "Operated By BG",
-              departureCode: "CXB",
-              departureCity: "Coxs Bazar",
-              departureCountry: "BD",
-              departureAirport: "COXs B...",
-              departureAirportFull: "COXs Bazar International Airport",
-              departureDate: "15 Apr 2025",
-              departureTime: "11:55",
-              arrivalCode: "DAC",
-              arrivalCity: "Dhaka",
-              arrivalCountry: "BD",
-              arrivalAirport: "Hazrat Shahj...",
-              arrivalAirportFull: "Hazrat Shahjalal International Airport",
-              arrivalDate: "15 Apr 2025",
-              arrivalTime: "13:00",
-              duration: "1H 5Min",
-            }}
-            fareSummary={{
-              baseFare: 10048,
-              taxFees: 2350,
-              totalCost: 12398,
-              discount: 1118,
-              grandTotal: 11280,
-            }}
-          /> */}
-        </FlightDetailsDrawer>
-      </PriceSection>
     </StyledCard>
   );
 };
 
-export default FlightCard;
+export default FlightCardInteractive;

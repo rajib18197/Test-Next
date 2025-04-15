@@ -13,14 +13,16 @@ import {
   TableRow,
   Grid,
 } from "@mui/material";
+import FlightCardInteractive from "./FlightCardInteractive";
+import { useState } from "react";
 // Custom styled components
 const FlightDetailsContainer = styled(Paper)({
   borderRadius: 8,
   boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
   overflow: "hidden",
-  width: "100%",
-  maxWidth: "900px",
-  margin: "0 auto",
+  // width: "100%",
+  width: "800px",
+  // margin: "0 auto",
 });
 
 const SectionHeader = styled(Box)({
@@ -113,6 +115,7 @@ const PolicyBox = styled(Box)({
   fontWeight: "bold",
   color: "#333",
   textAlign: "center",
+  width: "130px",
   marginBottom: "8px",
 });
 
@@ -191,13 +194,106 @@ interface FlightDetailsProps {
   };
 }
 
+function formatDate(dateStr: string) {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }); // e.g., 23 Apr 2025
+}
+
+function formatTime(dateStr: string) {
+  const date = new Date(dateStr);
+  return date.toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+  }); // e.g., 16:35
+}
+
 const FlightDetails: React.FC<FlightDetailsProps> = ({
   outboundFlight,
   returnFlight,
   fareSummary,
+  flight,
 }) => {
+  const [status, setStatus] = useState("from-to");
+
   return (
     <FlightDetailsContainer>
+      {status === "from-to" ? (
+        <FlightCardInteractive
+          airlineLogo=""
+          airlineName={flight.segments.go[0].marketingcareerName}
+          flightNumber={`${flight.segments.go[0].marketingcareer}-${flight.segments.go[0].marketingflight}`}
+          departureCode={flight.segments.go[0].departure}
+          departureAirport={flight.segments.go[0].departureAirport}
+          departureTime={formatTime(flight.segments.go[0].departureTime)}
+          departureDate={flight.godepartureDate}
+          arrivalCode={flight.segments.go[0].arrival}
+          arrivalAirport={flight.segments.go[0].arrivalAirport}
+          arrivalTime={formatTime(flight.segments.go[0].arrivalTime)}
+          arrivalDate={flight.goarrivalDate}
+          duration={flight.goflightduration}
+          flightType={
+            flight.transit.go.transit1 === "0" ? "NON STOP" : "Transit"
+          }
+          refundable={flight.refundable}
+          flightClass={flight.class}
+          baggage={`${flight.bags} Kg`}
+          currentPrice={flight.netfare}
+          originalPrice={flight.customerPrice}
+          flight={flight}
+          onStatusChange={setStatus}
+        />
+      ) : status === "to-from" ? (
+        <FlightCardInteractive
+          airlineLogo=""
+          airlineName={flight.segments.back[0].marketingcareerName}
+          flightNumber={`${flight.segments.back[0].marketingcareer}-${flight.segments.back[0].marketingflight}`}
+          departureCode={flight.segments.back[0].departure}
+          departureAirport={flight.segments.back[0].departureAirport}
+          departureTime={formatTime(flight.segments.back[0].departureTime)}
+          departureDate={flight.backdepartureDate}
+          arrivalCode={flight.segments.back[0].arrival}
+          arrivalAirport={flight.segments.back[0].arrivalAirport}
+          arrivalTime={formatTime(flight.segments.back[0].arrivalTime)}
+          arrivalDate={flight.backarrivalDate}
+          duration={flight.backflightduration}
+          flightType={
+            flight.transit.back.transit1 === "0" ? "NON STOP" : "Transit"
+          }
+          refundable={flight.refundable}
+          flightClass={flight.class}
+          baggage={`${flight.bags} Kg`}
+          currentPrice={flight.netfare}
+          originalPrice={flight.customerPrice}
+          flight={flight}
+          onStatusChange={setStatus}
+        />
+      ) : null}
+
+      {/* <FlightCardInteractive
+        airlineLogo=""
+        airlineName={flight.segments.go[0].marketingcareerName} // "USBangla Airlines"
+        flightNumber={`${flight.segments.go[0].marketingcareer}-${flight.segments.go[0].marketingflight}`} // "BS-157"
+        departureCode={flight.segments.go[0].departure} // "DAC"
+        departureAirport={flight.segments.go[0].departureAirport} // "Hazrat Shahjalal Intl Airport"
+        departureTime={formatTime(flight.segments.go[0].departureTime)} // "16:35"
+        departureDate={flight.godepartureDate} // "Wed 23 Apr 2025"
+        arrivalCode={flight.segments.go[0].arrival} // "CXB"
+        arrivalAirport={flight.segments.go[0].arrivalAirport} // "Cox's Bazar Airport"
+        arrivalTime={formatTime(flight.segments.go[0].arrivalTime)} // "17:40"
+        arrivalDate={flight.goarrivalDate} // "Wed 23 Apr 2025"
+        duration={flight.goflightduration} // "1H 5Min"
+        flightType={flight.transit.go.transit1 === "0" ? "NON STOP" : "Transit"} // "NON STOP"
+        refundable={flight.refundable} // "Refundable"
+        flightClass={flight.class} // "economy"
+        baggage={`${flight.bags} Kg`} // "20 Kg"
+        currentPrice={flight.netfare} // 11128
+        originalPrice={flight.customerPrice} // 12398
+        flight={flight}
+      /> */}
       {/* Header */}
       <SectionHeader>
         <Typography
@@ -569,30 +665,36 @@ const FlightDetails: React.FC<FlightDetailsProps> = ({
       </SectionHeader>
 
       <Box p={2}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+        <div
+          style={{
+            display: "grid",
+            gap: "10px",
+            gridTemplateColumns: "1fr 1fr",
+          }}
+        >
+          <div>
             <PolicyBox>Cancellation</PolicyBox>
             <PolicyText>
               Refund Amount = Paid Amount - Airline Cancellation Fee
             </PolicyText>
-          </Grid>
-          <Grid item xs={12} md={6}>
+          </div>
+          <div>
             <PolicyBox>Re-Issue</PolicyBox>
             <PolicyText>
               Re-issue Fee = Airline's Fee + Fare Difference
             </PolicyText>
-          </Grid>
-          <Grid item xs={12} md={6}>
+          </div>
+          <div>
             <PolicyBox>Refund</PolicyBox>
             <PolicyText>
               Refund Fee = Airline's Fee + Fare Difference
             </PolicyText>
-          </Grid>
-          <Grid item xs={12} md={6}>
+          </div>
+          <div>
             <PolicyBox>Void</PolicyBox>
             <PolicyText>Void Fee = Airline's Fee + Fare Difference</PolicyText>
-          </Grid>
-        </Grid>
+          </div>
+        </div>
       </Box>
 
       {/* Footer with Book & Hold */}

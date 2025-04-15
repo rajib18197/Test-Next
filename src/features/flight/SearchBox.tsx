@@ -22,6 +22,7 @@ import HotelBookingWidget from "../hotel/HotelBooking";
 import { useNavigate } from "react-router";
 
 import { getAllAirportsData } from "../../services/api/apiRoundways";
+import TourBookingWidget from "../tour/TourBooking";
 const allAirports = getAllAirportsData();
 
 const StyledTabs = styled(Tabs)({
@@ -606,6 +607,7 @@ export default function SearchBox() {
         )}
 
         {tabValue === 1 && <HotelBookingWidget />}
+        {tabValue === 2 && <TourBookingWidget />}
       </Container>
     </Container>
   );
