@@ -8,13 +8,73 @@ import {
   Paper,
   useTheme,
   useMediaQuery,
+  ClickAwayListener,
+  Popper,
 } from "@mui/material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import DatePicker from "../flight/DatePicker";
+import { styled } from "@mui/system";
+import { LocationOn } from "@mui/icons-material";
+import DestinationSelector from "./DestinationSelector";
+import { useState } from "react";
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }); // e.g., 23 Apr 2025
+}
+
+const LocationField = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  backgroundColor: "#e3f2fd",
+  borderRadius: "4px",
+  padding: "12px",
+  // marginBottom: "10px",
+});
+const StyledPopper = styled(Popper)(({ theme }) => ({
+  borderRadius: 6,
+  width: 300,
+  fontSize: 13,
+}));
 
 const HotelBookingWidget: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [selectedCity, setSelectedCity] = useState("DHAKA, Bangladesh");
+  const [checkInDate, setCheckInDate] = useState(new Date());
+  const [checkOutDate, setCheckOutDate] = useState(new Date());
+
+  const open = Boolean(anchorEl);
+  const id = open ? "date-picker-popover" : undefined;
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (anchorEl) {
+      setAnchorEl(null); // toggle off
+    } else {
+      setAnchorEl(event.currentTarget);
+    }
+  };
+
+  const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
+    // Don't close if select is open
+    if (isSelectOpen) {
+      return;
+    }
+
+    // Prevent closing when clicking on month or year selectors
+    const target = event.target as HTMLElement;
+    if (
+      target.closest(".MuiSelect-select") ||
+      target.closest(".MuiMenu-paper")
+    ) {
+      return;
+    }
+
+    setAnchorEl(null);
+  };
 
   return (
     <Paper
@@ -64,26 +124,60 @@ const HotelBookingWidget: React.FC = () => {
               color: "#00c4a7",
               fontWeight: 500,
               fontSize: "30px",
-              mb: "8px",
+              mb: "auto",
             }}
           >
-            DHAKA
+            {selectedCity.split(",")[0]}
           </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              bgcolor: "#f0f7ff",
-              p: 1,
-              borderRadius: "4px",
-              width: "fit-content",
+
+          <div style={{ width: "100%" }}>
+            <LocationField
+              onClick={handleClick}
+              sx={{
+                minHeight: 0,
+                minWidth: 0,
+                p: 0,
+                borderRadius: "4px",
+                cursor: "pointer",
+              }}
+            >
+              <LocationOn
+                sx={{
+                  color: "#d7e7f4",
+                  mr: 1,
+                  bgcolor: "#32d095",
+                  p: "4px 11px",
+                  borderTopLeftRadius: "4px",
+                  borderBottomLeftRadius: "4px",
+                }}
+              />
+              <Typography sx={{ color: "#666", fontSize: "14px" }}>
+                {selectedCity}
+              </Typography>
+            </LocationField>
+          </div>
+
+          <StyledPopper
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            placement="bottom-start"
+            style={{
+              width: "100%,",
+              padding: "4px 6px",
+              // background: "#32d095",
+              borderRadius: "0 !important",
             }}
           >
-            <LocationOnIcon sx={{ color: "#00c4a7", fontSize: 20, mr: 0.5 }} />
-            <Typography variant="body2" sx={{ color: "#555" }}>
-              DHAKA BANGLADESH
-            </Typography>
-          </Box>
+            <ClickAwayListener onClickAway={handleClose}>
+              <DestinationSelector
+                onSelectCity={(city: string) => {
+                  setSelectedCity(city.toUpperCase()); // Optional: Uppercase display
+                  setAnchorEl(null); // close popper after selection
+                }}
+              />
+            </ClickAwayListener>
+          </StyledPopper>
         </Box>
 
         {/* Check In Section */}
@@ -116,9 +210,9 @@ const HotelBookingWidget: React.FC = () => {
               mb: "8px",
             }}
           >
-            13 APR, 2025
+            {formatDate(checkInDate)}
           </Typography>
-          <DatePicker />
+          <DatePicker onChange={setCheckInDate} />
         </Box>
 
         {/* Check Out Section */}
@@ -151,9 +245,9 @@ const HotelBookingWidget: React.FC = () => {
               mb: "8px",
             }}
           >
-            13 APR, 2025
+            {formatDate(checkOutDate)}
           </Typography>
-          <DatePicker />
+          <DatePicker onChange={setCheckOutDate} />
         </Box>
       </Box>
 
