@@ -253,11 +253,17 @@ export default function AirportSelection({ initialValue, setAirport }) {
   const open = Boolean(anchorEl);
   const id = open ? "github-label" : undefined;
   // console.log(filteredOptions[0], 1817);
-  const text = value || textValue || filteredOptions[initialValue % 7];
+  const text =
+    value ||
+    textValue ||
+    filteredOptions[
+      initialValue > 6 ? initialValue - initialValue : initialValue
+    ];
 
   if (labels.length === 0) return null;
   // console.log(labels);
   // console.log(text, initialValue);
+  console.log(filteredOptions, initialValue);
 
   return (
     <div

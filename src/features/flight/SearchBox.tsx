@@ -133,8 +133,8 @@ export default function SearchBox() {
     city: "Cox's Bazar",
     country: "Bangladesh",
   });
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
+  const [fromDate, setFromDate] = useState(new Date("23 Apr 2025"));
+  const [toDate, setToDate] = useState(new Date("30 Apr 2025"));
 
   const { handleSearch } = useSearch();
 
@@ -156,6 +156,32 @@ export default function SearchBox() {
           toNum: last.toNum + 1,
         },
       ];
+    });
+  }
+
+  function removeNewCity(city) {
+    setCities((prevCities) => {
+      const cities = prevCities.filter((prev) => {
+        if (prev.fromNum === city.fromNum && prev.toNum === city.toNum) {
+          return false;
+        }
+        return true;
+      });
+
+      return cities.map((prev, i) => {
+        if (i >= 2) {
+          const last = cities[i - 1];
+          const newCity = allAirports[cities[i - 1].toNum + 1];
+          return {
+            ...prev,
+            from: { ...last.to },
+            to: newCity,
+            fromNum: last.toNum,
+            toNum: last.toNum + 1,
+          };
+        }
+        return prev;
+      });
     });
   }
 
@@ -469,7 +495,9 @@ export default function SearchBox() {
                   setFromDate={setFromDate}
                 />
               )}
-              {tripType === "multi-city" && <MultiCity cities={cities} />}
+              {tripType === "multi-city" && (
+                <MultiCity cities={cities} removeNewCity={removeNewCity} />
+              )}
             </Box>
 
             <Box

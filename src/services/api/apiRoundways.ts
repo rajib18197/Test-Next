@@ -45,7 +45,7 @@ interface FlightApiData {
 }
 
 export async function getRoundwaysFlightsData(searchFields: SearchContext) {
-  await delay(500);
+  await delay(10000);
 
   const data = JSON.parse(JSON.stringify(roundwaysJSON));
   console.log(searchFields);

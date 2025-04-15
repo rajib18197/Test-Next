@@ -10,6 +10,7 @@ import DepartureTimesFilter from "../features/flight/Departure";
 import { useEffect, useState } from "react";
 import { useSearch } from "../context/SearchContext";
 import { getRoundwaysFlightsData } from "../services/api/apiRoundways";
+import ShimmerLoadingEffect from "../ui/Shimmer";
 
 // Custom airline logos
 const BSLogo = () => (
@@ -88,6 +89,10 @@ export default function Flights() {
 
     loadFlights();
   }, []);
+
+  if (isLoading) {
+    return <ShimmerLoadingEffect />;
+  }
 
   return (
     <Container>

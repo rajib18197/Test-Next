@@ -10,7 +10,8 @@ import { useState } from "react";
 //   "airportName": "Hazrat Shahjalal Intl Airport",
 //   "acronym": "DAC"
 // },
-export default function MultiCity({ cities = [] }) {
+export default function MultiCity({ cities = [], removeNewCity }) {
+  console.log(cities);
   return (
     <>
       {cities.map((city, i) => {
@@ -22,6 +23,7 @@ export default function MultiCity({ cities = [] }) {
               flexDirection: { xs: "column", md: "row" },
               width: "100%",
             }}
+            onClick={() => removeNewCity(city)}
           >
             <SelectionBox labelText={"FROM"} acronym={city.from.acronym}>
               <AirportSelection

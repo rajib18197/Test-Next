@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
-import { useSearch } from "../../context/SearchContext";
 import FlightCard from "./FlightCard";
-import { getRoundwaysFlightsData } from "../../services/api/apiRoundways";
 
 const formatTime = (isoString) =>
   new Date(isoString).toLocaleTimeString([], {
