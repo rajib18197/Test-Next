@@ -16,6 +16,7 @@ import { styled } from "@mui/system";
 import { LocationOn } from "@mui/icons-material";
 import DestinationSelector from "./DestinationSelector";
 import { useState } from "react";
+import GuestInfo from "./GuestInfo";
 
 function formatDate(date: Date) {
   return date.toLocaleDateString("en-GB", {
@@ -42,10 +43,10 @@ const StyledPopper = styled(Popper)(({ theme }) => ({
 const HotelBookingWidget: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [selectedCity, setSelectedCity] = useState("DHAKA, Bangladesh");
   const [checkInDate, setCheckInDate] = useState(new Date());
   const [checkOutDate, setCheckOutDate] = useState(new Date());
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const open = Boolean(anchorEl);
   const id = open ? "date-picker-popover" : undefined;
@@ -252,57 +253,7 @@ const HotelBookingWidget: React.FC = () => {
       </Box>
 
       {/* Right Section: Guests & Rooms */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: "12px",
-          borderRadius: "10px",
-          bgcolor: "white",
-        }}
-      >
-        <Box>
-          <Typography
-            variant="body2"
-            sx={{
-              color: "#00c4a7",
-              fontWeight: 500,
-              mb: 1,
-            }}
-          >
-            Guests & Rooms
-          </Typography>
-          <Box
-            sx={{
-              bgcolor: "#f0f7ff",
-              // p: 1.5,
-              borderRadius: "4px",
-              mb: 2,
-              width: "100%",
-            }}
-          >
-            <Typography variant="body2" sx={{ color: "#555" }}>
-              1 ROOM, 1 GUESTS, 1 ADULTS
-            </Typography>
-          </Box>
-        </Box>
-        <Button
-          variant="contained"
-          fullWidth
-          sx={{
-            bgcolor: "#00c4a7",
-            color: "white",
-            "&:hover": {
-              bgcolor: "#00a08a",
-            },
-            textTransform: "uppercase",
-            py: 1.5,
-          }}
-        >
-          SEARCH FOR HOTEL
-        </Button>
-      </Box>
+      <GuestInfo />
     </Paper>
   );
 };
