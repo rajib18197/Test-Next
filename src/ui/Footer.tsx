@@ -2,7 +2,6 @@ import React from "react";
 import {
   Box,
   Container,
-  Grid,
   Typography,
   Link,
   TextField,
@@ -10,7 +9,7 @@ import {
   Divider,
   Stack,
   InputAdornment,
-  styled, // Import styled utility
+  styled,
 } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EmailIcon from "@mui/icons-material/Email";
@@ -19,16 +18,6 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import SendIcon from "@mui/icons-material/Send";
-
-// --- Styled Components (for cleaner component structure) ---
-
-const FooterWrapper = styled(Box)(({ theme }) => ({
-  backgroundColor: "#1abc9c", // Approximate green color from image
-  color: "#ffffff",
-  paddingTop: theme.spacing(6),
-  paddingBottom: theme.spacing(2),
-  fontSize: "0.875rem",
-}));
 
 const FooterLink = styled(Link)(({ theme }) => ({
   color: "#ffffff",
@@ -44,91 +33,69 @@ const FooterIcon = styled(IconButton)(({ theme }) => ({
   color: "#ffffff",
   padding: theme.spacing(0.5),
   marginRight: theme.spacing(1),
-  border: "1px solid rgba(255, 255, 255, 0.5)", // Optional border like in design
-  borderRadius: "50%", // Make it circular
+  border: "1px solid rgba(255, 255, 255, 0.5)",
+  borderRadius: "50%",
   "&:hover": {
     backgroundColor: "rgba(255, 255, 255, 0.1)",
   },
-  // Ensure consistent size
   width: "32px",
   height: "32px",
 }));
 
 const FooterTextField = styled(TextField)(({ theme }) => ({
   "& .MuiOutlinedInput-root": {
-    backgroundColor: "#ffffff", // White background for the input
-    borderRadius: "20px", // Rounded corners
-    paddingRight: 0, // Remove default padding to place icon button nicely
+    backgroundColor: "#ffffff",
+    borderRadius: "20px",
+    paddingRight: 0,
     "& fieldset": {
-      borderColor: "transparent", // Hide default border
+      borderColor: "transparent",
     },
     "&:hover fieldset": {
       borderColor: "transparent",
     },
     "&.Mui-focused fieldset": {
-      borderColor: "transparent", // Hide focus border
+      borderColor: "transparent",
     },
   },
   "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1.5), // Adjust padding
-    color: "#333", // Darker text color inside input
-    fontSize: "0.875rem", // Match other footer text size
+    padding: theme.spacing(1, 1.5),
+    color: "#333",
+    fontSize: "0.875rem",
   },
 }));
 
 const FooterSubmitButton = styled(IconButton)(({ theme }) => ({
-  backgroundColor: "#16a085", // Slightly darker green for button
+  backgroundColor: "#16a085",
   color: "#ffffff",
-  padding: theme.spacing(0.8), // Adjust padding for visual balance
+  padding: theme.spacing(0.8),
   "&:hover": {
-    backgroundColor: "#117e6b", // Darker on hover
+    backgroundColor: "#117e6b",
   },
 }));
 
-// --- Placeholder Data (Replace with actual image paths/URLs) ---
-
 const certifications = [
-  { alt: "Tata", src: "/images/placeholder-logo.png" }, // Replace
-  { alt: "ATAB", src: "/images/placeholder-logo.png" }, // Replace
-  { alt: "TOAB", src: "/images/placeholder-logo.png" }, // Replace
-  { alt: "IATA", src: "/images/placeholder-logo.png" }, // Replace
-  { alt: "Bangladesh Parjatan", src: "/images/placeholder-logo.png" }, // Replace
+  { alt: "Tata", src: "/download (1).png" },
+  { alt: "ATAB", src: "/download (2).png" },
+  { alt: "TOAB", src: "/download (3).png" },
+  { alt: "IATA", src: "/download (4).png" },
+  { alt: "Bangladesh Parjatan", src: "/download.png" },
 ];
-
-const paymentMethods = [
-  { alt: "Visa", src: "/images/payment/visa.png" }, // Replace
-  { alt: "Mastercard", src: "/images/payment/mastercard.png" }, // Replace
-  { alt: "Amex", src: "/images/payment/amex.png" }, // Replace
-  { alt: "UnionPay", src: "/images/payment/unionpay.png" }, // Replace
-  { alt: "DBBL", src: "/images/payment/dbbl.png" }, // Replace
-  { alt: "City Bank", src: "/images/payment/citybank.png" }, // Replace
-  { alt: "MTB", src: "/images/payment/mtb.png" }, // Replace
-  { alt: "Bkash", src: "/images/payment/bkash.png" }, // Replace
-  { alt: "Nagad", src: "/images/payment/nagad.png" }, // Replace
-  { alt: "Upay", src: "/images/payment/upay.png" }, // Replace
-  // Add other logos from the design as needed
-];
-
-// --- Footer Component ---
 
 const Footer: React.FC = () => {
-  const currentYear = new Date().getFullYear(); // Get current year dynamically
+  const currentYear = new Date().getFullYear();
 
   return (
-    <FooterWrapper component="footer">
+    <footer style={{ fontFamily: "sans-serif", width: "100%" }}>
       <Container maxWidth="lg">
-        {" "}
-        {/* Limits max width and centers content */}
-        {/* ============================================ */}
-        {/* Top Section: 4 Columns Grid Layout          */}
-        {/* ============================================ */}
-        <Grid container spacing={4} sx={{ mb: 4 }}>
-          {" "}
-          {/* spacing adds gaps between columns */}
-          {/* --- Column 1: Need Help --- */}
-          <Grid item xs={12} sm={6} md={3}>
-            {" "}
-            {/* xs: full width, sm: half width, md: quarter width */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr max-content max-content max-content",
+            gap: "40px",
+            marginBottom: "30px",
+          }}
+        >
+          <div>
             <Typography
               variant="h6"
               gutterBottom
@@ -190,9 +157,9 @@ const Footer: React.FC = () => {
                 <WhatsAppIcon fontSize="small" />
               </FooterIcon>
             </Stack>
-          </Grid>
-          {/* --- Column 2: Discover --- */}
-          <Grid item xs={12} sm={6} md={3}>
+          </div>
+
+          <div>
             <Typography
               variant="h6"
               gutterBottom
@@ -210,9 +177,8 @@ const Footer: React.FC = () => {
             <FooterLink href="/refund-cancellation-policy">
               Refund & Cancellation Policy
             </FooterLink>
-          </Grid>
-          {/* --- Column 3: Certification --- */}
-          <Grid item xs={12} sm={6} md={3}>
+          </div>
+          <div>
             <Typography
               variant="h6"
               gutterBottom
@@ -220,39 +186,35 @@ const Footer: React.FC = () => {
             >
               Certification
             </Typography>
-            {/* Nested Grid for logos */}
-            <Grid container spacing={1.5}>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr",
+                gap: "8px",
+              }}
+            >
               {certifications.map((cert) => (
-                <Grid
-                  item
-                  xs={4}
-                  key={cert.alt}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
+                <div>
                   <Box
                     component="img"
-                    src={cert.src} // Remember to replace this placeholder
+                    src={cert.src}
                     alt={cert.alt}
                     sx={{
-                      maxWidth: "100%", // Make image responsive within grid item
+                      maxWidth: "100%",
                       height: "auto",
-                      maxHeight: "40px", // Limit height if needed
-                      backgroundColor: "white", // Background for visibility if logo is transparent
+                      maxHeight: "40px",
+                      backgroundColor: "white",
                       padding: "4px",
                       borderRadius: "4px",
                       objectFit: "contain",
                     }}
                   />
-                </Grid>
+                </div>
               ))}
-            </Grid>
-          </Grid>
-          {/* --- Column 4: Get In Touch --- */}
-          <Grid item xs={12} sm={6} md={3}>
+            </div>
+          </div>
+          <div>
             <Typography
               variant="h6"
               gutterBottom
@@ -275,99 +237,37 @@ const Footer: React.FC = () => {
                     </FooterSubmitButton>
                   </InputAdornment>
                 ),
-                sx: { paddingRight: 0 }, // Ensure button sits flush
+                sx: { paddingRight: 0 },
               }}
             />
-          </Grid>
-        </Grid>
-        {/* End of Top 4 Columns Grid */}
-        {/* ============================================ */}
-        {/* Payment Methods Section                     */}
-        {/* ============================================ */}
-        <Grid container spacing={2} sx={{ alignItems: "center", mb: 3, mt: 2 }}>
-          {" "}
-          {/* Add some top margin */}
-          {/* --- Pay With Title --- */}
-          <Grid item xs={12} md={"auto"}>
-            {" "}
-            {/* Let title take auto width */}
-            <Typography
-              variant="body1"
-              sx={{
-                fontWeight: "bold",
-                textAlign: { xs: "center", md: "left" },
-                mr: { md: 2 } /* Margin right on medium+ */,
-              }}
-            >
-              Pay With
-            </Typography>
-          </Grid>
-          {/* --- Payment Logos --- */}
-          <Grid item xs={12} md>
-            {" "}
-            {/* Let logos take remaining space */}
-            <Stack
-              direction="row"
-              spacing={1.5} // Adjust spacing between logos
-              useFlexGap // Better spacing control
-              flexWrap="wrap" // Allow logos to wrap on smaller screens
-              sx={{ justifyContent: { xs: "center", md: "flex-start" } }} // Center on mobile, start on desktop
-            >
-              {paymentMethods.map((method) => (
-                <Box
-                  key={method.alt}
-                  component="img"
-                  src={method.src} // Remember to replace this placeholder
-                  alt={method.alt}
-                  sx={{
-                    height: "25px", // Adjust height as needed
-                    width: "auto",
-                    backgroundColor: "white",
-                    padding: "3px",
-                    borderRadius: "3px",
-                    objectFit: "contain",
-                    verticalAlign: "middle", // Align logos nicely if they wrap
-                  }}
-                />
-              ))}
-            </Stack>
-          </Grid>
-          {/* --- SSL Commerz Verification --- */}
-          <Grid
-            item
-            xs={12}
-            md={"auto"}
-            sx={{
-              textAlign: { xs: "center", md: "right" },
-              mt: { xs: 2, md: 0 },
+          </div>
+        </div>
+
+        <div
+          style={{
+            width: "800px",
+            display: "grid",
+
+            gap: "20px",
+            justifyContent: "center",
+            margin: "10px auto",
+          }}
+        >
+          <img
+            src="/payments/paymentgetway.webp"
+            style={{
+              width: "800px",
+              height: "100px",
             }}
-          >
-            {" "}
-            {/* Auto width, add top margin on mobile */}
-            <Typography
-              variant="caption"
-              sx={{ display: "inline-block", mr: 1 }}
-            >
-              Verified By:
-            </Typography>
-            <Box
-              component="img"
-              src="/images/payment/sslcommerz.png" // Replace with actual path
-              alt="SSLCommerz Verified"
-              sx={{ height: "30px", width: "auto", verticalAlign: "middle" }}
-            />
-          </Grid>
-        </Grid>
-        {/* End of Payment Methods Section */}
-        {/* ============================================ */}
-        {/* Divider and Copyright                       */}
-        {/* ============================================ */}
+          />
+        </div>
+
         <Divider sx={{ borderColor: "rgba(255, 255, 255, 0.3)", mb: 2 }} />
         <Typography variant="body2" align="center">
           © Copyright {currentYear} by Fly Far Tech | B2C OTA Portal
         </Typography>
       </Container>
-    </FooterWrapper>
+    </footer>
   );
 };
 
