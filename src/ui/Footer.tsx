@@ -85,7 +85,14 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer style={{ fontFamily: "sans-serif", width: "100%" }}>
+    <footer
+      style={{
+        fontFamily: "sans-serif",
+        background: "#32d095",
+        padding: "50px 0",
+        width: "100%",
+      }}
+    >
       <Container maxWidth="lg">
         <div
           style={{

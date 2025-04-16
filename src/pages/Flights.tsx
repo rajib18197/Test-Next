@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useSearch } from "../context/SearchContext";
 import { getRoundwaysFlightsData } from "../services/api/apiRoundways";
 import ShimmerLoadingEffect from "../ui/Shimmer";
+import Navbar from "../ui/Navbar";
 
 // Custom airline logos
 const BSLogo = () => (
@@ -95,41 +96,46 @@ export default function Flights() {
   }
 
   return (
-    <Container>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "220px 1fr",
-          gap: "10px",
-        }}
-      >
-        <FilterContainerBox>
-          <FilterBox />
-          <DepartureTimesFilter />
-          <LayoverFilter />
-        </FilterContainerBox>
+    <>
+      <Navbar />
+      <Container style={{ marginTop: "120px" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "220px 1fr",
+            gap: "10px",
+          }}
+        >
+          <FilterContainerBox>
+            <FilterBox />
+            <DepartureTimesFilter />
+            <LayoverFilter />
+          </FilterContainerBox>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          <FlightSearchHeader
-            origin={searchState.from.acronym}
-            destination={searchState.to.acronym}
-            totalFlights={flightData.length}
-            departureDate={formatDate(searchState.fromDate)}
-            returnDate={formatDate(searchState.toDate)}
-            travelers={
-              searchState.pax.adult +
-              searchState.pax.child +
-              searchState.pax.infant
-            }
-            airlines={airlines}
-            onAirlineChange={(airlineCode) =>
-              console.log("Selected airline:", airlineCode)
-            }
-            onModifySearch={() => console.log("Modify search clicked")}
-          />
-          <FlightList flightData={flightData} />
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+          >
+            <FlightSearchHeader
+              origin={searchState.from.acronym}
+              destination={searchState.to.acronym}
+              totalFlights={flightData.length}
+              departureDate={formatDate(searchState.fromDate)}
+              returnDate={formatDate(searchState.toDate)}
+              travelers={
+                searchState.pax.adult +
+                searchState.pax.child +
+                searchState.pax.infant
+              }
+              airlines={airlines}
+              onAirlineChange={(airlineCode) =>
+                console.log("Selected airline:", airlineCode)
+              }
+              onModifySearch={() => console.log("Modify search clicked")}
+            />
+            <FlightList flightData={flightData} />
+          </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </>
   );
 }

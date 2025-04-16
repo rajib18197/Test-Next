@@ -3,6 +3,7 @@ import SearchBox from "../features/flight/SearchBox";
 import HotDealsTabs from "../ui/HotDeals";
 import PromotionalSlider from "../ui/PromotionalSlider";
 import Footer from "../ui/Footer";
+import Navbar from "../ui/Navbar";
 
 // Sample tabs data with deals
 const tabsData = [
@@ -139,6 +140,7 @@ const slides: {
 export default function Home() {
   return (
     <>
+      <Navbar />
       <SearchBox />
       <Container
         maxWidth="lg"

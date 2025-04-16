@@ -171,20 +171,6 @@ export default function SearchBox() {
       });
 
       return cities;
-      // return cities.map((prev, i) => {
-      //   if (i >= 2) {
-      //     const last = cities[i - 1];
-      //     const newCity = allAirports[cities[i - 1].toNum + 1];
-      //     return {
-      //       ...prev,
-      //       from: { ...last.to },
-      //       to: newCity,
-      //       fromNum: last.toNum,
-      //       toNum: last.toNum + 1,
-      //     };
-      //   }
-      //   return prev;
-      // });
     });
   }
 
@@ -259,6 +245,7 @@ export default function SearchBox() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        marginTop: "120px",
       }}
     >
       <Container
