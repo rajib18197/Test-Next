@@ -10,75 +10,30 @@ import {
   Paper,
   InputAdornment,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 
-// Define the type for our airport data
-interface AirportData {
-  city: string;
-  country: string;
-  airportName: string;
-  acronym: string;
+// Generic type
+interface DestinationSelectorProps<T> {
+  data: T[];
+  onSelectItem: (value: string) => void;
+  getDisplayLabel: (item: T) => string;
+  getSearchFields: (item: T) => string[];
 }
 
-// Sample data based on the image
-const airportData: AirportData[] = [
-  {
-    city: "Dhaka",
-    country: "Bangladesh",
-    airportName: "Hazrat Shahjalal Intl Airport",
-    acronym: "DAC",
-  },
-  {
-    city: "Dubai",
-    country: "United Arab Emirates",
-    airportName: "Dubai International Airport",
-    acronym: "DXB",
-  },
-  {
-    city: "Barishal",
-    country: "Bangladesh",
-    airportName: "Barishal Airport",
-    acronym: "BZL",
-  },
-  {
-    city: "Jashore",
-    country: "Bangladesh",
-    airportName: "Jashore Airport",
-    acronym: "JSR",
-  },
-  {
-    city: "Rajshahi",
-    country: "Bangladesh",
-    airportName: "Rajshahi Airport",
-    acronym: "RJH",
-  },
-  {
-    city: "Saidpur",
-    country: "Bangladesh",
-    airportName: "Saidpur Airport",
-    acronym: "SPD",
-  },
-];
-
-const DestinationSelector: React.FC = ({
-  onSelectCity,
-}: {
-  onSelectCity: (city: string) => void;
-}) => {
+function DestinationSelector<T>({
+  data,
+  onSelectItem,
+  getDisplayLabel,
+  getSearchFields,
+}: DestinationSelectorProps<T>) {
   const [searchText, setSearchText] = useState("");
 
-  // Filter airports based on search text
-  const filteredAirports =
+  const filteredData =
     searchText.trim() === ""
-      ? airportData
-      : airportData.filter(
-          (airport) =>
-            airport.city.toLowerCase().includes(searchText.toLowerCase()) ||
-            airport.country.toLowerCase().includes(searchText.toLowerCase()) ||
-            airport.airportName
-              .toLowerCase()
-              .includes(searchText.toLowerCase()) ||
-            airport.acronym.toLowerCase().includes(searchText.toLowerCase())
+      ? data
+      : data.filter((item) =>
+          getSearchFields(item).some((field) =>
+            field.toLowerCase().includes(searchText.toLowerCase())
+          )
         );
 
   return (
@@ -87,7 +42,6 @@ const DestinationSelector: React.FC = ({
       sx={{
         width: "100%",
         maxWidth: 220,
-        // border: "1px solid #00c853",
         borderRadius: "4px",
         padding: "3px",
         background: "#32d095",
@@ -103,17 +57,12 @@ const DestinationSelector: React.FC = ({
           variant="outlined"
           size="small"
           InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                {/* <SearchIcon color="disabled" /> */}
-              </InputAdornment>
-            ),
+            startAdornment: <InputAdornment position="start" />,
             sx: {
               fontSize: "14px",
               borderRadius: 0,
               "& fieldset": {
                 border: "none",
-                // borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
               },
               padding: "4px 12px",
             },
@@ -121,9 +70,9 @@ const DestinationSelector: React.FC = ({
         />
 
         <List disablePadding>
-          {filteredAirports.map((airport, index) => (
+          {filteredData.map((item, index) => (
             <ListItem
-              key={airport.acronym}
+              key={index}
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -133,14 +82,8 @@ const DestinationSelector: React.FC = ({
                   backgroundColor: "#101d28",
                   color: "white !important",
                 },
-                // borderBottom:
-                //   index < filteredAirports.length - 1
-                //     ? "1px solid rgba(0, 0, 0, 0.08)"
-                //     : "none",
               }}
-              onClick={() =>
-                onSelectCity(`${airport.city}, ${airport.country}`)
-              }
+              onClick={() => onSelectItem(getDisplayLabel(item))}
             >
               <Typography
                 sx={{
@@ -148,16 +91,7 @@ const DestinationSelector: React.FC = ({
                   fontSize: "14px",
                 }}
               >
-                {airport.city},{airport.country}
-              </Typography>
-              <Typography
-                sx={{
-                  color: "#555",
-                  fontSize: "14px",
-                  fontWeight: 500,
-                }}
-              >
-                {airport.acronym}
+                {getDisplayLabel(item)}
               </Typography>
             </ListItem>
           ))}
@@ -165,6 +99,6 @@ const DestinationSelector: React.FC = ({
       </div>
     </Paper>
   );
-};
+}
 
 export default DestinationSelector;

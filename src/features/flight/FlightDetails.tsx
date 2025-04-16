@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import FlightCardInteractive from "./FlightCardInteractive";
 import { useState } from "react";
+import { useSearch } from "../../context/SearchContext";
 // Custom styled components
 const FlightDetailsContainer = styled(Paper)({
   borderRadius: 8,
@@ -218,6 +219,7 @@ const FlightDetails: React.FC<FlightDetailsProps> = ({
   flight,
 }) => {
   const [status, setStatus] = useState("from-to");
+  const { searchState } = useSearch();
 
   return (
     <FlightDetailsContainer>
@@ -610,10 +612,23 @@ const FlightDetails: React.FC<FlightDetailsProps> = ({
           <TableBody>
             <TableRow>
               <StyledTableCell>Adult</StyledTableCell>
-              <StyledTableCell>10,048 ৳</StyledTableCell>
-              <StyledTableCell>2,350 ৳</StyledTableCell>
-              <StyledTableCell>(10,048+2350 x 1) ৳</StyledTableCell>
-              <StyledTableCell>12,398 ৳</StyledTableCell>
+              <StyledTableCell>
+                {flight.pricebreakdown[0].BaseFare} ৳
+              </StyledTableCell>
+              <StyledTableCell>
+                {flight.pricebreakdown[0].Tax} ৳
+              </StyledTableCell>
+              <StyledTableCell>
+                ({Number(flight.pricebreakdown[0].BaseFare)}+
+                {Number(flight.pricebreakdown[0].Tax)} x {searchState.pax.adult}
+                ) ৳
+              </StyledTableCell>
+              <StyledTableCell>
+                {(Number(flight.pricebreakdown[0].BaseFare) +
+                  Number(flight.pricebreakdown[0].Tax)) *
+                  searchState.pax.adult}{" "}
+                ৳
+              </StyledTableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -624,7 +639,10 @@ const FlightDetails: React.FC<FlightDetailsProps> = ({
               Total
             </Typography>
             <Typography sx={{ color: "#2cd889", fontSize: "0.9rem" }}>
-              12398 ৳
+              {(Number(flight.pricebreakdown[0].BaseFare) +
+                Number(flight.pricebreakdown[0].Tax)) *
+                searchState.pax.adult}{" "}
+              ৳
             </Typography>
           </Box>
           <Box display="flex" justifyContent="space-between" mb={0.5}>
@@ -632,7 +650,7 @@ const FlightDetails: React.FC<FlightDetailsProps> = ({
               Discount
             </Typography>
             <Typography sx={{ color: "#2cd889", fontSize: "0.9rem" }}>
-              1118 ৳
+              {flight.pricebreakdown[0].Discount} ৳
             </Typography>
           </Box>
           <Box display="flex" justifyContent="space-between">
@@ -644,7 +662,11 @@ const FlightDetails: React.FC<FlightDetailsProps> = ({
             <Typography
               sx={{ color: "#2cd889", fontSize: "0.9rem", fontWeight: "bold" }}
             >
-              11280 ৳
+              {(Number(flight.pricebreakdown[0].BaseFare) +
+                Number(flight.pricebreakdown[0].Tax)) *
+                searchState.pax.adult -
+                flight.pricebreakdown[0].Discount}{" "}
+              ৳
             </Typography>
           </Box>
         </Box>

@@ -1,22 +1,16 @@
-"use client";
-
-import type React from "react";
+import { LocationOn } from "@mui/icons-material";
 import {
   Box,
-  Typography,
   Button,
-  Paper,
-  useTheme,
-  useMediaQuery,
   ClickAwayListener,
+  Paper,
   Popper,
+  Typography,
+  styled,
 } from "@mui/material";
-import DatePicker from "../flight/DatePicker";
-import { styled } from "@mui/system";
-import { LocationOn } from "@mui/icons-material";
-import DestinationSelector from "./DestinationSelector";
 import { useState } from "react";
-import GuestInfo from "./GuestInfo";
+import DestinationSelector from "../hotel/DestinationSelector";
+import DestinationCountry from "./DestinationCountry";
 
 function formatDate(date: Date) {
   return date.toLocaleDateString("en-GB", {
@@ -25,44 +19,6 @@ function formatDate(date: Date) {
     year: "numeric",
   }); // e.g., 23 Apr 2025
 }
-const airportData: AirportData[] = [
-  {
-    city: "Dhaka",
-    country: "Bangladesh",
-    airportName: "Hazrat Shahjalal Intl Airport",
-    acronym: "DAC",
-  },
-  {
-    city: "Dubai",
-    country: "United Arab Emirates",
-    airportName: "Dubai International Airport",
-    acronym: "DXB",
-  },
-  {
-    city: "Barishal",
-    country: "Bangladesh",
-    airportName: "Barishal Airport",
-    acronym: "BZL",
-  },
-  {
-    city: "Jashore",
-    country: "Bangladesh",
-    airportName: "Jashore Airport",
-    acronym: "JSR",
-  },
-  {
-    city: "Rajshahi",
-    country: "Bangladesh",
-    airportName: "Rajshahi Airport",
-    acronym: "RJH",
-  },
-  {
-    city: "Saidpur",
-    country: "Bangladesh",
-    airportName: "Saidpur Airport",
-    acronym: "SPD",
-  },
-];
 
 const LocationField = styled(Box)({
   display: "flex",
@@ -77,13 +33,13 @@ const StyledPopper = styled(Popper)(({ theme }) => ({
   width: 300,
   fontSize: 13,
 }));
+const VisaNames = [
+  { id: "tourist", visaName: "TOURIST VISA" },
+  { id: "business", visaName: "BUSINESS VISA" },
+];
 
-const HotelBookingWidget: React.FC = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [checkInDate, setCheckInDate] = useState(new Date());
-  const [checkOutDate, setCheckOutDate] = useState(new Date());
-  const [selectedCity, setSelectedCity] = useState("DHAKA, Bangladesh");
+export default function Visa() {
+  const [selectedCity, setSelectedCity] = useState("TOURIST VISA");
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const open = Boolean(anchorEl);
@@ -126,7 +82,6 @@ const HotelBookingWidget: React.FC = () => {
         alignContent: "end",
       }}
     >
-      {/* Left Section: Destination, Check In, Check Out */}
       <Box
         sx={{
           flex: "3",
@@ -136,7 +91,8 @@ const HotelBookingWidget: React.FC = () => {
           borderRadius: "10px",
         }}
       >
-        {/* Destination Section */}
+        <DestinationCountry />
+
         <Box
           sx={{
             padding: "0 16px",
@@ -155,7 +111,7 @@ const HotelBookingWidget: React.FC = () => {
               mb: 0.5,
             }}
           >
-            DESTINATION
+            SELECR VISA TYPE
           </Typography>
           <Typography
             variant="h4"
@@ -210,98 +166,45 @@ const HotelBookingWidget: React.FC = () => {
           >
             <ClickAwayListener onClickAway={handleClose}>
               <DestinationSelector
-                data={airportData}
+                data={VisaNames}
                 onSelectItem={(str) => {
                   setSelectedCity(str);
                   setAnchorEl(null);
                 }}
-                getDisplayLabel={(item) => `${item.city}, ${item.country}`}
-                getSearchFields={(item) => [
-                  item.city,
-                  item.country,
-                  item.airportName,
-                  item.acronym,
-                ]}
+                getDisplayLabel={(item) => item.visaName}
+                getSearchFields={(item) => [item.visaName]}
               />
             </ClickAwayListener>
           </StyledPopper>
         </Box>
-
-        {/* Check In Section */}
-        <Box
-          sx={{
-            padding: "0 16px",
-            flex: 1,
-            // borderRight: { xs: "none", md: "1px solid #e0e0e0" },
-            display: "flex",
-            flexDirection: "column",
-            gap: "4px",
-          }}
-        >
-          <Typography
-            variant="body2"
-            sx={{
-              color: "#555",
-              fontWeight: 500,
-              mb: 0.5,
-            }}
-          >
-            CHECK IN
-          </Typography>
-          <Typography
-            variant="h4"
-            sx={{
-              color: "#00c4a7",
-              fontWeight: 500,
-              fontSize: "30px",
-              mb: "8px",
-            }}
-          >
-            {formatDate(checkInDate)}
-          </Typography>
-          <DatePicker onChange={setCheckInDate} />
-        </Box>
-
-        {/* Check Out Section */}
-        <Box
-          sx={{
-            padding: "0 16px",
-            flex: 1,
-            // borderRight: { xs: "none", md: "1px solid #e0e0e0" },
-            display: "flex",
-            flexDirection: "column",
-            gap: "4px",
-          }}
-        >
-          <Typography
-            variant="body2"
-            sx={{
-              color: "#555",
-              fontWeight: 500,
-              mb: 0.5,
-            }}
-          >
-            CHECK OUT
-          </Typography>
-          <Typography
-            variant="h4"
-            sx={{
-              color: "#00c4a7",
-              fontWeight: 500,
-              fontSize: "30px",
-              mb: "8px",
-            }}
-          >
-            {formatDate(checkOutDate)}
-          </Typography>
-          <DatePicker onChange={setCheckOutDate} />
-        </Box>
       </Box>
-
-      {/* Right Section: Guests & Rooms */}
-      <GuestInfo />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          padding: "12px",
+          borderRadius: "10px",
+          bgcolor: "white",
+          alignSelf: "end",
+        }}
+      >
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{
+            bgcolor: "#00c4a7",
+            color: "white",
+            "&:hover": {
+              bgcolor: "#00a08a",
+            },
+            textTransform: "uppercase",
+            py: 1.5,
+          }}
+        >
+          SEARCH FOR HOTEL
+        </Button>
+      </Box>
     </Paper>
   );
-};
-
-export default HotelBookingWidget;
+}
