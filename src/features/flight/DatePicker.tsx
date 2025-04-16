@@ -7,7 +7,6 @@ import {
   IconButton,
   MenuItem,
   Paper,
-  Popover,
   Select,
   type SelectChangeEvent,
   Typography,
@@ -17,46 +16,25 @@ import {
 } from "@mui/material";
 import { CalendarMonth, ChevronRight } from "@mui/icons-material";
 
-// Custom styled components
-const DateDisplay = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  backgroundColor: "#e3f2fd",
-  borderRadius: "4px",
-  padding: "12px",
-  cursor: "pointer",
-  width: "fit-content",
-}));
-
-const CalendarIcon = styled(Box)(({ theme }) => ({
-  backgroundColor: "#2dd4bf",
-  borderRadius: "4px",
-  padding: "4px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  marginRight: "8px",
-}));
-
-const CalendarContainer = styled(Paper)(({ theme }) => ({
+const CalendarContainer = styled(Paper)(() => ({
   padding: "16px",
   width: "300px",
 }));
 
-const CalendarHeader = styled(Box)(({ theme }) => ({
+const CalendarHeader = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   marginBottom: "16px",
 }));
 
-const MonthYearSelector = styled(Box)(({ theme }) => ({
+const MonthYearSelector = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   gap: "8px",
 }));
 
-const StyledSelect = styled(Select)(({ theme }) => ({
+const StyledSelect = styled(Select)(() => ({
   minWidth: "80px",
   "& .MuiSelect-select": {
     padding: "4px 8px",
@@ -67,14 +45,14 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   },
 }));
 
-const DaysHeader = styled(Box)(({ theme }) => ({
+const DaysHeader = styled(Box)(() => ({
   display: "grid",
   gridTemplateColumns: "repeat(7, 1fr)",
   textAlign: "center",
   marginBottom: "8px",
 }));
 
-const DaysGrid = styled(Box)(({ theme }) => ({
+const DaysGrid = styled(Box)(() => ({
   display: "grid",
   gridTemplateColumns: "repeat(7, 1fr)",
   gap: "4px",
@@ -91,7 +69,7 @@ const DayCell = styled(Box, {
   isToday?: boolean;
   isCurrentMonth?: boolean;
   isDisabled?: boolean;
-}>(({ isSelected, isToday, isCurrentMonth, isDisabled, theme }) => ({
+}>(({ isSelected, isToday, isCurrentMonth, isDisabled }) => ({
   // height: "32px",
   // width: "32px",
   display: "flex",
@@ -135,7 +113,7 @@ const DayCell = styled(Box, {
     : {},
 }));
 
-const MonthTitle = styled(Typography)(({ theme }) => ({
+const MonthTitle = styled(Typography)(() => ({
   fontWeight: "500",
   color: "#757575",
   marginBottom: "8px",
@@ -155,20 +133,10 @@ interface DatePickerProps {
 }
 
 const StyledPopper = styled(Popper)(({ theme }) => ({
-  // border: "1px solid #e1e4e8",
-  // boxShadow: `0 8px 24px ${"rgba(149, 157, 165, 0.2)"}`,
-  // color: "#24292e",
-  // backgroundColor: "#fff",
   borderRadius: 6,
   width: 300,
   zIndex: theme.zIndex.modal,
   fontSize: 13,
-  // ...theme.applyStyles("dark", {
-  //   border: "1px solid #30363d",
-  //   boxShadow: "0 8px 24px rgb(1, 4, 9)",
-  //   color: "#c9d1d9",
-  //   backgroundColor: "#1c2128",
-  // }),
 }));
 
 export default function DatePicker({
@@ -176,7 +144,7 @@ export default function DatePicker({
   onChange,
 }: DatePickerProps) {
   const today = new Date();
-  today.setHours(0, 0, 0, 0); // Reset time to start of day
+  today.setHours(0, 0, 0, 0);
 
   const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
 
@@ -381,19 +349,6 @@ export default function DatePicker({
     return days;
   };
 
-  // Fixed: Corrected the getAvailableMonths function
-  const getAvailableMonths = () => {
-    const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth();
-    const displayedYear = currentMonth.getFullYear();
-
-    return months.map((month, index) => ({
-      name: month,
-      value: index,
-      disabled: currentYear === displayedYear && currentMonth > index,
-    }));
-  };
-
   // Filter years to only show current and future years
   const getAvailableYears = () => {
     const currentYear = today.getFullYear();
@@ -470,7 +425,7 @@ export default function DatePicker({
           borderRadius: "0 !important",
         }}
       >
-        <ClickAwayListener onClickAway={handleClose}>
+        <ClickAwayListener onClickAway={(e) => handleClose(e as any)}>
           <CalendarContainer>
             <CalendarHeader>
               <IconButton
@@ -501,7 +456,7 @@ export default function DatePicker({
                 <StyledSelect
                   data-month="month"
                   value={currentMonth.getMonth().toString()}
-                  onChange={handleMonthChange}
+                  onChange={handleMonthChange as any}
                   variant="standard"
                   onOpen={handleSelectOpen}
                   onClose={handleSelectClose}
@@ -541,7 +496,7 @@ export default function DatePicker({
 
                 <StyledSelect
                   value={currentMonth.getFullYear().toString()}
-                  onChange={handleYearChange}
+                  onChange={handleYearChange as any}
                   variant="standard"
                   onOpen={handleSelectOpen}
                   onClose={handleSelectClose}

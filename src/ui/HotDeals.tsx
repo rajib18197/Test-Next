@@ -89,7 +89,7 @@ const HotDealsTabs: React.FC<HotDealsTabsProps> = ({ tabs }) => {
   const [activeTab, setActiveTab] = useState(tabs[0]?.id || "");
 
   const handleTabChange = (
-    event: React.MouseEvent<HTMLElement>,
+    _event: React.MouseEvent<HTMLElement>,
     newTab: string | null
   ) => {
     if (newTab !== null) {

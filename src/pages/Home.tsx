@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import SearchBox from "../features/flight/SearchBox";
 import HotDealsTabs from "../ui/HotDeals";
 import PromotionalSlider from "../ui/PromotionalSlider";

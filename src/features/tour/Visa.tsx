@@ -12,14 +12,6 @@ import { useState } from "react";
 import DestinationSelector from "../hotel/DestinationSelector";
 import DestinationCountry from "./DestinationCountry";
 
-function formatDate(date: Date) {
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }); // e.g., 23 Apr 2025
-}
-
 const LocationField = styled(Box)({
   display: "flex",
   alignItems: "center",
@@ -28,7 +20,7 @@ const LocationField = styled(Box)({
   padding: "12px",
   // marginBottom: "10px",
 });
-const StyledPopper = styled(Popper)(({ theme }) => ({
+const StyledPopper = styled(Popper)(() => ({
   borderRadius: 6,
   width: 300,
   fontSize: 13,
@@ -54,11 +46,6 @@ export default function Visa() {
   };
 
   const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
-    // Don't close if select is open
-    if (isSelectOpen) {
-      return;
-    }
-
     // Prevent closing when clicking on month or year selectors
     const target = event.target as HTMLElement;
     if (
@@ -164,7 +151,7 @@ export default function Visa() {
               borderRadius: "0 !important",
             }}
           >
-            <ClickAwayListener onClickAway={handleClose}>
+            <ClickAwayListener onClickAway={(e) => handleClose(e as any)}>
               <DestinationSelector
                 data={VisaNames}
                 onSelectItem={(str) => {

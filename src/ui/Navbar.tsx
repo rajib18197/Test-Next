@@ -21,7 +21,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 
 // Styled components
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
+const StyledAppBar = styled(AppBar)(() => ({
   backgroundColor: "white",
   boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
   position: "fixed",

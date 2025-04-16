@@ -2,21 +2,12 @@ import { LocationOn } from "@mui/icons-material";
 import {
   Box,
   ClickAwayListener,
-  Paper,
   Popper,
   Typography,
   styled,
 } from "@mui/material";
 import { useState } from "react";
 import DestinationSelector from "../hotel/DestinationSelector";
-
-function formatDate(date: Date) {
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }); // e.g., 23 Apr 2025
-}
 
 const LocationField = styled(Box)({
   display: "flex",
@@ -26,7 +17,7 @@ const LocationField = styled(Box)({
   padding: "12px",
   // marginBottom: "10px",
 });
-const StyledPopper = styled(Popper)(({ theme }) => ({
+const StyledPopper = styled(Popper)(() => ({
   borderRadius: 6,
   width: 300,
   fontSize: 13,
@@ -51,19 +42,13 @@ export default function DestinationCountry() {
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     if (anchorEl) {
-      setAnchorEl(null); // toggle off
+      setAnchorEl(null);
     } else {
       setAnchorEl(event.currentTarget);
     }
   };
 
   const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
-    // Don't close if select is open
-    if (isSelectOpen) {
-      return;
-    }
-
-    // Prevent closing when clicking on month or year selectors
     const target = event.target as HTMLElement;
     if (
       target.closest(".MuiSelect-select") ||
@@ -147,7 +132,7 @@ export default function DestinationCountry() {
           borderRadius: "0 !important",
         }}
       >
-        <ClickAwayListener onClickAway={handleClose}>
+        <ClickAwayListener onClickAway={(e) => handleClose(e as any)}>
           <DestinationSelector
             data={countries}
             onSelectItem={(str) => {

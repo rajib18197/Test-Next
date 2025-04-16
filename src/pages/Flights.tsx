@@ -1,4 +1,3 @@
-import { useParams } from "react-router";
 import FlightList from "../features/flight/FlightList";
 // import FilterBox from "../features/flight/FilterBox";
 import FlightSearchHeader from "../features/flight/SearchHeader";
@@ -75,7 +74,7 @@ function formatDate(dateStr: string) {
 }
 
 export default function Flights() {
-  const { searchState } = useSearch();
+  const { searchState } = useSearch() as { searchState: any };
   const [flightData, setFlightData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 

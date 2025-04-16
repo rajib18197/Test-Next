@@ -17,14 +17,14 @@ const LocationField = styled(Box)({
   padding: "12px",
   // marginBottom: "10px",
 });
-const StyledPopper = styled(Popper)(({ theme }) => ({
+const StyledPopper = styled(Popper)(() => ({
   borderRadius: 6,
   width: 300,
   fontSize: 13,
 }));
 
 export default function SelectDestination() {
-  const [selectedCity, setSelectedCity] = useState("Rome, Vasnis");
+  const [selectedCity] = useState("Rome, Vasnis");
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const open = Boolean(anchorEl);
@@ -39,11 +39,6 @@ export default function SelectDestination() {
   };
 
   const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
-    // Don't close if select is open
-    if (isSelectOpen) {
-      return;
-    }
-
     // Prevent closing when clicking on month or year selectors
     const target = event.target as HTMLElement;
     if (
@@ -128,12 +123,16 @@ export default function SelectDestination() {
           borderRadius: "0 !important",
         }}
       >
-        <ClickAwayListener onClickAway={handleClose}>
+        <ClickAwayListener onClickAway={(e) => handleClose(e as any)}>
           <DestinationSelector
-            onSelectCity={(city: string) => {
-              setSelectedCity(city.toUpperCase()); // Optional: Uppercase display
-              setAnchorEl(null); // close popper after selection
-            }}
+            data={[]}
+            onSelectItem={() => {}}
+            getDisplayLabel={(_str: any) => ""}
+            getSearchFields={(_str: any) => [""]}
+            // onSelectCity={(city: string) => {
+            //   setSelectedCity(city.toUpperCase()); // Optional: Uppercase display
+            //   setAnchorEl(null); // close popper after selection
+            // }}
           />
         </ClickAwayListener>
       </StyledPopper>

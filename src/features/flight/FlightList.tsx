@@ -1,15 +1,15 @@
 import FlightCard from "./FlightCard";
 
-const formatTime = (isoString) =>
+const formatTime = (isoString: any) =>
   new Date(isoString).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
 
-export default function FlightList({ flightData }) {
+export default function FlightList({ flightData }: any) {
   return (
     <>
-      {flightData.map((flight) => {
+      {flightData.map((flight: any) => {
         return (
           <FlightCard
             airlineLogo=""

@@ -132,7 +132,7 @@ const FilterBox: React.FC<FlightFilterProps> = ({
   };
 
   const handlePriceRangeChange = (
-    event: Event,
+    _event: Event,
     newValue: number | number[]
   ) => {
     const newFilters = { ...filters, priceRange: newValue as [number, number] };
@@ -155,12 +155,8 @@ const FilterBox: React.FC<FlightFilterProps> = ({
       refundable: false,
       nonRefundable: false,
     };
-    setFilters(resetFilters);
-    onFilterChange?.(resetFilters);
-  };
-
-  const formatPrice = (value: number) => {
-    return `₹ ${value.toLocaleString()}`;
+    setFilters(resetFilters as any);
+    onFilterChange?.(resetFilters as any);
   };
 
   return (

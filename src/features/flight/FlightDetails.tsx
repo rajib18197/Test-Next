@@ -1,4 +1,3 @@
-import type React from "react";
 import {
   Box,
   Typography,
@@ -11,7 +10,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Grid,
 } from "@mui/material";
 import FlightCardInteractive from "./FlightCardInteractive";
 import { useState } from "react";
@@ -34,17 +32,6 @@ const SectionHeader = styled(Box)({
 const FlightSegment = styled(Box)({
   padding: "20px",
   display: "flex",
-});
-
-const AirlineLogoContainer = styled(Box)({
-  width: 50,
-  height: 50,
-  borderRadius: "50%",
-  backgroundColor: "#ff0000",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  marginRight: 20,
 });
 
 const FlightPathLine = styled(Box)({
@@ -145,64 +132,55 @@ const BookHoldButton = styled(Button)({
   },
 });
 
-interface FlightDetailsProps {
-  outboundFlight: {
-    airline: string;
-    flightNumber: string;
-    operator: string;
-    departureCode: string;
-    departureCity: string;
-    departureCountry: string;
-    departureAirport: string;
-    departureAirportFull: string;
-    departureDate: string;
-    departureTime: string;
-    arrivalCode: string;
-    arrivalCity: string;
-    arrivalCountry: string;
-    arrivalAirport: string;
-    arrivalAirportFull: string;
-    arrivalDate: string;
-    arrivalTime: string;
-    duration: string;
-  };
-  returnFlight: {
-    airline: string;
-    flightNumber: string;
-    operator: string;
-    departureCode: string;
-    departureCity: string;
-    departureCountry: string;
-    departureAirport: string;
-    departureAirportFull: string;
-    departureDate: string;
-    departureTime: string;
-    arrivalCode: string;
-    arrivalCity: string;
-    arrivalCountry: string;
-    arrivalAirport: string;
-    arrivalAirportFull: string;
-    arrivalDate: string;
-    arrivalTime: string;
-    duration: string;
-  };
-  fareSummary?: {
-    baseFare: number;
-    taxFees: number;
-    totalCost: number;
-    discount: number;
-    grandTotal: number;
-  };
-}
-
-function formatDate(dateStr: string) {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }); // e.g., 23 Apr 2025
-}
+// interface FlightDetailsProps {
+//   outboundFlight: {
+//     airline: string;
+//     flightNumber: string;
+//     operator: string;
+//     departureCode: string;
+//     departureCity: string;
+//     departureCountry: string;
+//     departureAirport: string;
+//     departureAirportFull: string;
+//     departureDate: string;
+//     departureTime: string;
+//     arrivalCode: string;
+//     arrivalCity: string;
+//     arrivalCountry: string;
+//     arrivalAirport: string;
+//     arrivalAirportFull: string;
+//     arrivalDate: string;
+//     arrivalTime: string;
+//     duration: string;
+//   };
+//   returnFlight: {
+//     airline: string;
+//     flightNumber: string;
+//     operator: string;
+//     departureCode: string;
+//     departureCity: string;
+//     departureCountry: string;
+//     departureAirport: string;
+//     departureAirportFull: string;
+//     departureDate: string;
+//     departureTime: string;
+//     arrivalCode: string;
+//     arrivalCity: string;
+//     arrivalCountry: string;
+//     arrivalAirport: string;
+//     arrivalAirportFull: string;
+//     arrivalDate: string;
+//     arrivalTime: string;
+//     duration: string;
+//   };
+//   fareSummary?: {
+//     baseFare: number;
+//     taxFees: number;
+//     totalCost: number;
+//     discount: number;
+//     grandTotal: number;
+//   };
+// }
 
 function formatTime(dateStr: string) {
   const date = new Date(dateStr);
@@ -212,14 +190,14 @@ function formatTime(dateStr: string) {
   }); // e.g., 16:35
 }
 
-const FlightDetails: React.FC<FlightDetailsProps> = ({
+const FlightDetails = ({
   outboundFlight,
   returnFlight,
-  fareSummary,
+
   flight,
-}) => {
+}: any) => {
   const [status, setStatus] = useState("from-to");
-  const { searchState } = useSearch();
+  const { searchState } = useSearch() as any;
 
   return (
     <FlightDetailsContainer>

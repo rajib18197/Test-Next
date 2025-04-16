@@ -1,6 +1,5 @@
 "use client";
 
-import type React from "react";
 import { useState } from "react";
 import { Box, styled } from "@mui/material";
 
@@ -21,7 +20,7 @@ const Option = styled(Box)<{ active: boolean }>(({ active }) => ({
   fontWeight: active ? 500 : 400,
 }));
 
-const TravelTypeSelector: React.FC = ({ onChange }) => {
+const TravelTypeSelector = ({ onChange }: { onChange: any }) => {
   const [activeOption, setActiveOption] = useState(0);
 
   return (

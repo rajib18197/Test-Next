@@ -12,7 +12,7 @@ const shimmer = keyframes`
 `;
 
 // Base shimmer component
-const ShimmerBase = styled(Box)(({ theme }) => ({
+const ShimmerBase = styled(Box)(() => ({
   position: "relative",
   backgroundColor: "#dddddd",
   backgroundImage:
@@ -21,14 +21,6 @@ const ShimmerBase = styled(Box)(({ theme }) => ({
   animation: `${shimmer} 1.5s infinite linear forwards`,
   borderRadius: "4px",
 }));
-
-// Container for the entire loading UI
-const LoadingContainer = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  gap: "16px",
-  width: "100%",
-});
 
 // Sidebar shimmer
 const SidebarShimmer = styled(Box)({

@@ -1,21 +1,16 @@
 "use client";
 
-import type React from "react";
 import { useState } from "react";
 import {
   Box,
   Button,
   Container,
-  Select,
   type SelectChangeEvent,
-  Tab,
-  Tabs,
   Typography,
   styled,
 } from "@mui/material";
 import { FlightTakeoff, Hotel, Tour, CreditCard } from "@mui/icons-material";
 import SelectBox from "../../ui/Select";
-import { useSearch } from "../../context/SearchContext";
 import TripType from "./TripType";
 import MultiCity from "./MultiCity";
 import HotelBookingWidget from "../hotel/HotelBooking";
@@ -24,30 +19,8 @@ import { useNavigate } from "react-router";
 import { getAllAirportsData } from "../../services/api/apiRoundways";
 import TourBookingWidget from "../tour/TourBooking";
 import Visa from "../tour/Visa";
+import { useSearch } from "../../context/SearchContext";
 const allAirports = getAllAirportsData();
-
-const StyledTabs = styled(Tabs)({
-  backgroundColor: "white",
-  borderRadius: "30px",
-  minHeight: "48px",
-  "& .MuiTabs-indicator": {
-    display: "none",
-  },
-});
-
-const StyledTab = styled(Tab)(({ theme }) => ({
-  textTransform: "uppercase",
-  fontWeight: "bold",
-  fontSize: "14px",
-  minHeight: "48px",
-  color: "#666",
-  "&.Mui-selected": {
-    color: "white",
-    backgroundColor: "#2dd4bf",
-    borderRadius: "30px",
-    margin: "0 4px",
-  },
-}));
 
 const RadioButton = styled(Box)({
   width: 24,
@@ -65,34 +38,6 @@ const RadioButtonInner = styled(Box)({
   height: 14,
   borderRadius: "50%",
   backgroundColor: "#2dd4bf",
-});
-
-const LocationField = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  backgroundColor: "#e3f2fd",
-  borderRadius: "4px",
-  padding: "12px",
-  marginBottom: "10px",
-});
-
-const DateField = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  backgroundColor: "#e3f2fd",
-  borderRadius: "4px",
-  padding: "12px",
-});
-
-const StyledSelect = styled(Select)({
-  backgroundColor: "#e3f2fd",
-  borderRadius: "4px",
-  "& .MuiOutlinedInput-notchedOutline": {
-    border: "none",
-  },
-  "& .MuiSelect-select": {
-    padding: "12px",
-  },
 });
 
 const SearchButton = styled(Button)({
@@ -122,7 +67,7 @@ export default function SearchBox() {
   const [child, setChild] = useState("0");
   const [infant, setInfant] = useState("0");
   const [travelClass, setTravelClass] = useState("Economy");
-
+  const { handleSearch } = useSearch() as { handleSearch: any };
   const [fromAirport, setFromAirport] = useState<Airport>({
     airportName: "Hazrat Shahjalal Intl Airport",
     acronym: "DAC",
@@ -137,8 +82,6 @@ export default function SearchBox() {
   });
   const [fromDate, setFromDate] = useState(new Date("23 Apr 2025"));
   const [toDate, setToDate] = useState(new Date("30 Apr 2025"));
-
-  const { handleSearch } = useSearch();
 
   const [cities, setCities] = useState([
     { from: allAirports[0], to: allAirports[1], fromNum: 0, toNum: 1 },
@@ -161,7 +104,7 @@ export default function SearchBox() {
     });
   }
 
-  function removeNewCity(city) {
+  function removeNewCity(city: any) {
     setCities((prevCities) => {
       const cities = prevCities.filter((prev) => {
         if (prev.fromNum === city.fromNum && prev.toNum === city.toNum) {
@@ -173,10 +116,6 @@ export default function SearchBox() {
       return cities;
     });
   }
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
 
   const handleTripTypeChange = (type: string) => {
     setTripType(type);

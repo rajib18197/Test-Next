@@ -3,13 +3,7 @@
 import type React from "react";
 
 import { useState, useEffect, useRef } from "react";
-import {
-  Box,
-  Typography,
-  styled,
-  useTheme,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, styled } from "@mui/material";
 
 // Custom styled components
 const SliderContainer = styled(Box)({
@@ -31,20 +25,6 @@ const Slide = styled(Box)({
   position: "relative",
 });
 
-const SlideContent = styled(Box)({
-  position: "absolute",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "flex-end",
-  padding: "0 40px",
-  boxSizing: "border-box",
-});
-
 const DotsContainer = styled(Box)({
   position: "absolute",
   bottom: "20px",
@@ -53,7 +33,6 @@ const DotsContainer = styled(Box)({
   gap: "8px",
 });
 
-// Fixed: Using a simple Box instead of an icon for the dots
 const Dot = styled(Box)({
   width: "10px",
   height: "10px",
@@ -61,23 +40,23 @@ const Dot = styled(Box)({
   cursor: "pointer",
 });
 
-interface Slide {
-  id: string;
-  backgroundImage: string;
-  title: string;
-  subtitle: string;
-  backgroundColor?: string;
-  titleColor?: string;
-  subtitleColor?: string;
-}
+// interface Slide {
+//   id: string;
+//   backgroundImage: string;
+//   title: string;
+//   subtitle: string;
+//   backgroundColor?: string;
+//   titleColor?: string;
+//   subtitleColor?: string;
+// }
 
-interface PromotionalSliderProps {
-  slides: Slide[];
-  autoPlay?: boolean;
-  interval?: number;
-}
+// interface PromotionalSliderProps {
+//   slides: Slide[];
+//   autoPlay?: boolean;
+//   interval?: number;
+// }
 
-const PromotionalSlider: React.FC<PromotionalSliderProps> = ({
+const PromotionalSlider: React.FC<any> = ({
   slides,
   autoPlay = true,
   interval = 5000,
@@ -88,9 +67,7 @@ const PromotionalSlider: React.FC<PromotionalSliderProps> = ({
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const intervalRef = useRef<any>(null);
 
   // Auto-advance slides
   useEffect(() => {

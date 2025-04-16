@@ -4,11 +4,11 @@ import AirportSelection from "./AutoComplete";
 import DatePicker from "./DatePicker";
 import FlightIcon from "../../ui/FlightIcon";
 
-export default function MultiCity({ cities = [], removeNewCity }) {
+export default function MultiCity({ cities = [], removeNewCity }: any) {
   console.log(cities);
   return (
     <>
-      {cities.map((city, i) => {
+      {cities.map((city: any, i: number) => {
         return (
           <Box
             key={`${i} - ${city.from.acronym}`}

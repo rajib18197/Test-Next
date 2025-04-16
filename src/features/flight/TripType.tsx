@@ -34,38 +34,7 @@ interface RoundWayTripProps extends BaseTripTypeProps {
 
 export type TripTypeProps = OneWayTripProps | RoundWayTripProps;
 
-/**
- * TripType component for selecting flight details
- *
- * @param props - Component props
- * @returns React component
- *
- * @example
- * // One-way trip
- * <TripType
- *   tripType="one-way"
- *   fromAcronym="JFK"
- *   toAcronym="LAX"
- *   setFromAirport={setFrom}
- *   setToAirport={setTo}
- *   fromDate={departureDate}
- *   setFromDate={setDepartureDate}
- * />
- *
- * // Round-way trip
- * <TripType
- *   tripType="round-way"
- *   fromAcronym="JFK"
- *   toAcronym="LAX"
- *   setFromAirport={setFrom}
- *   setToAirport={setTo}
- *   fromDate={departureDate}
- *   setFromDate={setDepartureDate}
- *   toDate={returnDate}
- *   setToDate={setReturnDate}
- * />
- */
-export default function TripType(props: TripTypeProps) {
+export default function TripType(props: any) {
   const {
     tripType,
     fromAcronym = "DAC",

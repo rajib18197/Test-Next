@@ -1,15 +1,6 @@
 import type React from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Card,
-  Divider,
-  styled,
-  Paper,
-} from "@mui/material";
+import { Box, Typography, Button, Card, styled, Paper } from "@mui/material";
 import LuggageIcon from "@mui/icons-material/Luggage";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import FlightDetailsDrawer from "../../ui/Drawer";
 import FlightDetails from "./FlightDetails";
 
@@ -81,31 +72,6 @@ const BookNowButton = styled(Button)({
   "&:hover": {
     backgroundColor: "#2d3748",
   },
-});
-
-const FlightDetailsButton = styled(Button)({
-  color: "#3f4b63",
-  padding: 0,
-  fontWeight: "bold",
-  fontSize: "0.7rem",
-  textTransform: "uppercase",
-  "&:hover": {
-    backgroundColor: "transparent",
-    textDecoration: "underline",
-  },
-});
-
-const PlaneIcon = styled(Box)({
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 80,
-  height: 80,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: 1,
 });
 
 interface FlightCardProps {
@@ -446,7 +412,6 @@ const FlightCard: React.FC<FlightCardProps> = ({
 
         <FlightDetailsDrawer>
           <FlightDetails
-            flight={flight}
             outboundFlight={{
               airline: flight.segments.go[0].marketingcareerName,
               flightNumber: `${flight.segments.go[0].marketingcareer}${flight.segments.go[0].marketingflight}`,
@@ -517,57 +482,8 @@ const FlightCard: React.FC<FlightCardProps> = ({
                 Number(flight.customerPrice),
               grandTotal: Number(flight.netfare),
             }}
+            flight={flight}
           />
-
-          {/* <FlightDetails
-            outboundFlight={{
-              airline: "Biman Bangladesh",
-              flightNumber: "BG-437 & G",
-              operator: "Operated By BG",
-              departureCode: "DAC",
-              departureCity: "Dhaka",
-              departureCountry: "BD",
-              departureAirport: "Hazrat Shahj...",
-              departureAirportFull: "Hazrat Shahjalal International Airport",
-              departureDate: "13 Apr 2025",
-              departureTime: "15:30",
-              arrivalCode: "CXB",
-              arrivalCity: "Coxs Bazar",
-              arrivalCountry: "BD",
-              arrivalAirport: "COXs B...",
-              arrivalAirportFull: "COXs Bazar International Airport",
-              arrivalDate: "13 Apr 2025",
-              arrivalTime: "16:45",
-              duration: "1H 15Min",
-            }}
-            returnFlight={{
-              airline: "Biman Bangladesh",
-              flightNumber: "BG-434 & G",
-              operator: "Operated By BG",
-              departureCode: "CXB",
-              departureCity: "Coxs Bazar",
-              departureCountry: "BD",
-              departureAirport: "COXs B...",
-              departureAirportFull: "COXs Bazar International Airport",
-              departureDate: "15 Apr 2025",
-              departureTime: "11:55",
-              arrivalCode: "DAC",
-              arrivalCity: "Dhaka",
-              arrivalCountry: "BD",
-              arrivalAirport: "Hazrat Shahj...",
-              arrivalAirportFull: "Hazrat Shahjalal International Airport",
-              arrivalDate: "15 Apr 2025",
-              arrivalTime: "13:00",
-              duration: "1H 5Min",
-            }}
-            fareSummary={{
-              baseFare: 10048,
-              taxFees: 2350,
-              totalCost: 12398,
-              discount: 1118,
-              grandTotal: 11280,
-            }}
-          /> */}
         </FlightDetailsDrawer>
       </PriceSection>
     </StyledCard>

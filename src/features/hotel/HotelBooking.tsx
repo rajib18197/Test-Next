@@ -4,10 +4,7 @@ import type React from "react";
 import {
   Box,
   Typography,
-  Button,
   Paper,
-  useTheme,
-  useMediaQuery,
   ClickAwayListener,
   Popper,
 } from "@mui/material";
@@ -25,7 +22,7 @@ function formatDate(date: Date) {
     year: "numeric",
   }); // e.g., 23 Apr 2025
 }
-const airportData: AirportData[] = [
+const airportData: any[] = [
   {
     city: "Dhaka",
     country: "Bangladesh",
@@ -72,15 +69,13 @@ const LocationField = styled(Box)({
   padding: "12px",
   // marginBottom: "10px",
 });
-const StyledPopper = styled(Popper)(({ theme }) => ({
+const StyledPopper = styled(Popper)(() => ({
   borderRadius: 6,
   width: 300,
   fontSize: 13,
 }));
 
 const HotelBookingWidget: React.FC = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [checkInDate, setCheckInDate] = useState(new Date());
   const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [selectedCity, setSelectedCity] = useState("DHAKA, Bangladesh");
@@ -89,7 +84,7 @@ const HotelBookingWidget: React.FC = () => {
   const open = Boolean(anchorEl);
   const id = open ? "date-picker-popover" : undefined;
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: any) => {
     if (anchorEl) {
       setAnchorEl(null); // toggle off
     } else {
@@ -99,9 +94,9 @@ const HotelBookingWidget: React.FC = () => {
 
   const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
     // Don't close if select is open
-    if (isSelectOpen) {
-      return;
-    }
+    // if (isSelectOpen) {
+    //   return;
+    // }
 
     // Prevent closing when clicking on month or year selectors
     const target = event.target as HTMLElement;
@@ -208,7 +203,7 @@ const HotelBookingWidget: React.FC = () => {
               borderRadius: "0 !important",
             }}
           >
-            <ClickAwayListener onClickAway={handleClose}>
+            <ClickAwayListener onClickAway={(e) => handleClose(e as any)}>
               <DestinationSelector
                 data={airportData}
                 onSelectItem={(str) => {

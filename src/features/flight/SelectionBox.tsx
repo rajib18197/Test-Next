@@ -4,6 +4,7 @@ interface SelectionBoxProps {
   labelText: "FROM" | "TO";
   acronym: string;
   children: React.ReactNode;
+  sx?: any;
 }
 
 export default function SelectionBox({

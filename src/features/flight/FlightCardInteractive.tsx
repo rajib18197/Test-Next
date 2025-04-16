@@ -1,18 +1,6 @@
 import type React from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Card,
-  Divider,
-  styled,
-  Paper,
-} from "@mui/material";
+import { Box, Typography, Card, styled } from "@mui/material";
 import LuggageIcon from "@mui/icons-material/Luggage";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import FlightDetailsDrawer from "../../ui/Drawer";
-import FlightDetails from "./FlightDetails";
-import { useState } from "react";
 
 // Custom styled components
 const StyledCard = styled(Card)({
@@ -30,17 +18,6 @@ const FlightInfoSection = styled(Box)({
   padding: "24px",
   display: "flex",
   flexDirection: "column",
-});
-
-const PriceSection = styled(Paper)({
-  width: "180px",
-  borderRadius: "0 8px 8px 0",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: "24px 16px",
-  borderLeft: "1px solid #f0f0f0",
 });
 
 const AirlineLogoContainer = styled(Box)({
@@ -70,45 +47,6 @@ const FlightPathDot = styled(Box)({
   position: "absolute",
 });
 
-const BookNowButton = styled(Button)({
-  backgroundColor: "#3f4b63",
-  color: "white",
-  borderRadius: 25,
-  padding: "8px 24px",
-  fontWeight: "bold",
-  textTransform: "uppercase",
-  fontSize: "0.8rem",
-  width: "100%",
-  "&:hover": {
-    backgroundColor: "#2d3748",
-  },
-});
-
-const FlightDetailsButton = styled(Button)({
-  color: "#3f4b63",
-  padding: 0,
-  fontWeight: "bold",
-  fontSize: "0.7rem",
-  textTransform: "uppercase",
-  "&:hover": {
-    backgroundColor: "transparent",
-    textDecoration: "underline",
-  },
-});
-
-const PlaneIcon = styled(Box)({
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 80,
-  height: 80,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: 1,
-});
-
 interface FlightCardProps {
   airlineName: string;
   airlineLogo: string;
@@ -132,23 +70,6 @@ interface FlightCardProps {
   onStatusChange: any;
 }
 
-function formatDate(dateStr: string) {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }); // e.g., 23 Apr 2025
-}
-
-function formatTime(dateStr: string) {
-  const date = new Date(dateStr);
-  return date.toLocaleTimeString("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-  }); // e.g., 16:35
-}
-
 const FlightCardInteractive: React.FC<FlightCardProps> = ({
   airlineName,
   airlineLogo,
@@ -166,27 +87,17 @@ const FlightCardInteractive: React.FC<FlightCardProps> = ({
   refundable,
   flightClass,
   baggage,
-  currentPrice,
-  originalPrice,
-  flight,
   onStatusChange,
 }) => {
   return (
     <StyledCard>
-      {/* Flight Information Box */}
       <FlightInfoSection>
         <Box
           display="flex"
           justifyContent="space-between"
           alignItems="flex-start"
         >
-          {/* Airline Information */}
-          <Box
-            display="flex"
-            flexDirection="column"
-            // alignItems="center"
-            width="120px"
-          >
+          <Box display="flex" flexDirection="column" width="120px">
             <AirlineLogoContainer
               style={{ border: "2px solid orange", borderRadius: "50%" }}
             >
@@ -195,7 +106,6 @@ const FlightCardInteractive: React.FC<FlightCardProps> = ({
                 alt={airlineName}
                 width="35"
                 height="35"
-                // style={{ border: "2px solid orange", borderRadius: "50%" }}
               />
             </AirlineLogoContainer>
             <Typography
@@ -212,7 +122,6 @@ const FlightCardInteractive: React.FC<FlightCardProps> = ({
             </Typography>
           </Box>
 
-          {/* Flight Information */}
           <Box
             display="flex"
             flex={1}
@@ -226,7 +135,6 @@ const FlightCardInteractive: React.FC<FlightCardProps> = ({
                 variant="h6"
                 sx={{
                   color: "#4cd3a5",
-                  //   fontWeight: "bold",
                   fontSize: "1.75rem",
                 }}
               >
@@ -249,7 +157,6 @@ const FlightCardInteractive: React.FC<FlightCardProps> = ({
               </Typography>
             </Box>
 
-            {/* Flight Path with Plane Icon */}
             <Box
               component="div"
               sx={{
@@ -326,9 +233,7 @@ const FlightCardInteractive: React.FC<FlightCardProps> = ({
           </Box>
         </Box>
 
-        {/* Flight Duration and Type */}
         <Box display="flex" alignItems="center" mt={3} mb={1}>
-          {/* Duration and flight type with improved styling */}
           <Box
             display="flex"
             flexDirection="column"
@@ -368,9 +273,6 @@ const FlightCardInteractive: React.FC<FlightCardProps> = ({
             </Typography>
           </Box>
 
-          {/* <Divider orientation="vertical" flexItem sx={{ mx: 3 }} /> */}
-
-          {/* Flight Details */}
           <Box display="flex" flex={1} justifyContent="space-between">
             <Typography
               variant="body2"

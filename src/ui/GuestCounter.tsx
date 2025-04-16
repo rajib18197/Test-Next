@@ -61,10 +61,10 @@ const DoneButton = styled(Button)(({ theme }) => ({
 }));
 
 // Counter component
-const GuestCounter: React.FC = ({ onChange }) => {
+const GuestCounter = ({ onChange }: { onChange: any }) => {
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
-  const [rooms, setRooms] = useState(1);
+  const [rooms] = useState(1);
   const total = adults + children;
 
   useEffect(() => {

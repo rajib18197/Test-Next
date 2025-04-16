@@ -1,14 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { useTheme, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Popper from "@mui/material/Popper";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Autocomplete, {
   type AutocompleteCloseReason,
   autocompleteClasses,
 } from "@mui/material/Autocomplete";
-import ButtonBase from "@mui/material/ButtonBase";
 import InputBase from "@mui/material/InputBase";
 import Box from "@mui/material/Box";
 import { LocationOn } from "@mui/icons-material";
@@ -107,31 +106,6 @@ const StyledInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Button = styled(ButtonBase)(({ theme }) => ({
-  fontSize: 13,
-  width: "100%",
-  textAlign: "left",
-  paddingBottom: 8,
-  fontWeight: 600,
-  color: "#586069",
-  ...theme.applyStyles("dark", {
-    color: "#8b949e",
-  }),
-  "&:hover,&:focus": {
-    color: "#0366d6",
-    ...theme.applyStyles("dark", {
-      color: "#58a6ff",
-    }),
-  },
-  "& span": {
-    width: "100%",
-  },
-  "& svg": {
-    width: 16,
-    height: 16,
-  },
-}));
-
 const LocationField = styled(Box)({
   display: "flex",
   alignItems: "center",
@@ -172,7 +146,7 @@ interface AirportType {
   country: string;
 }
 
-export default function AirportSelection({ initialValue, setAirport }) {
+export default function AirportSelection({ initialValue, setAirport }: any) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [value, setValue] = React.useState<AirportType | null>(null);
   const [inputValue, setInputValue] = React.useState("");
@@ -194,7 +168,7 @@ export default function AirportSelection({ initialValue, setAirport }) {
     const term = searchTerm.trim().toLowerCase();
     return allLabels
       .filter(
-        (option) =>
+        (option: any) =>
           option?.airportName.toLowerCase().includes(term) ||
           option?.acronym.toLowerCase().includes(term) ||
           option?.city.toLowerCase().includes(term) ||
@@ -218,30 +192,15 @@ export default function AirportSelection({ initialValue, setAirport }) {
   };
 
   const handleInputChange = (
-    event: React.SyntheticEvent,
+    _event: React.SyntheticEvent,
     newInputValue: string
   ) => {
     setInputValue(newInputValue);
     setSearchTerm(newInputValue);
-
-    // Debug
-    // console.log("Search term:", newInputValue);
-    // console.log(
-    //   "Filtered options count:",
-    //   allLabels.filter(
-    //     (option) =>
-    //       option?.airportName
-    //         .toLowerCase()
-    //         .includes(newInputValue.toLowerCase()) ||
-    //       option?.acronym.toLowerCase().includes(newInputValue.toLowerCase()) ||
-    //       option?.city.toLowerCase().includes(newInputValue.toLowerCase()) ||
-    //       option?.country.toLowerCase().includes(newInputValue.toLowerCase())
-    //   ).length
-    // );
   };
 
   const handleOptionSelect = (
-    event: React.SyntheticEvent,
+    _event: React.SyntheticEvent,
     newValue: AirportType | null
   ) => {
     setValue(newValue);
@@ -320,7 +279,7 @@ export default function AirportSelection({ initialValue, setAirport }) {
               }}
               open
               onClose={(
-                event: React.ChangeEvent<{}>,
+                _event: React.ChangeEvent<{}>,
                 reason: AutocompleteCloseReason
               ) => {
                 if (reason === "escape") {
@@ -333,7 +292,7 @@ export default function AirportSelection({ initialValue, setAirport }) {
               onInputChange={handleInputChange}
               noOptionsText="No airports found"
               filterOptions={(x) => x} // Important: disable the built-in filtering
-              renderOption={(props, option, { _selected }) => {
+              renderOption={(props, option) => {
                 const { key, ...optionProps } = props;
                 return (
                   <StyledItem key={key} {...optionProps}>
@@ -415,41 +374,3 @@ export default function AirportSelection({ initialValue, setAirport }) {
     </div>
   );
 }
-
-const labels = [
-  {
-    fullName: "Hazrat Shahjalal Intl Airport",
-    acronym: "DAC",
-    location: "Dhaka, Bangladesh",
-  },
-  {
-    fullName: "Dubai Intl Airport",
-    acronym: "DXB",
-    location: "Dubai, United Arab Emirates",
-  },
-  {
-    fullName: "Cox's Bazar Airport",
-    acronym: "CXB",
-    location: "Cox's Bazar, Bangladesh",
-  },
-  {
-    fullName: "Jashore Airport",
-    acronym: "JSR",
-    location: "Jashore, Bangladesh",
-  },
-  {
-    fullName: "Barishal Airport",
-    acronym: "BZL",
-    location: "Barishal, Bangladesh",
-  },
-  {
-    fullName: "Shah Makhdum Airport",
-    acronym: "RJH",
-    location: "Rajshahi, Bangladesh",
-  },
-  {
-    fullName: "Saidpur Airport",
-    acronym: "SPD",
-    location: "Saidpur, Bangladesh",
-  },
-];

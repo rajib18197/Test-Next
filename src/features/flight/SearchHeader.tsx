@@ -13,7 +13,6 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import FlightIcon from "@mui/icons-material/Flight";
 
 // Custom styled components
 const HeaderContainer = styled(Box)({
@@ -115,7 +114,7 @@ const FlightSearchHeader: React.FC<FlightSearchHeaderProps> = ({
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleAirlineChange = (
-    event: React.SyntheticEvent,
+    _event: React.SyntheticEvent,
     newValue: string
   ) => {
     setSelectedAirline(newValue);
@@ -175,31 +174,5 @@ const FlightSearchHeader: React.FC<FlightSearchHeaderProps> = ({
     </HeaderContainer>
   );
 };
-
-// Custom airline logos
-const BSLogo = () => (
-  <Box
-    component="img"
-    src="/placeholder.svg?height=30&width=30"
-    alt="BS Airline"
-    sx={{ height: 30, width: 30, objectFit: "contain" }}
-  />
-);
-
-const BGLogo = () => (
-  <Box
-    sx={{
-      height: 30,
-      width: 30,
-      borderRadius: "50%",
-      backgroundColor: "#ff0000",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-  >
-    <FlightIcon sx={{ color: "white", fontSize: "1rem" }} />
-  </Box>
-);
 
 export default FlightSearchHeader;

@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import GuestCounter from "../../ui/GuestCounter";
 
-const StyledPopper = styled(Popper)(({ theme }) => ({
+const StyledPopper = styled(Popper)(() => ({
   borderRadius: 6,
   width: 300,
   fontSize: 13,
@@ -36,11 +36,6 @@ export default function GuestInfo() {
   };
 
   const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
-    // Don't close if select is open
-    if (isSelectOpen) {
-      return;
-    }
-
     // Prevent closing when clicking on month or year selectors
     const target = event.target as HTMLElement;
     if (
@@ -109,7 +104,7 @@ export default function GuestInfo() {
             borderRadius: "0 !important",
           }}
         >
-          <ClickAwayListener onClickAway={handleClose}>
+          <ClickAwayListener onClickAway={(e) => handleClose(e as any)}>
             <GuestCounter onChange={setPeople} />
           </ClickAwayListener>
         </StyledPopper>

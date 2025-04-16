@@ -6,8 +6,6 @@ import {
   Typography,
   Button,
   Paper,
-  useTheme,
-  useMediaQuery,
   ClickAwayListener,
   Popper,
 } from "@mui/material";
@@ -34,16 +32,13 @@ const LocationField = styled(Box)({
   padding: "12px",
   // marginBottom: "10px",
 });
-const StyledPopper = styled(Popper)(({ theme }) => ({
+const StyledPopper = styled(Popper)(() => ({
   borderRadius: 6,
   width: 300,
   fontSize: 13,
 }));
 
 const TourBookingWidget: React.FC = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [checkInDate, setCheckInDate] = useState(new Date());
   const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [selectedCity, setSelectedCity] = useState("Domestic");
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -60,11 +55,6 @@ const TourBookingWidget: React.FC = () => {
   };
 
   const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
-    // Don't close if select is open
-    if (isSelectOpen) {
-      return;
-    }
-
     // Prevent closing when clicking on month or year selectors
     const target = event.target as HTMLElement;
     if (
@@ -170,7 +160,7 @@ const TourBookingWidget: React.FC = () => {
               borderRadius: "0 !important",
             }}
           >
-            <ClickAwayListener onClickAway={handleClose}>
+            <ClickAwayListener onClickAway={(e) => handleClose(e as any)}>
               <TravelTypeTabs
                 onChange={(str: string) => {
                   setSelectedCity(str);
